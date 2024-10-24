@@ -1,68 +1,84 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Sobrescribe el color principal */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: linear-gradient(to bottom right, #C2453E, #333333, #E9BAA1);/* Fondo oscuro */
+  color: #000000; /* Texto color melocotón claro */
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: lowercase;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Colores de los botones */
+.btn-primary {
+  background-color: #C2453E;
+  border-color: #C2453E;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.btn-primary:hover {
+  background-color: #E9BAA1;
+  border-color: #E9BAA1;
+  color: #333333;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Sobrescribir el color de los enlaces */
+a {
+  color: #C2453E;
+}
+
+a:hover {
+  color: #E9BAA1;
+}
+
+/* Fondo de las tarjetas (cards) */
+.card {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+}
+
+.card-header {
+  background-color: #C2453E;
+  color: #ffffff;
+}
+
+/* Formulario */
+.form-control {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #C2453E;
+}
+
+.form-control:focus {
+  background-color: #E9BAA1;
+  color: #333333;
+  border-color: #C2453E;
+  box-shadow: none;
+}
+
+/* Barras de navegación (navbar) */
+.navbar {
+  background-color: #333333;
+  border-bottom: 2px solid #C2453E;
+}
+
+.navbar .navbar-brand {
+  color: #E9BAA1;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: #E9BAA1;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #C2453E;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  color: #E9BAA1;
+}
+.form-label{
+  color:#000000;
+}
+.text-center{
+  color:#000000;
 }
