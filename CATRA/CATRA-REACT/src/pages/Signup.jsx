@@ -33,6 +33,7 @@ const Signup = () => {
         .then(({data}) => {
           setUser(data.user)
           setToken(data.token);
+          console.log(`Los datos son: ${data}`);
         })
         .catch(err => {
           const response = err.response;

@@ -8,7 +8,8 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica de autenticación
+    
+    
     
   };
 
