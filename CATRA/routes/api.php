@@ -15,7 +15,5 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::post('/signup', function () {
-    return "Respuesta";
-});
+Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
