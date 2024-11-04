@@ -1,8 +1,28 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
  // Archivo CSS para estilos personalizados
-
+ import {useEffect} from "react";
+ import axiosClient from "/src/axios-client.jsx";
+ import {useStateContext} from "/src/contexts/ContextProvider.jsx";
 function Home() {
+  const {user, token, setUser, setToken, notification} = useStateContext();
+  const onLogout = ev => {
+    ev.preventDefault()
+
+    axiosClient.post('/logout')
+      .then(() => {
+        setUser({})
+        setToken(null)
+      })
+  }
+
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({data}) => {
+         setUser(data)
+         
+      })
+  }, [])
   return (
     <div>
       {/* Barra de navegación */}
@@ -26,6 +46,9 @@ function Home() {
               <Nav.Link href="#services">Nuestros servicios</Nav.Link>
               <Nav.Link href="#contact">Contacto</Nav.Link>
               <Nav.Link href="#comments">Comentarios</Nav.Link>
+              <button type="button" onClick={onLogout} className="btn btn-primary">
+            Log out
+          </button>
             </Nav>
           </Navbar.Collapse>
         </Container>
