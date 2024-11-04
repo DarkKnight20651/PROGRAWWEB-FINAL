@@ -1,8 +1,11 @@
 import axios from "axios";
-import {useStateContext} from "/src/contexts/ContextProvider.jsx";
 
 const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}`
+  baseURL: `http://127.0.0.1:8000/api`,
+  headers: {
+    Accept: 'application/json'
+  },
+  method: 'no-cors'
 })
 
 axiosClient.interceptors.request.use((config) => {

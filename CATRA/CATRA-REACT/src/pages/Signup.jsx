@@ -33,6 +33,7 @@ const Signup = () => {
         .then(({data}) => {
           setUser(data.user)
           setToken(data.token);
+          return <Navigate to="/home"/>
         })
         .catch(err => {
           const response = err.response;
