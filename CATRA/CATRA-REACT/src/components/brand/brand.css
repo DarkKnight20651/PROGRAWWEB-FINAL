@@ -1,0 +1,29 @@
+.catra__brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.catra__brand__content-text{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-family: var(--font-family);
+
+}
+.catra__brand__content-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.catra__brand__content-image img {
+    width: 40%;
+    height: 50%;
+    object-fit: cover;
+
+
+}

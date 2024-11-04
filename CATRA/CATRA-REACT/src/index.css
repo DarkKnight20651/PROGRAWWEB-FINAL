@@ -1,84 +1,18 @@
-/* Sobrescribe el color principal */
-body {
-  background: linear-gradient(to bottom right, #C2453E, #333333, #E9BAA1);/* Fondo oscuro */
-  color: #000000; /* Texto color melocotón claro */
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: lowercase;
-}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 
-/* Colores de los botones */
-.btn-primary {
-  background-color: #C2453E;
-  border-color: #C2453E;
-}
-
-.btn-primary:hover {
-  background-color: #E9BAA1;
-  border-color: #E9BAA1;
-  color: #333333;
-}
-
-/* Sobrescribir el color de los enlaces */
-a {
-  color: #C2453E;
-}
-
-a:hover {
-  color: #E9BAA1;
-}
-
-/* Fondo de las tarjetas (cards) */
-.card {
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
-}
-
-.card-header {
-  background-color: #C2453E;
-  color: #ffffff;
-}
-
-/* Formulario */
-.form-control {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #C2453E;
-}
-
-.form-control:focus {
-  background-color: #E9BAA1;
-  color: #333333;
-  border-color: #C2453E;
-  box-shadow: none;
-}
-
-/* Barras de navegación (navbar) */
-.navbar {
-  background-color: #333333;
-  border-bottom: 2px solid #C2453E;
-}
-
-.navbar .navbar-brand {
-  color: #E9BAA1;
-}
-
-.navbar .navbar-nav .nav-link {
-  color: #E9BAA1;
-}
-
-.navbar .navbar-nav .nav-link:hover {
-  color: #C2453E;
-}
-
-/* Títulos */
-h1, h2, h3, h4, h5, h6 {
-  color: #E9BAA1;
-}
-.form-label{
-  color:#000000;
-}
-.text-center{
-  color:#000000;
+:root {
+  --font-family: 'Manrope', sans-serif;
+/**texto en negro */
+  --gradient-text:    black;
+  --gradient-bar: radial-gradient(ellipse at 16% 50%, rgba(255, 255, 255, 1) 0%, rgba(253, 0, 0, 1) 100%);
+/**
+--color-bg: linear-gradient(161deg, rgba(217, 217, 217, 1) 0%, rgba(211, 106, 106, 1) 74%, rgba(226, 35, 35, 1) 99%);
+  
+*/
+/** color de fondo de los demas componentes excepto navigation*/ 
+--color-bg: white;
+  --color-footer : #fbe1e1;
+  --color-blog: #540404;
+  --color-text: #81AFDD;
+  --color-subtext: #000000;
 }

@@ -1,33 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Students from './pages/Students';
-import Instructors from './pages/Instructors';
-import Schedule from './pages/Schedule';
-import Dashboard from './components/Dashboard';
-import './styles/styles.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-function App() {
+import React from 'react'
+import './App.css'
+import {Footer, Header,Blog,Features,Posibility,WhatCATRA} from './containers'
+import {Article, Cta, Navbar,Brand} from './components'
+const App = () => {
   return (
-    <Router>
-      <div className="App d-flex">
-        {/* Barra lateral (Dashboard) */}
-        <Dashboard />
-        
-        {/* Contenedor principal para las rutas */}
-        <div className="main-content container-fluid p-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/students" element={<Students />} />
-            <Route path="/instructors" element={<Instructors />} />
-            <Route path="/schedule" element={<Schedule />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  );
+    <div className="App gradient__bg">
+    <div className="gradient__bg"> 
+     <Navbar/>
+     <Header/>
+
+    </div>
+ 
+    <WhatCATRA/>
+    
+    <Features/>
+    <Posibility/>
+    <Cta/>
+    <Blog/>
+    <Footer/>
+    
+   </div>
+
+  )
 }
 
-
-export default App;
+export default App
