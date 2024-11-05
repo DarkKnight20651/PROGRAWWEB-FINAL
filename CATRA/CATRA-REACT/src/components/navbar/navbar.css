@@ -118,9 +118,11 @@ box-shadow: 0 0 5 rgba(0, 0,0,0.2);
 @media screen and (max-width: 1050px){
     .catra__navbar-links_container{
         display: none;
+        color: #000000;
     }
     .catra__navbar-menu{
         display: flex;
+        color: #000000;
     }
     
     
@@ -128,6 +130,7 @@ box-shadow: 0 0 5 rgba(0, 0,0,0.2);
 
 @media screen and (max-width: 700px){
     .catra__navbar{
+        color: #000000;
         padding: 2rem 4rem;
     }
     
@@ -135,13 +138,26 @@ box-shadow: 0 0 5 rgba(0, 0,0,0.2);
 
 @media screen and (max-width: 700px){
     .catra__navbar{
+        
         padding: 2rem;
     }
     .catra__navbar-sign{
         display: none;
     }
     .catra__navbar-menu_container{
+        color: #000000;
+        background-color: rgb(255, 255, 255);
+        
         top: 20px;
+    }
+    .catra__navbar-menu_container p {
+        color: #000000;
+
+        
+        
+    }
+    .catra__navbar-menu {
+        color: #000000;
     }
     .catra__navbar-menu_container-links-sign{
         display: block;

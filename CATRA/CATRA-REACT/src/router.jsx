@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 
 import App from "./App";
+import Infocatra from "./Infocatra";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Students from "./pages/Students";
@@ -11,21 +12,25 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <AdminLayout></AdminLayout>,
-        children:[
+        children: [
             {
                 path: '/Students',
                 element: <Students></Students>
             },
             {
                 path: '/home',
-                element: <Home></Home>
+                element: <App></App>
             },
         ]
     },
     {
         path: '/',
         element: <GuestLayout></GuestLayout>,
-        children:[
+        children: [
+            {
+                path: '/home',
+                element: <App></App>
+            },
             {
                 path: '/login',
                 element: <Login></Login>
@@ -35,16 +40,18 @@ const router = createBrowserRouter([
                 element: <Signup></Signup>
             },
             {
-                path: '/home',
-                element: <App></App>
+                path: '/Infocatra',
+                element: <Infocatra></Infocatra>
             }
+
+
         ]
     },
 
-{
-    path: '*',
-    element: <NotFound></NotFound>
-},
+    {
+        path: '*',
+        element: <NotFound></NotFound>
+    },
 ])
 
 export default router;

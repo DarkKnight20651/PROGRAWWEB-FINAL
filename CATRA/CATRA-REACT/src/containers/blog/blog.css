@@ -35,6 +35,12 @@
     grid-gap: 2rem;
 }
 
+.catra__blog-container_groupB img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 @media screen and (max-width: 990px) {
     .catra__blog-container {
         flex-direction: column-reverse;
@@ -51,6 +57,7 @@
 
     .catra__blog-container_groupA .catra__blog-container_article-image {
         height: 250px;
+        
     }
 }
 

@@ -10,14 +10,14 @@ const Footer = () => (
     </div>
 
     <div className="catra__footer-btn">
-      <p>Request Early Access</p>
+      <p>Solicitar Inscribción </p>
     </div>
 
     <div className="catra__footer-links">
       <div className="catra__footer-links_logo">
         <img src={catraLogo} alt="catra_logo" />
-        <p>Brasil 306, Colonia América Sur
-        Oaxaca de Juarez,Oaxaca 68104, MX. <br /> Todos los derechos reservados</p>
+        <p id='text1'>Brasil 306, Colonia América Sur
+          Oaxaca de Juarez,Oaxaca 68104, MX. <br /> Todos los derechos reservados</p>
       </div>
       <div className="catra__footer-links_div">
         <h4>Enlaces</h4>

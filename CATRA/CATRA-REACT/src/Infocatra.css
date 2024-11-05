@@ -1,0 +1,14 @@
+.catra__infocatra{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+   
+}
+
+.catra__infocatra h1{
+    font-size: 35px;
+}

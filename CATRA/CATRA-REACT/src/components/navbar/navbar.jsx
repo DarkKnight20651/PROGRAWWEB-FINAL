@@ -6,10 +6,10 @@ import logo from '/src/assets/CATRAF.png'
 const Menu = () => {
   return (
     <>
-      <p><a href='#home'>Home </a></p>
-      <p><a href='#whatiscatra'>Que es CATRA  </a></p>
+      <p><a href='/home#home'>Home </a></p>
+      <p><a href='/Infocatra'>Que es CATRA  </a></p>
       <p><a href='#nuestros_servicios'>Nuestros Servicios </a></p>
-      <p><a href='#instalaciones'>Instalaciones </a></p>
+      <p><a href='/home#blog'>Instalaciones </a></p>
       <p><a href='#categorias'>Categorias </a></p>
     </>
   );
@@ -37,8 +37,9 @@ const navbar = () => {
       </div>
       <div className='catra__navbar-menu'>
         {toggleMenu
-          ? <RiCloseLine color='white' size={30} onClick={() => setToggleMenu(false)} />
-          : <RiMenu3Line color='white' size={30} onClick={() => setToggleMenu(true)} />
+        
+          ? <RiCloseLine color='black' size={30} onClick={() => setToggleMenu(false)} />
+          : <RiMenu3Line color='black' size={30} onClick={() => setToggleMenu(true)} />
         }
         {
           toggleMenu && (

@@ -1,7 +1,3 @@
-.section__margin {
-    margin: 4rem 6rem;
-}
-
 .catra__whatiscatra {
     display: flex;
     flex-direction: column;
@@ -12,23 +8,22 @@
    
 
     /* ff 3.6+ */
-    background: -moz-linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 119, 119, 1) 100%); 
+    background: -moz-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%); 
 
     /* safari 5.1+,chrome 10+ */
-    background: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 119, 119, 1) 100%);
+    background: -webkit-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
 
     /* opera 11.10+ */
-    background: -o-linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 119, 119, 1) 100%);
+    background: -o-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
 
     /* ie 6-9 */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF7777', endColorstr='#FFFFFF', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#FF0202', GradientType=1 );
 
     /* ie 10+ */
-    background: -ms-linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 119, 119, 1) 100%);
+    background: -ms-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
 
     /* global 94%+ browsers support */
-    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 119, 119, 1) 100%);
-
+    background: linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
 
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
@@ -37,11 +32,13 @@
     display: flex;
 }
 
-.catra__whatiscatra-feature .catra__whatiscatra-contaier__feature {
+/* Customizing feature component as per needs */
+.catra__whatiscatra-feature .catra__features-container__feature {
     margin: 0;
 }
 
-.catra__whatiscatra-feature .catra__whatiscatra-contaier-text {
+/* Customizing feature component as per needs */
+.catra__whatiscatra-feature .catra__features-container_feature-text {
     max-width: 700px;
 }
 
@@ -50,17 +47,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    
     margin: 4rem 0 2rem;
 }
 
 .catra__whatiscatra-heading h1 {
     font-size: 34px;
-    font-weight: 500;
     line-height: 45px;
     font-weight: 800;
     font-family: var(--font-family);
     max-width: 510px;
-
 }
 
 .catra__whatiscatra-heading p {
@@ -80,35 +76,44 @@
     margin-top: 2rem;
 }
 
+/* Customizing feature component as per needs */
+.catra__whatiscatra-container .catra__features-container__feature {
+    flex: 1;
+    margin: 1rem;
+    min-width: 210px;
+    display: unset;
+    flex-direction: column;
+}
 
-
-
-
+/* Customizing feature component as per needs */
+.catra__whatiscatra-container .catra__features-container_feature-text {
+    margin-top: 0.5rem;
+}
 
 @media screen and (max-width: 850px) {
-    .gpt3__whatgpt3-heading {
+    .catra__whatiscatra-heading {
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: 0rem;
     }
 
-    .gpt3__whatgpt3-heading p {
+    .catra__whatiscatra-heading p {
         margin-top: 1rem;
     }
 }
 
 @media screen and (max-width: 650px) {
     /* Customizing feature component as per needs */
-    .gpt3__whatgpt3-feature .gpt3__features-container__feature {
+    .catra__whatiscatra-feature .catra__features-container__feature {
         flex-direction: column;
     }
 
     /* Customizing feature component as per needs */
-    .gpt3__whatgpt3-feature .gpt3__features-container_feature-text {
+    .catra__whatiscatra-feature .catra__features-container_feature-text {
         margin-top: 0.5rem;
     }
 
-    .gpt3__whatgpt3-heading h1 {
+    .catra__whatiscatra-heading h1 {
         font-size: 28px;
         line-height: 40px;
     }
@@ -116,7 +121,7 @@
 
 @media screen and (max-width: 350px) {
     /* Customizing feature component as per needs */
-    .gpt3__whatgpt3-container .gpt3__features-container__feature {
+    .catra__whatiscatra-container .catra__features-container__feature {
         margin: 1rem 0;
         min-width: 100%;
     }
