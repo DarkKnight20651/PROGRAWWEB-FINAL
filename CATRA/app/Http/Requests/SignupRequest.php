@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class SignupRequest extends FormRequest
 {
@@ -25,16 +24,13 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8)
-                    ->letters()
-                    ->symbols()
-                    ->numbers()
-            ]
+            'nombre' => 'required|string|max:255',
+            'apellido_paterno' => 'required|string|max:255',
+            'apellido_materno' => 'required|string|max:255',
+            'fecha_nacimiento' => 'required|date_format:Y-m-d',
+            'email' => 'required|email|unique:users,email',
+            'num_telefono' => 'required|string|max:15',
+            'password' => 'required|string|min:5|confirmed',
         ];
     }
 }

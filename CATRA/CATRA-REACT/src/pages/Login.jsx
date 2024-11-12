@@ -18,18 +18,7 @@ const Login = () => {
       password: passwordRef.current.value,
     };
 
-    axiosClient.post('/login', payload)
-      .then(({ data }) => {
-        setUser(data.user);
-        setToken(data.token);
-        navigate("/home"); // Redirige a /home después de una respuesta exitosa
-      })
-      .catch((err) => {
-        const response = err.response;
-        if (response && response.status === 422) {
-          setMessage(response.data.message);
-        }
-      });
+    
   };
 
   return (

@@ -6,46 +6,58 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
-use http\Env\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function signup(SignupRequest $request)
     {
-        $data = $request->validated();
-        /** @var \App\Models\User $user */
+        $validated = $request->validated();
+
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'nombre' => $validated['nombre'],
+            'apellido_paterno' => $validated['apellido_paterno'],
+            'apellido_materno' => $validated['apellido_materno'],
+            'fecha_nacimiento' => $validated['fecha_nacimiento'],
+            'email' => $validated['email'],
+            'num_telefono' => $validated['num_telefono'],
+            'password' => Hash::make($validated['password']),
         ]);
 
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+        $token = $user->createToken($user->email)->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ], 201);
     }
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->validated();
-        if (!Auth::attempt($credentials)) {
-            return response([
-                'message' => 'Provided email or password is incorrect'
-            ], 422);
+        $validated = $request->validated();
+
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            return response()->json([
+                'error' => 'Credenciales incorrectas.'
+            ], 401);
         }
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+        $token = $user->createToken($user->email)->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ], 200);
     }
 
     public function logout(Request $request)
     {
-        /** @var \App\Models\User $user */
-        $user = $request->user();
-        //clear$user->currentAccessToken()->delete();
-        return response('', 204);
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Se ha cerrado la sesión de forma exitosa',
+        ]);
     }
 }

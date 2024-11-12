@@ -1,26 +1,25 @@
 .content-container {
     margin-left: 250px; /* Para dar espacio al sidebar */
     padding: 20px;
-  }
-  
-  .dashboard {
+}
+
+.dashboard {
     width: 250px;
     background-color: #343a40;
     height: 100vh;
     padding: 20px;
-  }
-  
-  .dashboard h2 {
+}
+
+.dashboard h2 {
     color: #fff;
     font-size: 24px;
     margin-bottom: 30px;
-  }
-  
-  .dashboard .nav-link {
+}
+
+.dashboard .nav-link {
     color: #fff;
-  }
-  
-  .dashboard .nav-link:hover {
+}
+
+.dashboard .nav-link:hover {
     color: #ced4da;
-  }
-  
+}

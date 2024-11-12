@@ -1,4 +1,3 @@
-import React from 'react';
 import catraLogo from '/src/assets/CATRAF.png'
 
 import './footer.css';
@@ -10,7 +9,7 @@ const Footer = () => (
     </div>
 
     <div className="catra__footer-btn">
-      <p>Solicitar Inscribción </p>
+      <p>Solicitar Inscripción</p>
     </div>
 
     <div className="catra__footer-links">

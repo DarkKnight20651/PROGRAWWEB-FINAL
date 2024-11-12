@@ -20,7 +20,6 @@
 .catra__navbar-links_logo img {
     width: 150ox;
     height: 100px;
-
 }
 
 .catra__navbar-links_container {
@@ -76,6 +75,7 @@
     border: 0;
     outline: none;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .catra__navbar-menu{

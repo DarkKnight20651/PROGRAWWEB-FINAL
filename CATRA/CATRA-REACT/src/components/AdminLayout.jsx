@@ -1,15 +1,16 @@
-import { useStateContext } from "../contexts/ContextProvider";
-import { Navigate } from 'react-router-dom';
-import { Outlet } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
+import {  } from "react";
+
 function AdminLayout() {
-  const {user,token}=useStateContext()
-  //if(!token){
-    //return <Navigate to="/login"/>
-  //}
   return (
-    <div><Outlet /></div>
-    
+    <div>
+      <h1>Esta es la página del usuario administrador</h1>
+
+      <p><Link to="/perfil">Perfil</Link></p>
+      <p><Link to="/revisar-documentos">Revisar documentos</Link></p>
+      <p><Link to="/administrar-clientes">Administrar clientes</Link></p>
+    </div>
   )
-  }
-  
-  export default AdminLayout;
+}
+
+export default AdminLayout;
