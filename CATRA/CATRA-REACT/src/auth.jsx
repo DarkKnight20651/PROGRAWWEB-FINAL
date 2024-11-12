@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
           type: LOGIN,
           payload: {
             user: respuesta.data.user,
-            isAdmin: respuesta.data.user.is_admin,
+            rol: respuesta.data.user.rol,
           },
         });
 
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
           type: SIGNUP,
           payload: {
             user: respuesta.data.user,
-            isAdmin: respuesta.data.user.is_admin,
+            rol: respuesta.data.user.rol,
           },
         });
 
@@ -100,7 +100,7 @@ export function AuthProvider({ children }) {
             type: LOGIN,
             payload: {
               user,
-              isAdmin: user.is_admin,
+              rol: user.rol,
             },
           });
 
@@ -138,7 +138,7 @@ export function AuthProvider({ children }) {
       value={{
         isAuthenticated: state.isAuthenticated,
         user: state.user,
-        isAdmin: state.isAdmin,
+        rol: state.rol,
         login,
         logout,
         signup,

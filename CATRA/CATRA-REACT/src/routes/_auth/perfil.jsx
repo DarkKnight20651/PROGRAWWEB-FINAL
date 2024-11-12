@@ -25,11 +25,11 @@ function ProfilePage() {
     <section className="grid gap-2 p-2">
       <h1>Ruta Autenticada</h1>
       <p>Hola {auth.user.nombre}!</p>
-      <p>Eres {auth.user.isAdmin ? "administrador" : "cliente"}</p>
+      <p>Tu rol es {auth.user.rol}</p>
       <p>Estás actualmente en la ruta del perfil.</p>
 
       <div className="p-2 h-full">
-        <p>Esta vista es solo para usuarios autenticados (clientes y administradores)</p>
+        <p>Esta vista es solo para usuarios autenticados</p>
         <ul className="py-2 flex gap-2">
           <li>
             <Link

@@ -17,7 +17,7 @@ export function persistUserInfo(user, token) {
 export const initialState = {
   user: getStoredUser(),
   isAuthenticated: false,
-  isAdmin: false,
+  rol: false,
 };
 
 export function authReducer(state, action) {
@@ -26,21 +26,21 @@ export function authReducer(state, action) {
       return {
         ...state,
         isAuthenticated: true,
-        isAdmin: action.payload.isAdmin,
+        rol: action.payload.rol,
         user: action.payload.user,
       };
     case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
-        isAdmin: false,
+        rol: null,
         user: null,
       };
     case SIGNUP:
       return {
         ...state,
         isAuthenticated: true,
-        isAdmin: action.payload.isAdmin,
+        rol: action.payload.rol,
         user: action.payload.user,
       };
     default:

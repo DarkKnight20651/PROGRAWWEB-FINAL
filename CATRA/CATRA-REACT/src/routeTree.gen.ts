@@ -17,10 +17,10 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthRoutesImport } from './routes/_auth/routes'
 import { Route as AuthPerfilImport } from './routes/_auth/perfil'
 import { Route as AuthDashboardImport } from './routes/_auth/dashboard'
-import { Route as AuthClientRouteImport } from './routes/_auth/_client.route'
+import { Route as AuthClienteRouteImport } from './routes/_auth/_cliente.route'
 import { Route as AuthAdminRouteImport } from './routes/_auth/_admin.route'
-import { Route as AuthClientSubirDocumentosImport } from './routes/_auth/_client/subir-documentos'
-import { Route as AuthClientRealizarExamenImport } from './routes/_auth/_client/realizar-examen'
+import { Route as AuthClienteSubirDocumentosImport } from './routes/_auth/_cliente/subir-documentos'
+import { Route as AuthClienteRealizarExamenImport } from './routes/_auth/_cliente/realizar-examen'
 import { Route as AuthAdminRevisarDocumentosImport } from './routes/_auth/_admin/revisar-documentos'
 import { Route as AuthAdminAdministrarClientesImport } from './routes/_auth/_admin/administrar-clientes'
 
@@ -62,8 +62,8 @@ const AuthDashboardRoute = AuthDashboardImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthClientRouteRoute = AuthClientRouteImport.update({
-  id: '/_auth/_client',
+const AuthClienteRouteRoute = AuthClienteRouteImport.update({
+  id: '/_auth/_cliente',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -72,16 +72,18 @@ const AuthAdminRouteRoute = AuthAdminRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthClientSubirDocumentosRoute = AuthClientSubirDocumentosImport.update({
-  id: '/subir-documentos',
-  path: '/subir-documentos',
-  getParentRoute: () => AuthClientRouteRoute,
-} as any)
+const AuthClienteSubirDocumentosRoute = AuthClienteSubirDocumentosImport.update(
+  {
+    id: '/subir-documentos',
+    path: '/subir-documentos',
+    getParentRoute: () => AuthClienteRouteRoute,
+  } as any,
+)
 
-const AuthClientRealizarExamenRoute = AuthClientRealizarExamenImport.update({
+const AuthClienteRealizarExamenRoute = AuthClienteRealizarExamenImport.update({
   id: '/realizar-examen',
   path: '/realizar-examen',
-  getParentRoute: () => AuthClientRouteRoute,
+  getParentRoute: () => AuthClienteRouteRoute,
 } as any)
 
 const AuthAdminRevisarDocumentosRoute = AuthAdminRevisarDocumentosImport.update(
@@ -131,11 +133,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAdminRouteImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/_client': {
-      id: '/_auth/_client'
+    '/_auth/_cliente': {
+      id: '/_auth/_cliente'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthClientRouteImport
+      preLoaderRoute: typeof AuthClienteRouteImport
       parentRoute: typeof rootRoute
     }
     '/_auth/dashboard': {
@@ -173,19 +175,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAdminRevisarDocumentosImport
       parentRoute: typeof AuthAdminRouteImport
     }
-    '/_auth/_client/realizar-examen': {
-      id: '/_auth/_client/realizar-examen'
+    '/_auth/_cliente/realizar-examen': {
+      id: '/_auth/_cliente/realizar-examen'
       path: '/realizar-examen'
       fullPath: '/realizar-examen'
-      preLoaderRoute: typeof AuthClientRealizarExamenImport
-      parentRoute: typeof AuthClientRouteImport
+      preLoaderRoute: typeof AuthClienteRealizarExamenImport
+      parentRoute: typeof AuthClienteRouteImport
     }
-    '/_auth/_client/subir-documentos': {
-      id: '/_auth/_client/subir-documentos'
+    '/_auth/_cliente/subir-documentos': {
+      id: '/_auth/_cliente/subir-documentos'
       path: '/subir-documentos'
       fullPath: '/subir-documentos'
-      preLoaderRoute: typeof AuthClientSubirDocumentosImport
-      parentRoute: typeof AuthClientRouteImport
+      preLoaderRoute: typeof AuthClienteSubirDocumentosImport
+      parentRoute: typeof AuthClienteRouteImport
     }
   }
 }
@@ -206,46 +208,45 @@ const AuthAdminRouteRouteWithChildren = AuthAdminRouteRoute._addFileChildren(
   AuthAdminRouteRouteChildren,
 )
 
-interface AuthClientRouteRouteChildren {
-  AuthClientRealizarExamenRoute: typeof AuthClientRealizarExamenRoute
-  AuthClientSubirDocumentosRoute: typeof AuthClientSubirDocumentosRoute
+interface AuthClienteRouteRouteChildren {
+  AuthClienteRealizarExamenRoute: typeof AuthClienteRealizarExamenRoute
+  AuthClienteSubirDocumentosRoute: typeof AuthClienteSubirDocumentosRoute
 }
 
-const AuthClientRouteRouteChildren: AuthClientRouteRouteChildren = {
-  AuthClientRealizarExamenRoute: AuthClientRealizarExamenRoute,
-  AuthClientSubirDocumentosRoute: AuthClientSubirDocumentosRoute,
+const AuthClienteRouteRouteChildren: AuthClienteRouteRouteChildren = {
+  AuthClienteRealizarExamenRoute: AuthClienteRealizarExamenRoute,
+  AuthClienteSubirDocumentosRoute: AuthClienteSubirDocumentosRoute,
 }
 
-const AuthClientRouteRouteWithChildren = AuthClientRouteRoute._addFileChildren(
-  AuthClientRouteRouteChildren,
-)
+const AuthClienteRouteRouteWithChildren =
+  AuthClienteRouteRoute._addFileChildren(AuthClienteRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '': typeof AuthClientRouteRouteWithChildren
+  '': typeof AuthClienteRouteRouteWithChildren
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
   '/routes': typeof AuthRoutesRoute
   '/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
   '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
-  '/realizar-examen': typeof AuthClientRealizarExamenRoute
-  '/subir-documentos': typeof AuthClientSubirDocumentosRoute
+  '/realizar-examen': typeof AuthClienteRealizarExamenRoute
+  '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
-  '': typeof AuthClientRouteRouteWithChildren
+  '': typeof AuthClienteRouteRouteWithChildren
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
   '/routes': typeof AuthRoutesRoute
   '/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
   '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
-  '/realizar-examen': typeof AuthClientRealizarExamenRoute
-  '/subir-documentos': typeof AuthClientSubirDocumentosRoute
+  '/realizar-examen': typeof AuthClienteRealizarExamenRoute
+  '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
 }
 
 export interface FileRoutesById {
@@ -254,14 +255,14 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_auth/_admin': typeof AuthAdminRouteRouteWithChildren
-  '/_auth/_client': typeof AuthClientRouteRouteWithChildren
+  '/_auth/_cliente': typeof AuthClienteRouteRouteWithChildren
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/perfil': typeof AuthPerfilRoute
   '/_auth/routes': typeof AuthRoutesRoute
   '/_auth/_admin/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
   '/_auth/_admin/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
-  '/_auth/_client/realizar-examen': typeof AuthClientRealizarExamenRoute
-  '/_auth/_client/subir-documentos': typeof AuthClientSubirDocumentosRoute
+  '/_auth/_cliente/realizar-examen': typeof AuthClienteRealizarExamenRoute
+  '/_auth/_cliente/subir-documentos': typeof AuthClienteSubirDocumentosRoute
 }
 
 export interface FileRouteTypes {
@@ -297,14 +298,14 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_auth/_admin'
-    | '/_auth/_client'
+    | '/_auth/_cliente'
     | '/_auth/dashboard'
     | '/_auth/perfil'
     | '/_auth/routes'
     | '/_auth/_admin/administrar-clientes'
     | '/_auth/_admin/revisar-documentos'
-    | '/_auth/_client/realizar-examen'
-    | '/_auth/_client/subir-documentos'
+    | '/_auth/_cliente/realizar-examen'
+    | '/_auth/_cliente/subir-documentos'
   fileRoutesById: FileRoutesById
 }
 
@@ -313,7 +314,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   AuthAdminRouteRoute: typeof AuthAdminRouteRouteWithChildren
-  AuthClientRouteRoute: typeof AuthClientRouteRouteWithChildren
+  AuthClienteRouteRoute: typeof AuthClienteRouteRouteWithChildren
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthPerfilRoute: typeof AuthPerfilRoute
   AuthRoutesRoute: typeof AuthRoutesRoute
@@ -324,7 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   AuthAdminRouteRoute: AuthAdminRouteRouteWithChildren,
-  AuthClientRouteRoute: AuthClientRouteRouteWithChildren,
+  AuthClienteRouteRoute: AuthClienteRouteRouteWithChildren,
   AuthDashboardRoute: AuthDashboardRoute,
   AuthPerfilRoute: AuthPerfilRoute,
   AuthRoutesRoute: AuthRoutesRoute,
@@ -344,7 +345,7 @@ export const routeTree = rootRoute
         "/login",
         "/signup",
         "/_auth/_admin",
-        "/_auth/_client",
+        "/_auth/_cliente",
         "/_auth/dashboard",
         "/_auth/perfil",
         "/_auth/routes"
@@ -366,11 +367,11 @@ export const routeTree = rootRoute
         "/_auth/_admin/revisar-documentos"
       ]
     },
-    "/_auth/_client": {
-      "filePath": "_auth/_client.route.jsx",
+    "/_auth/_cliente": {
+      "filePath": "_auth/_cliente.route.jsx",
       "children": [
-        "/_auth/_client/realizar-examen",
-        "/_auth/_client/subir-documentos"
+        "/_auth/_cliente/realizar-examen",
+        "/_auth/_cliente/subir-documentos"
       ]
     },
     "/_auth/dashboard": {
@@ -390,13 +391,13 @@ export const routeTree = rootRoute
       "filePath": "_auth/_admin/revisar-documentos.jsx",
       "parent": "/_auth/_admin"
     },
-    "/_auth/_client/realizar-examen": {
-      "filePath": "_auth/_client/realizar-examen.jsx",
-      "parent": "/_auth/_client"
+    "/_auth/_cliente/realizar-examen": {
+      "filePath": "_auth/_cliente/realizar-examen.jsx",
+      "parent": "/_auth/_cliente"
     },
-    "/_auth/_client/subir-documentos": {
-      "filePath": "_auth/_client/subir-documentos.jsx",
-      "parent": "/_auth/_client"
+    "/_auth/_cliente/subir-documentos": {
+      "filePath": "_auth/_cliente/subir-documentos.jsx",
+      "parent": "/_auth/_cliente"
     }
   }
 }

@@ -58,7 +58,7 @@ function SignupComponent() {
         await navigate({ to: "/dashboard" });
       }
     } catch (error) {
-      console.log("ERROR - ", error.mensajes);
+      console.log("ERROR - ", error);
       setErrors(() => error.mensajes || {});
     } finally {
       setIsSubmitting(false);

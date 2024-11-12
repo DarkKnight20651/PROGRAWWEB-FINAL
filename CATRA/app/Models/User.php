@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasUlids;
 
     /**
      * The attributes that are mass assignable.
@@ -36,15 +36,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    protected $appends = ['is_admin'];
-
-    public function isAdmin(): Attribute
-    {
-        return new Attribute(
-            get: fn() => $this->email === "admin@admin.com"
-        );
-    }
+    
     /**
      * Get the attributes that should be cast.
      *
