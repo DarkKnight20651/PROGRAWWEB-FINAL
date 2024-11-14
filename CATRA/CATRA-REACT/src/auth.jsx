@@ -7,7 +7,8 @@ import {
   LOGOUT,
   persistUserInfo,
   SIGNUP,
-  user_key,
+  limpiarTkUsuarioStorage,
+  AuthContext
 } from "./auth-utils";
 import {
   createContext,
@@ -15,13 +16,6 @@ import {
   useEffect,
   useReducer,
 } from "react";
-
-export const AuthContext = createContext(null);
-
-function limpiarTkUsuarioStorage() {
-  localStorage.removeItem(access_token_key);
-    localStorage.removeItem(user_key);
-}
 
 // eslint-disable-next-line react/prop-types
 export function AuthProvider({ children }) {

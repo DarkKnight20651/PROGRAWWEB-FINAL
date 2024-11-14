@@ -1,9 +1,13 @@
+import { createContext } from "react";
+
 export const user_key = 'auth.user';
 export const access_token_key = 'auth.access_token';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
+
+export const AuthContext = createContext(null);
 
 export function getStoredUser() {
     return localStorage.getItem(user_key);
@@ -48,3 +52,7 @@ export function authReducer(state, action) {
   }
 }
 
+export function limpiarTkUsuarioStorage() {
+  localStorage.removeItem(access_token_key);
+  localStorage.removeItem(user_key);
+}

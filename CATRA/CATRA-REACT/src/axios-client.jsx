@@ -19,16 +19,13 @@ axiosClient.interceptors.request.use(
             console.log(
                 "no se proporcionó token para " +
                     config.url +
-                    ", método " +
+                    ", método HTTP = " +
                     config.method,
             );
         }
 
         return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    },
+    }
 );
 
 export default axiosClient;
