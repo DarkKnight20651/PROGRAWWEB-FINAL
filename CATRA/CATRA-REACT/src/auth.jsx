@@ -8,10 +8,10 @@ import {
   persistUserInfo,
   SIGNUP,
   limpiarTkUsuarioStorage,
-  AuthContext
+  AuthContext,
+  REGISTER_CLIENTE
 } from "./auth-utils";
 import {
-  createContext,
   useCallback,
   useEffect,
   useReducer,
@@ -40,9 +40,17 @@ export function AuthProvider({ children }) {
           type: LOGIN,
           payload: {
             user: respuesta.data.user,
-            rol: respuesta.data.user.rol,
           },
         });
+
+        if(respuesta.data.cliente) {
+          dispatch({
+            type: REGISTER_CLIENTE,
+            payload: {
+              user: respuesta.data.cliente,
+            },
+          });
+        }
 
         persistUserInfo(respuesta.data.user, respuesta.data.token);
         return "Success";
@@ -63,11 +71,31 @@ export function AuthProvider({ children }) {
           type: SIGNUP,
           payload: {
             user: respuesta.data.user,
-            rol: respuesta.data.user.rol,
           },
         });
 
         persistUserInfo(respuesta.data.user, respuesta.data.token);
+
+        return "Success";
+      } catch (error) {
+        error.mensajes = error.response?.data?.errors;
+        throw error;
+      }
+    },
+    []
+  );
+
+  const registrar_cliente = useCallback(
+    async (payload) => {
+      try {
+        const respuesta = await axiosClient.post("/cliente", payload);
+
+        dispatch({
+          type: REGISTER_CLIENTE,
+          payload: {
+            user: respuesta.data.cliente,
+          },
+        });
 
         return "Success";
       } catch (error) {
@@ -89,24 +117,22 @@ export function AuthProvider({ children }) {
 
         const response = await axiosClient.get("/user", { signal });
         if (response.status === 200 && response.data) {
-          const user = response.data;
           dispatch({
             type: LOGIN,
             payload: {
-              user,
-              rol: user.rol,
+              user: response.data.user
             },
           });
 
-          /* const usuarioLocalStr = localStorage.getItem(user_key);
-          if (usuarioLocalStr != null) {
-            console.log(usuarioLocalStr);
-            
-            const usuarioLocal = JSON.parse(usuarioLocalStr);
-            if (usuarioLocal.email !== response.data.email) {
-              throw new Error("El email no coincide con el local");
-            }
-          } */
+          if(response.data.cliente) {
+            dispatch({
+              type: REGISTER_CLIENTE,
+              payload: {
+                cliente: response.data.cliente,
+              },
+            });
+          }
+          
         }
       } catch (err) {
         console.log("ERROR DE USE EFFECT", err);
@@ -136,6 +162,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         signup,
+        registrar_cliente
       }}
     >
       {children}

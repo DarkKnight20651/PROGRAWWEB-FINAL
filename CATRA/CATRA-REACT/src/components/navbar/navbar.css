@@ -3,6 +3,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 6rem;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -11,6 +14,11 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    border-radius: var(--navbar-links-border-radius);
+    border: var(--navbar-links-border);
+    
+    box-shadow: var(--navbar-links-box-shadow);
+    padding: var(--navbar-links-padding);
 }
 
 .catra__navbar-links_logo {
@@ -66,12 +74,12 @@
 .catra__navbar-sign_container button {
     padding: 0.5rem 1rem;
     color: #fff;
-    background: #f31c1c;
+   
     font-family: var(--font-family);
     font-weight: 500;
     font-size: 18px;
     line-height: 25px;
-    border-radius: 5px;
+    
     border: 0;
     outline: none;
     cursor: pointer;
@@ -79,6 +87,7 @@
 }
 
 .catra__navbar-menu{
+    border-style: double;
     margin-left: 1rem;
     display: none;
     position: relative;
@@ -89,6 +98,7 @@
 }
 
 .catra__navbar-menu_container{
+   
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -102,6 +112,7 @@
     margin-top: 1rem;
 min-width: 210px;
 border-radius: 5px;
+border-color: #000000;
 box-shadow: 0 0 5 rgba(0, 0,0,0.2);
 
 
@@ -161,5 +172,6 @@ box-shadow: 0 0 5 rgba(0, 0,0,0.2);
     }
     .catra__navbar-menu_container-links-sign{
         display: block;
+        
     }
 }

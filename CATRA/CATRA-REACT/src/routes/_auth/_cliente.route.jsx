@@ -4,7 +4,7 @@ export const Route = createFileRoute('/_auth/_cliente')({
   beforeLoad: async ({ context }) => {
     console.log('CONTEXTO BEFORE LOAD /_AUTH/_CLIENT', context)
 
-    if (!context.auth.isAuthenticated || context.auth.rol !== 'cliente') {
+    if (!context.auth.isAuthenticated || context.auth.user.role !== 'cliente') {
       throw redirect({
         to: '/dashboard',
       })

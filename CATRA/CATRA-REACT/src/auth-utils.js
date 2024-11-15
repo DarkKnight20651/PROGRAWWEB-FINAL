@@ -6,6 +6,7 @@ export const access_token_key = 'auth.access_token';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
+export const REGISTER_CLIENTE = 'REGISTER_CLIENTE';
 
 export const AuthContext = createContext(null);
 
@@ -21,7 +22,7 @@ export function persistUserInfo(user, token) {
 export const initialState = {
   user: getStoredUser(),
   isAuthenticated: false,
-  rol: false,
+  cliente: null,
 };
 
 export function authReducer(state, action) {
@@ -30,22 +31,27 @@ export function authReducer(state, action) {
       return {
         ...state,
         isAuthenticated: true,
-        rol: action.payload.rol,
         user: action.payload.user,
+        cliente: null,
       };
     case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
-        rol: null,
         user: null,
+        cliente: null
+      };
+    case REGISTER_CLIENTE:
+      return {
+        ...state,
+        cliente: action.payload.cliente,
       };
     case SIGNUP:
       return {
         ...state,
         isAuthenticated: true,
-        rol: action.payload.rol,
         user: action.payload.user,
+        cliente: null,
       };
     default:
       return state;

@@ -10,7 +10,9 @@ const whatcatra = () => {
       
       <div className='catra__whatiscatra-heading'>
         <h1 className='gradient-text'>
-          Logra obtener tu licencia con CATRA
+          
+          
+            Logra obtener tu licencia con CATRA!
         </h1>
         <p>Explora nuestros cursos</p>
       </div>

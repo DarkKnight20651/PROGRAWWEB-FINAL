@@ -24,8 +24,8 @@ function ProfilePage() {
   return (
     <section className="grid gap-2 p-2">
       <h1>Ruta Autenticada</h1>
-      <p>Hola {auth.user.nombre}!</p>
-      <p>Tu rol es {auth.user.rol}</p>
+      <p>Tu rol es {auth.user.role}</p>
+      {auth.cliente && <p>{auth.cliente.name}</p>}
       <p>Estás actualmente en la ruta del perfil.</p>
 
       <div className="p-2 h-full">

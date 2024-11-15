@@ -23,6 +23,10 @@ import { Route as AuthClienteSubirDocumentosImport } from './routes/_auth/_clien
 import { Route as AuthClienteRealizarExamenImport } from './routes/_auth/_cliente/realizar-examen'
 import { Route as AuthAdminRevisarDocumentosImport } from './routes/_auth/_admin/revisar-documentos'
 import { Route as AuthAdminAdministrarClientesImport } from './routes/_auth/_admin/administrar-clientes'
+import { Route as AuthAdminUsuariosIndexImport } from './routes/_auth/_admin/usuarios/index'
+import { Route as AuthAdminUsuariosCrearImport } from './routes/_auth/_admin/usuarios/crear'
+import { Route as AuthAdminUsuariosCogerImport } from './routes/_auth/_admin/usuarios/coger'
+import { Route as AuthAdminUsuariosEditarUserIdImport } from './routes/_auth/_admin/usuarios/editar.$userId'
 
 // Create/Update Routes
 
@@ -98,6 +102,31 @@ const AuthAdminAdministrarClientesRoute =
   AuthAdminAdministrarClientesImport.update({
     id: '/administrar-clientes',
     path: '/administrar-clientes',
+    getParentRoute: () => AuthAdminRouteRoute,
+  } as any)
+
+const AuthAdminUsuariosIndexRoute = AuthAdminUsuariosIndexImport.update({
+  id: '/usuarios/',
+  path: '/usuarios/',
+  getParentRoute: () => AuthAdminRouteRoute,
+} as any)
+
+const AuthAdminUsuariosCrearRoute = AuthAdminUsuariosCrearImport.update({
+  id: '/usuarios/crear',
+  path: '/usuarios/crear',
+  getParentRoute: () => AuthAdminRouteRoute,
+} as any)
+
+const AuthAdminUsuariosCogerRoute = AuthAdminUsuariosCogerImport.update({
+  id: '/usuarios/coger',
+  path: '/usuarios/coger',
+  getParentRoute: () => AuthAdminRouteRoute,
+} as any)
+
+const AuthAdminUsuariosEditarUserIdRoute =
+  AuthAdminUsuariosEditarUserIdImport.update({
+    id: '/usuarios/editar/$userId',
+    path: '/usuarios/editar/$userId',
     getParentRoute: () => AuthAdminRouteRoute,
   } as any)
 
@@ -189,6 +218,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthClienteSubirDocumentosImport
       parentRoute: typeof AuthClienteRouteImport
     }
+    '/_auth/_admin/usuarios/coger': {
+      id: '/_auth/_admin/usuarios/coger'
+      path: '/usuarios/coger'
+      fullPath: '/usuarios/coger'
+      preLoaderRoute: typeof AuthAdminUsuariosCogerImport
+      parentRoute: typeof AuthAdminRouteImport
+    }
+    '/_auth/_admin/usuarios/crear': {
+      id: '/_auth/_admin/usuarios/crear'
+      path: '/usuarios/crear'
+      fullPath: '/usuarios/crear'
+      preLoaderRoute: typeof AuthAdminUsuariosCrearImport
+      parentRoute: typeof AuthAdminRouteImport
+    }
+    '/_auth/_admin/usuarios/': {
+      id: '/_auth/_admin/usuarios/'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof AuthAdminUsuariosIndexImport
+      parentRoute: typeof AuthAdminRouteImport
+    }
+    '/_auth/_admin/usuarios/editar/$userId': {
+      id: '/_auth/_admin/usuarios/editar/$userId'
+      path: '/usuarios/editar/$userId'
+      fullPath: '/usuarios/editar/$userId'
+      preLoaderRoute: typeof AuthAdminUsuariosEditarUserIdImport
+      parentRoute: typeof AuthAdminRouteImport
+    }
   }
 }
 
@@ -197,11 +254,19 @@ declare module '@tanstack/react-router' {
 interface AuthAdminRouteRouteChildren {
   AuthAdminAdministrarClientesRoute: typeof AuthAdminAdministrarClientesRoute
   AuthAdminRevisarDocumentosRoute: typeof AuthAdminRevisarDocumentosRoute
+  AuthAdminUsuariosCogerRoute: typeof AuthAdminUsuariosCogerRoute
+  AuthAdminUsuariosCrearRoute: typeof AuthAdminUsuariosCrearRoute
+  AuthAdminUsuariosIndexRoute: typeof AuthAdminUsuariosIndexRoute
+  AuthAdminUsuariosEditarUserIdRoute: typeof AuthAdminUsuariosEditarUserIdRoute
 }
 
 const AuthAdminRouteRouteChildren: AuthAdminRouteRouteChildren = {
   AuthAdminAdministrarClientesRoute: AuthAdminAdministrarClientesRoute,
   AuthAdminRevisarDocumentosRoute: AuthAdminRevisarDocumentosRoute,
+  AuthAdminUsuariosCogerRoute: AuthAdminUsuariosCogerRoute,
+  AuthAdminUsuariosCrearRoute: AuthAdminUsuariosCrearRoute,
+  AuthAdminUsuariosIndexRoute: AuthAdminUsuariosIndexRoute,
+  AuthAdminUsuariosEditarUserIdRoute: AuthAdminUsuariosEditarUserIdRoute,
 }
 
 const AuthAdminRouteRouteWithChildren = AuthAdminRouteRoute._addFileChildren(
@@ -233,6 +298,10 @@ export interface FileRoutesByFullPath {
   '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
+  '/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
+  '/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
+  '/usuarios': typeof AuthAdminUsuariosIndexRoute
+  '/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -247,6 +316,10 @@ export interface FileRoutesByTo {
   '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
+  '/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
+  '/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
+  '/usuarios': typeof AuthAdminUsuariosIndexRoute
+  '/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
 }
 
 export interface FileRoutesById {
@@ -263,6 +336,10 @@ export interface FileRoutesById {
   '/_auth/_admin/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
   '/_auth/_cliente/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/_auth/_cliente/subir-documentos': typeof AuthClienteSubirDocumentosRoute
+  '/_auth/_admin/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
+  '/_auth/_admin/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
+  '/_auth/_admin/usuarios/': typeof AuthAdminUsuariosIndexRoute
+  '/_auth/_admin/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
 }
 
 export interface FileRouteTypes {
@@ -279,6 +356,10 @@ export interface FileRouteTypes {
     | '/revisar-documentos'
     | '/realizar-examen'
     | '/subir-documentos'
+    | '/usuarios/coger'
+    | '/usuarios/crear'
+    | '/usuarios'
+    | '/usuarios/editar/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -292,6 +373,10 @@ export interface FileRouteTypes {
     | '/revisar-documentos'
     | '/realizar-examen'
     | '/subir-documentos'
+    | '/usuarios/coger'
+    | '/usuarios/crear'
+    | '/usuarios'
+    | '/usuarios/editar/$userId'
   id:
     | '__root__'
     | '/'
@@ -306,6 +391,10 @@ export interface FileRouteTypes {
     | '/_auth/_admin/revisar-documentos'
     | '/_auth/_cliente/realizar-examen'
     | '/_auth/_cliente/subir-documentos'
+    | '/_auth/_admin/usuarios/coger'
+    | '/_auth/_admin/usuarios/crear'
+    | '/_auth/_admin/usuarios/'
+    | '/_auth/_admin/usuarios/editar/$userId'
   fileRoutesById: FileRoutesById
 }
 
@@ -364,7 +453,11 @@ export const routeTree = rootRoute
       "filePath": "_auth/_admin.route.jsx",
       "children": [
         "/_auth/_admin/administrar-clientes",
-        "/_auth/_admin/revisar-documentos"
+        "/_auth/_admin/revisar-documentos",
+        "/_auth/_admin/usuarios/coger",
+        "/_auth/_admin/usuarios/crear",
+        "/_auth/_admin/usuarios/",
+        "/_auth/_admin/usuarios/editar/$userId"
       ]
     },
     "/_auth/_cliente": {
@@ -398,6 +491,22 @@ export const routeTree = rootRoute
     "/_auth/_cliente/subir-documentos": {
       "filePath": "_auth/_cliente/subir-documentos.jsx",
       "parent": "/_auth/_cliente"
+    },
+    "/_auth/_admin/usuarios/coger": {
+      "filePath": "_auth/_admin/usuarios/coger.jsx",
+      "parent": "/_auth/_admin"
+    },
+    "/_auth/_admin/usuarios/crear": {
+      "filePath": "_auth/_admin/usuarios/crear.jsx",
+      "parent": "/_auth/_admin"
+    },
+    "/_auth/_admin/usuarios/": {
+      "filePath": "_auth/_admin/usuarios/index.jsx",
+      "parent": "/_auth/_admin"
+    },
+    "/_auth/_admin/usuarios/editar/$userId": {
+      "filePath": "_auth/_admin/usuarios/editar.$userId.jsx",
+      "parent": "/_auth/_admin"
     }
   }
 }

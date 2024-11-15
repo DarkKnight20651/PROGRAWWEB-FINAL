@@ -7,24 +7,6 @@
 
    
 
-    /* ff 3.6+ */
-    background: -moz-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%); 
-
-    /* safari 5.1+,chrome 10+ */
-    background: -webkit-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
-
-    /* opera 11.10+ */
-    background: -o-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
-
-    /* ie 6-9 */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#FF0202', GradientType=1 );
-
-    /* ie 10+ */
-    background: -ms-linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
-
-    /* global 94%+ browsers support */
-    background: linear-gradient(10deg, rgba(255, 255, 255, 1) 0%, rgba(255, 26, 4, 0.36) 79%, rgba(255, 2, 2, 0.47) 100%);
-
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
@@ -51,7 +33,14 @@
     margin: 4rem 0 2rem;
 }
 
+
+.catra__whatiscatra-heading gradient-text{
+color:white;
+text-align: center;
+}
 .catra__whatiscatra-heading h1 {
+    font-style: oblique;
+    color: black;
     font-size: 34px;
     line-height: 45px;
     font-weight: 800;
@@ -60,6 +49,7 @@
 }
 
 .catra__whatiscatra-heading p {
+    
     font-family: var(--font-family);
     font-weight: 500;
     font-size: 16px;

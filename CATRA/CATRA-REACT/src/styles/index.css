@@ -1,6 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
+/**variables para los bordes*/
+  --navbar-links-border-radius: 30px;
+  --navbar-links-border: 2px solid rgba(0, 0, 0, 0.5);
+  --navbar-links-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  --navbar-links-padding: 2rem;
+  
+
+/**variables para los botones*/
+--button-color-red: rgb(184, 28, 28);
+--button-border-radius: 10px;
+
   --font-family: 'Manrope', sans-serif;
 /**texto en negro */
   --gradient-text:    black;
@@ -15,4 +26,11 @@
   --color-blog: #540404;
   --color-text: #81AFDD;
   --color-subtext: #000000;
+
+  --border-style:  border-radius: 10px;
+  border-color: #000000;
+  border-style: double
+  ;
+ 
+
 }

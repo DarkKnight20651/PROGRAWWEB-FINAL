@@ -2,14 +2,16 @@ import catraLogo from '/src/assets/CATRAF.png'
 
 import './footer.css';
 
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
+
 const Footer = () => (
   <div className="catra__footer section__padding">
     <div className="catra__footer-heading">
-      <h1 className="gradient__text">Quieres estar un paso adelante de los demas </h1>
+      <h1 className="textred">¿Quieres estar un paso adelante de los demás?</h1>
     </div>
 
     <div className="catra__footer-btn">
-      <p>Solicitar Inscripción</p>
+      <h1 id='soli'>Solicitar Inscripción </h1>
     </div>
 
     <div className="catra__footer-links">
@@ -21,9 +23,12 @@ const Footer = () => (
       <div className="catra__footer-links_div">
         <h4>Enlaces</h4>
         <p>Home</p>
-        <p>Redes Sociales</p>
-        <p>Counters</p>
-        <p>Contacto</p>
+        <p>Iniciar sesion</p>
+        <p>Registrarse</p>
+        <p>¿Que es catra ?</p>
+        <p>¿Nuestros Servicios ?</p>
+        <p>Instalaciones</p>
+
       </div>
       <div className="catra__footer-links_div">
         <h4>Compañia</h4>
@@ -33,9 +38,17 @@ const Footer = () => (
       </div>
       <div className="catra__footer-links_div">
         <h4>Contactanos</h4>
-        <p>Crechterwoord K12 182 DK Alknjkcb</p>
+        <p>Brasil 306, Colonia América Sur
+        Oaxaca de Juarez,Oaxaca 68104, MX</p>
         <p>951 124 7422</p>
         <p>catra@gmail.com</p>
+        
+      </div>
+
+      <div className="catra__footer-links_div">
+        <h4>Redes Sociales</h4>
+        <p><a href="https://www.facebook.com/CatraLicenciasFederalesOaxaca" target="_blank" rel="noopener noreferrer"><FaFacebook /> Facebook</a></p>
+        <p><a href="https://www.instagram.com/catra_centrodecapacitacion/" target="_blank" rel="noopener noreferrer"><FaInstagram /> Instagram</a></p>
       </div>
     </div>
 

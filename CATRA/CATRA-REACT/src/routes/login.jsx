@@ -7,6 +7,8 @@ import {
   useRouterState,
 } from '@tanstack/react-router'
 
+import '../pages/login/Login.css'
+
 import useAuth from '../useAuth'
 
 const fallback = '/dashboard'
@@ -14,7 +16,7 @@ const fallback = '/dashboard'
 export const Route = createFileRoute('/login')({
   beforeLoad: ({ context, search }) => {
     if (context.auth.isAuthenticated) {
-      throw redirect({ to: search.redirect || fallback })
+      throw redirect({ to: fallback })
     }
   },
   component: LoginComponent,

@@ -7,13 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 //use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
-    protected $keyType = 'string';
-    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -21,14 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nombre',
-        'apellido_paterno',
-        'apellido_materno',
-        'fecha_nacimiento',
         'email',
-        'rol',
-        'num_telefono',
         'password',
+        'role',
     ];
 
     /**
@@ -54,11 +46,8 @@ class User extends Authenticatable
         ];
     }
 
-
-    public static function booted()
+    public function cliente()
     {
-        static::creating(function ($model) {
-            $model->id = Str::uuid();
-        });
+        return $this->hasOne(Cliente::class, 'id_user', 'id');
     }
 }

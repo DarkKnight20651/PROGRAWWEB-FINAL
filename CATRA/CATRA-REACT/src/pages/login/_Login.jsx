@@ -2,7 +2,7 @@ import React, { useState, createRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateContext } from "/src/contexts/ContextProvider.jsx";
 import axiosClient from "/src/axios-client.jsx";
-
+ import './Login.css'
 const Login = () => {
   const emailRef = createRef();
   const passwordRef = createRef();
@@ -18,13 +18,21 @@ const Login = () => {
       password: passwordRef.current.value,
     };
 
-    
+    axiosClient.post('/login', payload)
+      .then(({ data }) => {
+        
+        navigate("/users"); 
+      })
+      .catch((err) => {
+        const response = err.response;
+        
+      });
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 w-25">
-        <h3 className="text-center">INICIAR SESIÓN</h3>
+        <h3 className="text-center">Iniciar sesión </h3>
         <form onSubmit={onSubmit}>
           <div className="mb-3">
             {message && (
@@ -52,7 +60,7 @@ const Login = () => {
             />
           </div>
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
+            <button type="button" className="btn-primary" color='red'>
               INGRESAR
             </button>
           </div>

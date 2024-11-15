@@ -8,11 +8,11 @@ import useAuth from '../../useAuth'
 const Menu = () => {
   return (
     <>
-      <p><Link>Inicio</Link></p>
-      <p><Link to='/info'>Qué es CATRA</Link></p>
-      <p><Link to='/servivios'>Nuestros Servicios </Link></p>
-      <p><Link to='/instalaciones'>Instalaciones </Link></p>
-      <p><Link to='/categorias'>Categorias </Link></p>
+      <p><a href='/home#home'>Home </a></p>
+      <p><a href='/Infocatra'>Que es CATRA  </a></p>
+      <p><a href='/cursos'>Nuestros Servicios </a></p>
+      <p><a href='/home#blog'>Instalaciones </a></p>
+      <p><a href='#categorias'>Categorias </a></p>
     </>
   );
 }
@@ -44,18 +44,21 @@ const Navbar = () => {
   return (
 
     <div className='catra__navbar'>
-      <div className='catra__navbar-links'>
-        <div className='catra__navbar-links_logo'>
+      <div className='catra__navbar-links_logo'>
           <img src={logo} alt='logo' />
         </div>
+      <div className='catra__navbar-links'>
+        
         <div className='catra__navbar-links_container'>
           <Menu />
         </div>
-      </div>
 
       <div className='catra__navbar-sign'>
         <BotonesNavbar />
       </div>
+      </div>
+
+     
       <div className='catra__navbar-menu'>
         {toggleMenu
 

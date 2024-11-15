@@ -1,5 +1,6 @@
 import React from 'react'
 import './feature.css'
+import '../../styles/index.css'
 const feature = ({title,text}) => {
   return (
     <div className='catra__features-container__feature'>

@@ -7,11 +7,9 @@ const Infocatra = () => {
     <div className="App gradient__bg">
     <div className="gradient__bg"> 
      <Navbar/>
-    
-
+     <Header/>
     </div>
- 
-    
+    <WhatCATRA/>
     <Features/>
     <Posibility/>
     <Cta/>

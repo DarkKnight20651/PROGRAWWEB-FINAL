@@ -16,13 +16,8 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         $user = User::create([
-            'nombre' => $validated['nombre'],
-            'apellido_paterno' => $validated['apellido_paterno'],
-            'apellido_materno' => $validated['apellido_materno'],
-            'fecha_nacimiento' => $validated['fecha_nacimiento'],
             'email' => $validated['email'],
-            'num_telefono' => $validated['num_telefono'],
-            'rol' => 'cliente',
+            'role'=> 'cliente',
             'password' => Hash::make($validated['password']),
         ]);
 
@@ -48,9 +43,19 @@ class AuthController extends Controller
 
         $token = $user->createToken($user->email)->plainTextToken;
 
+        $cliente = $user->cliente;
+
+        if($cliente) {
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+                'cliente' => $cliente
+            ], 200);
+        }
+
         return response()->json([
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ], 200);
     }
 
