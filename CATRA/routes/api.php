@@ -12,20 +12,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clientes', ClienteController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     Route::get('/user', function (Request $request) {
         $user = $request->user();
-        $cliente = $user->cliente;
-
-        if($cliente) {
-            return response()->json([
-                'user' => $user,
-            ]);
-        }
-
         return response()->json([
             'user' => $user,
-            'cliente' => $cliente
+            'token' => $request->bearerToken()
         ]);
     });
 
@@ -37,5 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/registrar-cliente', [ClienteController::class, 'registrar']);
+//Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

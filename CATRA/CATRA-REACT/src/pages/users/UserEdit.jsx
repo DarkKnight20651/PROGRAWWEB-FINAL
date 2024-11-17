@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import axiosClient from '../../axios-client';
 
@@ -25,11 +25,11 @@ const UserEdit = () => {
         const payload = {
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            passwordConf: passwordConfRef.current.value,
+            password_confirmation: passwordConfRef.current.value,
             role: roleRef.current.value,
         };
 
-        axiosClient.put(`/usuarios/${userId}`, payload)
+        axiosClient.put(`/users/${userId}`, payload)
             .then(() => {
                 navigate('/usuarios'); 
             })

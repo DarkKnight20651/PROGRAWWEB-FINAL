@@ -1,55 +1,49 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import useAuth from '../../useAuth'
+import useAuth from '/src/useAuth'
 
-import { Container } from 'react-bootstrap';
-import DashboardSidebar from '../../components/DashboardSidebar';
+import { Container } from 'react-bootstrap'
+import DashboardSidebar from '/src/components/DashboardSidebar'
 
 export const Route = createFileRoute('/_auth/dashboard')({
-    component: DashboardPage, 
+  component: DashboardPage,
 })
 
 const rutasClientes = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Subir Documentos', path: '/subir-documentos' },
-];
+  { name: 'Realizar Examen', path: '/realizar-examen' },
+]
 
 const rutasAdmin = [
   { name: 'Perfil', path: '/perfil' },
-  { name: 'Administrar Clientes', path: '/administrar-clientes' },
+  { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
-];
+]
 
 const rutasSecre = [
   { name: 'Perfil', path: '/perfil' },
-  { name: 'Administrar Clientes', path: '/administrar-clientes' },
-];
+  { name: 'Administrar Clientes', path: '/clientes' },
+  { name: 'Gestionar usuarios', path: '/usuarios' },
+]
 
-function App() {
-
-  const auth = useAuth();
+function DashboardPage() {
+  const auth = useAuth()
 
   return (
     <div style={{ display: 'flex' }}>
-      <DashboardSidebar routes={
-        auth.user.role === "cliente" ? rutasClientes :
-        auth.user.role === "admin" ? rutasAdmin : rutasSecre
-        } />
-      <Container fluid style={{ marginLeft: '200px', padding: '15px' }}>
+      <DashboardSidebar
+        routes={
+          auth.user?.role === 'cliente'
+            ? rutasClientes
+            : auth.user?.role === 'admin'
+              ? rutasAdmin
+              : rutasSecre
+        }
+      />
+      <Container fluid style={{ marginLeft: '350px', padding: '15px' }}>
+        <h1>Bienvenido al Dashboardd</h1>
         <Outlet />
       </Container>
     </div>
-  );
-}
-
-export default App;
-
-
-function DashboardPage() {
-    const auth = useAuth()
-
-    if(auth.isAdmin) {
-        return <AdminLayout />
-    } else {
-        return <ClientLayout />
-    }
+  )
 }

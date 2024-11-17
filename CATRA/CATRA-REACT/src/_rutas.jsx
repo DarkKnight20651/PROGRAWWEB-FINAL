@@ -79,9 +79,6 @@ const router = createBrowserRouter([
                 element: <Crud />
             },
             {
-                path: '/home',
-                element: <App />
-            },{
                 path: '/cursos',
                 element: <Cursos />
             }

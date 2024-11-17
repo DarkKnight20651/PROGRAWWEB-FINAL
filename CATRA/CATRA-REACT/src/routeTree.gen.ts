@@ -12,21 +12,25 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignupImport } from './routes/signup'
+import { Route as NuestrosCursosImport } from './routes/nuestros-cursos'
 import { Route as LoginImport } from './routes/login'
+import { Route as InfoCatraImport } from './routes/info-catra'
+import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as AuthRoutesImport } from './routes/_auth/routes'
 import { Route as AuthPerfilImport } from './routes/_auth/perfil'
 import { Route as AuthDashboardImport } from './routes/_auth/dashboard'
-import { Route as AuthClienteRouteImport } from './routes/_auth/_cliente.route'
-import { Route as AuthAdminRouteImport } from './routes/_auth/_admin.route'
+import { Route as AuthUsuariosRouteImport } from './routes/_auth/usuarios/route'
+import { Route as AuthClientesRouteImport } from './routes/_auth/clientes/route'
+import { Route as AuthClienteRouteImport } from './routes/_auth/_cliente/route'
+import { Route as AuthAdminRouteImport } from './routes/_auth/_admin/route'
+import { Route as AuthUsuariosIndexImport } from './routes/_auth/usuarios/index'
+import { Route as AuthClientesIndexImport } from './routes/_auth/clientes/index'
+import { Route as AuthUsuariosCrearImport } from './routes/_auth/usuarios/crear'
+import { Route as AuthClientesCrearImport } from './routes/_auth/clientes/crear'
 import { Route as AuthClienteSubirDocumentosImport } from './routes/_auth/_cliente/subir-documentos'
 import { Route as AuthClienteRealizarExamenImport } from './routes/_auth/_cliente/realizar-examen'
-import { Route as AuthAdminRevisarDocumentosImport } from './routes/_auth/_admin/revisar-documentos'
-import { Route as AuthAdminAdministrarClientesImport } from './routes/_auth/_admin/administrar-clientes'
-import { Route as AuthAdminUsuariosIndexImport } from './routes/_auth/_admin/usuarios/index'
-import { Route as AuthAdminUsuariosCrearImport } from './routes/_auth/_admin/usuarios/crear'
-import { Route as AuthAdminUsuariosCogerImport } from './routes/_auth/_admin/usuarios/coger'
-import { Route as AuthAdminUsuariosEditarUserIdImport } from './routes/_auth/_admin/usuarios/editar.$userId'
+import { Route as AuthAdminSoloAdminImport } from './routes/_auth/_admin/solo-admin'
+import { Route as AuthUsuariosEditarUserIdImport } from './routes/_auth/usuarios/editar.$userId'
 
 // Create/Update Routes
 
@@ -36,9 +40,26 @@ const SignupRoute = SignupImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const NuestrosCursosRoute = NuestrosCursosImport.update({
+  id: '/nuestros-cursos',
+  path: '/nuestros-cursos',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const InfoCatraRoute = InfoCatraImport.update({
+  id: '/info-catra',
+  path: '/info-catra',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRouteRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,32 +69,62 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRoutesRoute = AuthRoutesImport.update({
-  id: '/_auth/routes',
-  path: '/routes',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AuthPerfilRoute = AuthPerfilImport.update({
-  id: '/_auth/perfil',
+  id: '/perfil',
   path: '/perfil',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthDashboardRoute = AuthDashboardImport.update({
-  id: '/_auth/dashboard',
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthUsuariosRouteRoute = AuthUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthClientesRouteRoute = AuthClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthClienteRouteRoute = AuthClienteRouteImport.update({
-  id: '/_auth/_cliente',
-  getParentRoute: () => rootRoute,
+  id: '/_cliente',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthAdminRouteRoute = AuthAdminRouteImport.update({
-  id: '/_auth/_admin',
-  getParentRoute: () => rootRoute,
+  id: '/_admin',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthUsuariosIndexRoute = AuthUsuariosIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthUsuariosRouteRoute,
+} as any)
+
+const AuthClientesIndexRoute = AuthClientesIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthClientesRouteRoute,
+} as any)
+
+const AuthUsuariosCrearRoute = AuthUsuariosCrearImport.update({
+  id: '/crear',
+  path: '/crear',
+  getParentRoute: () => AuthUsuariosRouteRoute,
+} as any)
+
+const AuthClientesCrearRoute = AuthClientesCrearImport.update({
+  id: '/crear',
+  path: '/crear',
+  getParentRoute: () => AuthClientesRouteRoute,
 } as any)
 
 const AuthClienteSubirDocumentosRoute = AuthClienteSubirDocumentosImport.update(
@@ -90,45 +141,17 @@ const AuthClienteRealizarExamenRoute = AuthClienteRealizarExamenImport.update({
   getParentRoute: () => AuthClienteRouteRoute,
 } as any)
 
-const AuthAdminRevisarDocumentosRoute = AuthAdminRevisarDocumentosImport.update(
-  {
-    id: '/revisar-documentos',
-    path: '/revisar-documentos',
-    getParentRoute: () => AuthAdminRouteRoute,
-  } as any,
-)
-
-const AuthAdminAdministrarClientesRoute =
-  AuthAdminAdministrarClientesImport.update({
-    id: '/administrar-clientes',
-    path: '/administrar-clientes',
-    getParentRoute: () => AuthAdminRouteRoute,
-  } as any)
-
-const AuthAdminUsuariosIndexRoute = AuthAdminUsuariosIndexImport.update({
-  id: '/usuarios/',
-  path: '/usuarios/',
+const AuthAdminSoloAdminRoute = AuthAdminSoloAdminImport.update({
+  id: '/solo-admin',
+  path: '/solo-admin',
   getParentRoute: () => AuthAdminRouteRoute,
 } as any)
 
-const AuthAdminUsuariosCrearRoute = AuthAdminUsuariosCrearImport.update({
-  id: '/usuarios/crear',
-  path: '/usuarios/crear',
-  getParentRoute: () => AuthAdminRouteRoute,
+const AuthUsuariosEditarUserIdRoute = AuthUsuariosEditarUserIdImport.update({
+  id: '/editar/$userId',
+  path: '/editar/$userId',
+  getParentRoute: () => AuthUsuariosRouteRoute,
 } as any)
-
-const AuthAdminUsuariosCogerRoute = AuthAdminUsuariosCogerImport.update({
-  id: '/usuarios/coger',
-  path: '/usuarios/coger',
-  getParentRoute: () => AuthAdminRouteRoute,
-} as any)
-
-const AuthAdminUsuariosEditarUserIdRoute =
-  AuthAdminUsuariosEditarUserIdImport.update({
-    id: '/usuarios/editar/$userId',
-    path: '/usuarios/editar/$userId',
-    getParentRoute: () => AuthAdminRouteRoute,
-  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -141,11 +164,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/info-catra': {
+      id: '/info-catra'
+      path: '/info-catra'
+      fullPath: '/info-catra'
+      preLoaderRoute: typeof InfoCatraImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/nuestros-cursos': {
+      id: '/nuestros-cursos'
+      path: '/nuestros-cursos'
+      fullPath: '/nuestros-cursos'
+      preLoaderRoute: typeof NuestrosCursosImport
       parentRoute: typeof rootRoute
     }
     '/signup': {
@@ -160,48 +204,48 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthAdminRouteImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/_cliente': {
       id: '/_auth/_cliente'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthClienteRouteImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/clientes': {
+      id: '/_auth/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof AuthClientesRouteImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/usuarios': {
+      id: '/_auth/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof AuthUsuariosRouteImport
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthDashboardImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/perfil': {
       id: '/_auth/perfil'
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof AuthPerfilImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthRouteImport
     }
-    '/_auth/routes': {
-      id: '/_auth/routes'
-      path: '/routes'
-      fullPath: '/routes'
-      preLoaderRoute: typeof AuthRoutesImport
-      parentRoute: typeof rootRoute
-    }
-    '/_auth/_admin/administrar-clientes': {
-      id: '/_auth/_admin/administrar-clientes'
-      path: '/administrar-clientes'
-      fullPath: '/administrar-clientes'
-      preLoaderRoute: typeof AuthAdminAdministrarClientesImport
-      parentRoute: typeof AuthAdminRouteImport
-    }
-    '/_auth/_admin/revisar-documentos': {
-      id: '/_auth/_admin/revisar-documentos'
-      path: '/revisar-documentos'
-      fullPath: '/revisar-documentos'
-      preLoaderRoute: typeof AuthAdminRevisarDocumentosImport
+    '/_auth/_admin/solo-admin': {
+      id: '/_auth/_admin/solo-admin'
+      path: '/solo-admin'
+      fullPath: '/solo-admin'
+      preLoaderRoute: typeof AuthAdminSoloAdminImport
       parentRoute: typeof AuthAdminRouteImport
     }
     '/_auth/_cliente/realizar-examen': {
@@ -218,33 +262,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthClienteSubirDocumentosImport
       parentRoute: typeof AuthClienteRouteImport
     }
-    '/_auth/_admin/usuarios/coger': {
-      id: '/_auth/_admin/usuarios/coger'
-      path: '/usuarios/coger'
-      fullPath: '/usuarios/coger'
-      preLoaderRoute: typeof AuthAdminUsuariosCogerImport
-      parentRoute: typeof AuthAdminRouteImport
+    '/_auth/clientes/crear': {
+      id: '/_auth/clientes/crear'
+      path: '/crear'
+      fullPath: '/clientes/crear'
+      preLoaderRoute: typeof AuthClientesCrearImport
+      parentRoute: typeof AuthClientesRouteImport
     }
-    '/_auth/_admin/usuarios/crear': {
-      id: '/_auth/_admin/usuarios/crear'
-      path: '/usuarios/crear'
+    '/_auth/usuarios/crear': {
+      id: '/_auth/usuarios/crear'
+      path: '/crear'
       fullPath: '/usuarios/crear'
-      preLoaderRoute: typeof AuthAdminUsuariosCrearImport
-      parentRoute: typeof AuthAdminRouteImport
+      preLoaderRoute: typeof AuthUsuariosCrearImport
+      parentRoute: typeof AuthUsuariosRouteImport
     }
-    '/_auth/_admin/usuarios/': {
-      id: '/_auth/_admin/usuarios/'
-      path: '/usuarios'
-      fullPath: '/usuarios'
-      preLoaderRoute: typeof AuthAdminUsuariosIndexImport
-      parentRoute: typeof AuthAdminRouteImport
+    '/_auth/clientes/': {
+      id: '/_auth/clientes/'
+      path: '/'
+      fullPath: '/clientes/'
+      preLoaderRoute: typeof AuthClientesIndexImport
+      parentRoute: typeof AuthClientesRouteImport
     }
-    '/_auth/_admin/usuarios/editar/$userId': {
-      id: '/_auth/_admin/usuarios/editar/$userId'
-      path: '/usuarios/editar/$userId'
+    '/_auth/usuarios/': {
+      id: '/_auth/usuarios/'
+      path: '/'
+      fullPath: '/usuarios/'
+      preLoaderRoute: typeof AuthUsuariosIndexImport
+      parentRoute: typeof AuthUsuariosRouteImport
+    }
+    '/_auth/usuarios/editar/$userId': {
+      id: '/_auth/usuarios/editar/$userId'
+      path: '/editar/$userId'
       fullPath: '/usuarios/editar/$userId'
-      preLoaderRoute: typeof AuthAdminUsuariosEditarUserIdImport
-      parentRoute: typeof AuthAdminRouteImport
+      preLoaderRoute: typeof AuthUsuariosEditarUserIdImport
+      parentRoute: typeof AuthUsuariosRouteImport
     }
   }
 }
@@ -252,21 +303,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthAdminRouteRouteChildren {
-  AuthAdminAdministrarClientesRoute: typeof AuthAdminAdministrarClientesRoute
-  AuthAdminRevisarDocumentosRoute: typeof AuthAdminRevisarDocumentosRoute
-  AuthAdminUsuariosCogerRoute: typeof AuthAdminUsuariosCogerRoute
-  AuthAdminUsuariosCrearRoute: typeof AuthAdminUsuariosCrearRoute
-  AuthAdminUsuariosIndexRoute: typeof AuthAdminUsuariosIndexRoute
-  AuthAdminUsuariosEditarUserIdRoute: typeof AuthAdminUsuariosEditarUserIdRoute
+  AuthAdminSoloAdminRoute: typeof AuthAdminSoloAdminRoute
 }
 
 const AuthAdminRouteRouteChildren: AuthAdminRouteRouteChildren = {
-  AuthAdminAdministrarClientesRoute: AuthAdminAdministrarClientesRoute,
-  AuthAdminRevisarDocumentosRoute: AuthAdminRevisarDocumentosRoute,
-  AuthAdminUsuariosCogerRoute: AuthAdminUsuariosCogerRoute,
-  AuthAdminUsuariosCrearRoute: AuthAdminUsuariosCrearRoute,
-  AuthAdminUsuariosIndexRoute: AuthAdminUsuariosIndexRoute,
-  AuthAdminUsuariosEditarUserIdRoute: AuthAdminUsuariosEditarUserIdRoute,
+  AuthAdminSoloAdminRoute: AuthAdminSoloAdminRoute,
 }
 
 const AuthAdminRouteRouteWithChildren = AuthAdminRouteRoute._addFileChildren(
@@ -286,138 +327,200 @@ const AuthClienteRouteRouteChildren: AuthClienteRouteRouteChildren = {
 const AuthClienteRouteRouteWithChildren =
   AuthClienteRouteRoute._addFileChildren(AuthClienteRouteRouteChildren)
 
+interface AuthClientesRouteRouteChildren {
+  AuthClientesCrearRoute: typeof AuthClientesCrearRoute
+  AuthClientesIndexRoute: typeof AuthClientesIndexRoute
+}
+
+const AuthClientesRouteRouteChildren: AuthClientesRouteRouteChildren = {
+  AuthClientesCrearRoute: AuthClientesCrearRoute,
+  AuthClientesIndexRoute: AuthClientesIndexRoute,
+}
+
+const AuthClientesRouteRouteWithChildren =
+  AuthClientesRouteRoute._addFileChildren(AuthClientesRouteRouteChildren)
+
+interface AuthUsuariosRouteRouteChildren {
+  AuthUsuariosCrearRoute: typeof AuthUsuariosCrearRoute
+  AuthUsuariosIndexRoute: typeof AuthUsuariosIndexRoute
+  AuthUsuariosEditarUserIdRoute: typeof AuthUsuariosEditarUserIdRoute
+}
+
+const AuthUsuariosRouteRouteChildren: AuthUsuariosRouteRouteChildren = {
+  AuthUsuariosCrearRoute: AuthUsuariosCrearRoute,
+  AuthUsuariosIndexRoute: AuthUsuariosIndexRoute,
+  AuthUsuariosEditarUserIdRoute: AuthUsuariosEditarUserIdRoute,
+}
+
+const AuthUsuariosRouteRouteWithChildren =
+  AuthUsuariosRouteRoute._addFileChildren(AuthUsuariosRouteRouteChildren)
+
+interface AuthRouteRouteChildren {
+  AuthAdminRouteRoute: typeof AuthAdminRouteRouteWithChildren
+  AuthClienteRouteRoute: typeof AuthClienteRouteRouteWithChildren
+  AuthClientesRouteRoute: typeof AuthClientesRouteRouteWithChildren
+  AuthUsuariosRouteRoute: typeof AuthUsuariosRouteRouteWithChildren
+  AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthPerfilRoute: typeof AuthPerfilRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthAdminRouteRoute: AuthAdminRouteRouteWithChildren,
+  AuthClienteRouteRoute: AuthClienteRouteRouteWithChildren,
+  AuthClientesRouteRoute: AuthClientesRouteRouteWithChildren,
+  AuthUsuariosRouteRoute: AuthUsuariosRouteRouteWithChildren,
+  AuthDashboardRoute: AuthDashboardRoute,
+  AuthPerfilRoute: AuthPerfilRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
   '': typeof AuthClienteRouteRouteWithChildren
+  '/info-catra': typeof InfoCatraRoute
+  '/login': typeof LoginRoute
+  '/nuestros-cursos': typeof NuestrosCursosRoute
+  '/signup': typeof SignupRoute
+  '/clientes': typeof AuthClientesRouteRouteWithChildren
+  '/usuarios': typeof AuthUsuariosRouteRouteWithChildren
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
-  '/routes': typeof AuthRoutesRoute
-  '/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
-  '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
+  '/solo-admin': typeof AuthAdminSoloAdminRoute
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
-  '/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
-  '/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
-  '/usuarios': typeof AuthAdminUsuariosIndexRoute
-  '/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
+  '/clientes/crear': typeof AuthClientesCrearRoute
+  '/usuarios/crear': typeof AuthUsuariosCrearRoute
+  '/clientes/': typeof AuthClientesIndexRoute
+  '/usuarios/': typeof AuthUsuariosIndexRoute
+  '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
   '': typeof AuthClienteRouteRouteWithChildren
+  '/info-catra': typeof InfoCatraRoute
+  '/login': typeof LoginRoute
+  '/nuestros-cursos': typeof NuestrosCursosRoute
+  '/signup': typeof SignupRoute
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
-  '/routes': typeof AuthRoutesRoute
-  '/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
-  '/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
+  '/solo-admin': typeof AuthAdminSoloAdminRoute
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
-  '/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
-  '/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
-  '/usuarios': typeof AuthAdminUsuariosIndexRoute
-  '/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
+  '/clientes/crear': typeof AuthClientesCrearRoute
+  '/usuarios/crear': typeof AuthUsuariosCrearRoute
+  '/clientes': typeof AuthClientesIndexRoute
+  '/usuarios': typeof AuthUsuariosIndexRoute
+  '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/info-catra': typeof InfoCatraRoute
   '/login': typeof LoginRoute
+  '/nuestros-cursos': typeof NuestrosCursosRoute
   '/signup': typeof SignupRoute
   '/_auth/_admin': typeof AuthAdminRouteRouteWithChildren
   '/_auth/_cliente': typeof AuthClienteRouteRouteWithChildren
+  '/_auth/clientes': typeof AuthClientesRouteRouteWithChildren
+  '/_auth/usuarios': typeof AuthUsuariosRouteRouteWithChildren
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/perfil': typeof AuthPerfilRoute
-  '/_auth/routes': typeof AuthRoutesRoute
-  '/_auth/_admin/administrar-clientes': typeof AuthAdminAdministrarClientesRoute
-  '/_auth/_admin/revisar-documentos': typeof AuthAdminRevisarDocumentosRoute
+  '/_auth/_admin/solo-admin': typeof AuthAdminSoloAdminRoute
   '/_auth/_cliente/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/_auth/_cliente/subir-documentos': typeof AuthClienteSubirDocumentosRoute
-  '/_auth/_admin/usuarios/coger': typeof AuthAdminUsuariosCogerRoute
-  '/_auth/_admin/usuarios/crear': typeof AuthAdminUsuariosCrearRoute
-  '/_auth/_admin/usuarios/': typeof AuthAdminUsuariosIndexRoute
-  '/_auth/_admin/usuarios/editar/$userId': typeof AuthAdminUsuariosEditarUserIdRoute
+  '/_auth/clientes/crear': typeof AuthClientesCrearRoute
+  '/_auth/usuarios/crear': typeof AuthUsuariosCrearRoute
+  '/_auth/clientes/': typeof AuthClientesIndexRoute
+  '/_auth/usuarios/': typeof AuthUsuariosIndexRoute
+  '/_auth/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
-    | '/signup'
     | ''
+    | '/info-catra'
+    | '/login'
+    | '/nuestros-cursos'
+    | '/signup'
+    | '/clientes'
+    | '/usuarios'
     | '/dashboard'
     | '/perfil'
-    | '/routes'
-    | '/administrar-clientes'
-    | '/revisar-documentos'
+    | '/solo-admin'
     | '/realizar-examen'
     | '/subir-documentos'
-    | '/usuarios/coger'
+    | '/clientes/crear'
     | '/usuarios/crear'
-    | '/usuarios'
+    | '/clientes/'
+    | '/usuarios/'
     | '/usuarios/editar/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
-    | '/signup'
     | ''
+    | '/info-catra'
+    | '/login'
+    | '/nuestros-cursos'
+    | '/signup'
     | '/dashboard'
     | '/perfil'
-    | '/routes'
-    | '/administrar-clientes'
-    | '/revisar-documentos'
+    | '/solo-admin'
     | '/realizar-examen'
     | '/subir-documentos'
-    | '/usuarios/coger'
+    | '/clientes/crear'
     | '/usuarios/crear'
+    | '/clientes'
     | '/usuarios'
     | '/usuarios/editar/$userId'
   id:
     | '__root__'
     | '/'
+    | '/_auth'
+    | '/info-catra'
     | '/login'
+    | '/nuestros-cursos'
     | '/signup'
     | '/_auth/_admin'
     | '/_auth/_cliente'
+    | '/_auth/clientes'
+    | '/_auth/usuarios'
     | '/_auth/dashboard'
     | '/_auth/perfil'
-    | '/_auth/routes'
-    | '/_auth/_admin/administrar-clientes'
-    | '/_auth/_admin/revisar-documentos'
+    | '/_auth/_admin/solo-admin'
     | '/_auth/_cliente/realizar-examen'
     | '/_auth/_cliente/subir-documentos'
-    | '/_auth/_admin/usuarios/coger'
-    | '/_auth/_admin/usuarios/crear'
-    | '/_auth/_admin/usuarios/'
-    | '/_auth/_admin/usuarios/editar/$userId'
+    | '/_auth/clientes/crear'
+    | '/_auth/usuarios/crear'
+    | '/_auth/clientes/'
+    | '/_auth/usuarios/'
+    | '/_auth/usuarios/editar/$userId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  InfoCatraRoute: typeof InfoCatraRoute
   LoginRoute: typeof LoginRoute
+  NuestrosCursosRoute: typeof NuestrosCursosRoute
   SignupRoute: typeof SignupRoute
-  AuthAdminRouteRoute: typeof AuthAdminRouteRouteWithChildren
-  AuthClienteRouteRoute: typeof AuthClienteRouteRouteWithChildren
-  AuthDashboardRoute: typeof AuthDashboardRoute
-  AuthPerfilRoute: typeof AuthPerfilRoute
-  AuthRoutesRoute: typeof AuthRoutesRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  InfoCatraRoute: InfoCatraRoute,
   LoginRoute: LoginRoute,
+  NuestrosCursosRoute: NuestrosCursosRoute,
   SignupRoute: SignupRoute,
-  AuthAdminRouteRoute: AuthAdminRouteRouteWithChildren,
-  AuthClienteRouteRoute: AuthClienteRouteRouteWithChildren,
-  AuthDashboardRoute: AuthDashboardRoute,
-  AuthPerfilRoute: AuthPerfilRoute,
-  AuthRoutesRoute: AuthRoutesRoute,
 }
 
 export const routeTree = rootRoute
@@ -431,57 +534,81 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/_auth",
+        "/info-catra",
         "/login",
-        "/signup",
-        "/_auth/_admin",
-        "/_auth/_cliente",
-        "/_auth/dashboard",
-        "/_auth/perfil",
-        "/_auth/routes"
+        "/nuestros-cursos",
+        "/signup"
       ]
     },
     "/": {
       "filePath": "index.jsx"
     },
+    "/_auth": {
+      "filePath": "_auth/route.jsx",
+      "children": [
+        "/_auth/_admin",
+        "/_auth/_cliente",
+        "/_auth/clientes",
+        "/_auth/usuarios",
+        "/_auth/dashboard",
+        "/_auth/perfil"
+      ]
+    },
+    "/info-catra": {
+      "filePath": "info-catra.jsx"
+    },
     "/login": {
       "filePath": "login.jsx"
+    },
+    "/nuestros-cursos": {
+      "filePath": "nuestros-cursos.jsx"
     },
     "/signup": {
       "filePath": "signup.jsx"
     },
     "/_auth/_admin": {
-      "filePath": "_auth/_admin.route.jsx",
+      "filePath": "_auth/_admin/route.jsx",
+      "parent": "/_auth",
       "children": [
-        "/_auth/_admin/administrar-clientes",
-        "/_auth/_admin/revisar-documentos",
-        "/_auth/_admin/usuarios/coger",
-        "/_auth/_admin/usuarios/crear",
-        "/_auth/_admin/usuarios/",
-        "/_auth/_admin/usuarios/editar/$userId"
+        "/_auth/_admin/solo-admin"
       ]
     },
     "/_auth/_cliente": {
-      "filePath": "_auth/_cliente.route.jsx",
+      "filePath": "_auth/_cliente/route.jsx",
+      "parent": "/_auth",
       "children": [
         "/_auth/_cliente/realizar-examen",
         "/_auth/_cliente/subir-documentos"
       ]
     },
+    "/_auth/clientes": {
+      "filePath": "_auth/clientes/route.jsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/clientes/crear",
+        "/_auth/clientes/"
+      ]
+    },
+    "/_auth/usuarios": {
+      "filePath": "_auth/usuarios/route.jsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/usuarios/crear",
+        "/_auth/usuarios/",
+        "/_auth/usuarios/editar/$userId"
+      ]
+    },
     "/_auth/dashboard": {
-      "filePath": "_auth/dashboard.jsx"
+      "filePath": "_auth/dashboard.jsx",
+      "parent": "/_auth"
     },
     "/_auth/perfil": {
-      "filePath": "_auth/perfil.jsx"
+      "filePath": "_auth/perfil.jsx",
+      "parent": "/_auth"
     },
-    "/_auth/routes": {
-      "filePath": "_auth/routes.jsx"
-    },
-    "/_auth/_admin/administrar-clientes": {
-      "filePath": "_auth/_admin/administrar-clientes.jsx",
-      "parent": "/_auth/_admin"
-    },
-    "/_auth/_admin/revisar-documentos": {
-      "filePath": "_auth/_admin/revisar-documentos.jsx",
+    "/_auth/_admin/solo-admin": {
+      "filePath": "_auth/_admin/solo-admin.jsx",
       "parent": "/_auth/_admin"
     },
     "/_auth/_cliente/realizar-examen": {
@@ -492,21 +619,25 @@ export const routeTree = rootRoute
       "filePath": "_auth/_cliente/subir-documentos.jsx",
       "parent": "/_auth/_cliente"
     },
-    "/_auth/_admin/usuarios/coger": {
-      "filePath": "_auth/_admin/usuarios/coger.jsx",
-      "parent": "/_auth/_admin"
+    "/_auth/clientes/crear": {
+      "filePath": "_auth/clientes/crear.jsx",
+      "parent": "/_auth/clientes"
     },
-    "/_auth/_admin/usuarios/crear": {
-      "filePath": "_auth/_admin/usuarios/crear.jsx",
-      "parent": "/_auth/_admin"
+    "/_auth/usuarios/crear": {
+      "filePath": "_auth/usuarios/crear.jsx",
+      "parent": "/_auth/usuarios"
     },
-    "/_auth/_admin/usuarios/": {
-      "filePath": "_auth/_admin/usuarios/index.jsx",
-      "parent": "/_auth/_admin"
+    "/_auth/clientes/": {
+      "filePath": "_auth/clientes/index.jsx",
+      "parent": "/_auth/clientes"
     },
-    "/_auth/_admin/usuarios/editar/$userId": {
-      "filePath": "_auth/_admin/usuarios/editar.$userId.jsx",
-      "parent": "/_auth/_admin"
+    "/_auth/usuarios/": {
+      "filePath": "_auth/usuarios/index.jsx",
+      "parent": "/_auth/usuarios"
+    },
+    "/_auth/usuarios/editar/$userId": {
+      "filePath": "_auth/usuarios/editar.$userId.jsx",
+      "parent": "/_auth/usuarios"
     }
   }
 }

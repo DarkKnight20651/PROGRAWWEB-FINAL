@@ -4,7 +4,7 @@ import { Card, Nav } from 'react-bootstrap';
 
 const Sidebar = ({ routes }) => {
   return (
-    <Card className="border-0" style={{ height: '100vh', width: '200px', padding: '10px', backgroundColor: '#f8f9fa' }}>
+    <Card className="border-0" style={{ height: '100vh', width: '350px', padding: '10px', backgroundColor: '#f8f9fa' }}>
       <Card.Body>
         <h3>Dashboard</h3>
         <Nav className="flex-column">

@@ -5,12 +5,14 @@ import { routeTree } from './routeTree.gen'
 import { AuthProvider } from './auth'
 import useAuth from "./useAuth";
 import { StrictMode } from 'react'
+
 import './assets/bootstrap.min.css'
 import './styles/index.css'
 
 const router = createRouter({
   routeTree,
-  defaultPreload: 'intent',
+  defaultPendingComponent: () => (<p>Cargando</p>),
+  defaultPreload: false,
   context: {
     auth: undefined,
   },
@@ -18,6 +20,7 @@ const router = createRouter({
 
 export function InnerApp() {
   const auth = useAuth()
+
   return <RouterProvider router={router} context={{ auth }} />
 }
 

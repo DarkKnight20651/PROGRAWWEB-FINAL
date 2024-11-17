@@ -1,15 +1,13 @@
-import React from 'react'
-import './App.css'
+import { Navbar } from '../components'
+import { Footer } from '../containers'
+import '../styles/App.css'
 import './Infocatra.css'
-import { Footer, Header, Blog, Features, Posibility, WhatCATRA } from '../containers'
-import { Article, Cta, Navbar, Brand,Feature } from '../components'
+
 const Infocatra = () => {
   return (
     <div className="App gradient__bg">
       <div className="gradient__bg">
         <Navbar />
-
-
       </div>
 
       <div className="catra__infocatra__values">

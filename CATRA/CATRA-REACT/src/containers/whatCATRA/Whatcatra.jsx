@@ -1,18 +1,15 @@
-import React from 'react'
 import './whatcatra.css'
 import { Feature } from '../../components'
 const whatcatra = () => {
   return (
-    <div className='catra__whatiscatra section__margin' id='catra'>
+    <div className='catra__whatiscatra section__margin'>
       <div className='catra__whatiscatra-feature '>
         <Feature title= "Que es catra" text=" CATRA se distingue por ofrecer cursos y asesoría de alta calidad tanto para individuos como para empresas y entidades gubernamentales a nivel nacional."/>
       </div>
       
-      <div className='catra__whatiscatra-heading'>
-        <h1 className='gradient-text'>
-          
-          
-            Logra obtener tu licencia con CATRA!
+      <div className='catra__whatiscatra-heading' id='categorias'>
+        <h1 className='gradient-text'>          
+          Logra obtener tu licencia con CATRA!
         </h1>
         <p>Explora nuestros cursos</p>
       </div>

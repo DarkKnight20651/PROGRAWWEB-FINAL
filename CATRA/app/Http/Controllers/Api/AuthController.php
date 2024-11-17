@@ -11,24 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signup(SignupRequest $request)
-    {
-        $validated = $request->validated();
-
-        $user = User::create([
-            'email' => $validated['email'],
-            'role'=> 'cliente',
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        $token = $user->createToken($user->email)->plainTextToken;
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token
-        ], 201);
-    }
-
     public function login(LoginRequest $request)
     {
         $validated = $request->validated();
@@ -43,15 +25,15 @@ class AuthController extends Controller
 
         $token = $user->createToken($user->email)->plainTextToken;
 
-        $cliente = $user->cliente;
+        /* $cliente = $user->cliente;
 
-        if($cliente) {
+        if ($cliente) {
             return response()->json([
                 'user' => $user,
                 'token' => $token,
                 'cliente' => $cliente
             ], 200);
-        }
+        } */
 
         return response()->json([
             'user' => $user,
@@ -63,7 +45,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'Se ha cerrado la sesión de forma exitosa',
+            'message' => 'Se ha cerrado la sesión',
         ]);
     }
 }

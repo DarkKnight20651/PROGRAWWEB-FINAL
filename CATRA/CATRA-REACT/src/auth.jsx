@@ -1,15 +1,13 @@
 import axiosClient from "./axios-client";
 import {
-  access_token_key,
   authReducer,
   initialState,
   LOGIN,
   LOGOUT,
   persistUserInfo,
   SIGNUP,
-  limpiarTkUsuarioStorage,
+  cleanUserStorage,
   AuthContext,
-  REGISTER_CLIENTE
 } from "./auth-utils";
 import {
   useCallback,
@@ -24,11 +22,14 @@ export function AuthProvider({ children }) {
   console.log("RECALCULANDO AUTH PROVIDER", state);
 
   const logout = useCallback(async () => {
-    await axiosClient.post("/logout");
-    dispatch({ type: LOGOUT });
-    limpiarTkUsuarioStorage();
-
-    console.log("Se cerró la sesión");
+    try {
+      await axiosClient.post("/logout");
+      dispatch({ type: LOGOUT });
+      cleanUserStorage();
+      console.log("Se cerró la sesión");
+    } catch(err) {
+      console.log(err);
+    }
   }, []);
 
   const login = useCallback(
@@ -43,17 +44,9 @@ export function AuthProvider({ children }) {
           },
         });
 
-        if(respuesta.data.cliente) {
-          dispatch({
-            type: REGISTER_CLIENTE,
-            payload: {
-              user: respuesta.data.cliente,
-            },
-          });
-        }
-
         persistUserInfo(respuesta.data.user, respuesta.data.token);
         return "Success";
+
       } catch (error) {
         error.mensajes = error.response?.data?.errors;
         throw error;
@@ -65,39 +58,19 @@ export function AuthProvider({ children }) {
   const signup = useCallback(
     async (payload) => {
       try {
-        const respuesta = await axiosClient.post("/signup", payload);
-
+        const respuesta = await axiosClient.post("/registrar-cliente", payload);
+        
         dispatch({
           type: SIGNUP,
           payload: {
             user: respuesta.data.user,
+            cliente: null
           },
         });
-
+      
         persistUserInfo(respuesta.data.user, respuesta.data.token);
-
         return "Success";
-      } catch (error) {
-        error.mensajes = error.response?.data?.errors;
-        throw error;
-      }
-    },
-    []
-  );
 
-  const registrar_cliente = useCallback(
-    async (payload) => {
-      try {
-        const respuesta = await axiosClient.post("/cliente", payload);
-
-        dispatch({
-          type: REGISTER_CLIENTE,
-          payload: {
-            user: respuesta.data.cliente,
-          },
-        });
-
-        return "Success";
       } catch (error) {
         error.mensajes = error.response?.data?.errors;
         throw error;
@@ -107,14 +80,13 @@ export function AuthProvider({ children }) {
   );
 
   useEffect(() => {
+    console.log("Ejecutando USE_EFFECT AuthProvider");
+
     const controller = new AbortController();
     const signal = controller.signal;
-
-    const checkAuth = async () => {
-      const token = localStorage.getItem(access_token_key);
+    
+    (async () => {
       try {
-        console.log("TOKEN ANTES DE /USER EN EFFECT", token);
-
         const response = await axiosClient.get("/user", { signal });
         if (response.status === 200 && response.data) {
           dispatch({
@@ -123,30 +95,12 @@ export function AuthProvider({ children }) {
               user: response.data.user
             },
           });
-
-          if(response.data.cliente) {
-            dispatch({
-              type: REGISTER_CLIENTE,
-              payload: {
-                cliente: response.data.cliente,
-              },
-            });
-          }
-          
+          persistUserInfo(response.data.user, response.data.token);
         }
       } catch (err) {
         console.log("ERROR DE USE EFFECT", err);
-
-        /* if (err.token_expirado) {
-          console.log("HACIENDO LOGOUT POR ERROR");
-          dispatch({ type: LOGOUT });
-          localStorage.removeItem(access_token_key);
-          localStorage.removeItem(user_key);
-        } */
       }
-    };
-
-    checkAuth();
+    })();
 
     return () => {
       controller.abort();
@@ -156,13 +110,10 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: state.isAuthenticated,
-        user: state.user,
-        rol: state.rol,
+        ...state,
         login,
         logout,
-        signup,
-        registrar_cliente
+        signup
       }}
     >
       {children}

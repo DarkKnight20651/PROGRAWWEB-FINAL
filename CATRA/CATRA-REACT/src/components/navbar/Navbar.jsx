@@ -8,19 +8,18 @@ import useAuth from '../../useAuth'
 const Menu = () => {
   return (
     <>
-      <p><a href='/home#home'>Home </a></p>
-      <p><a href='/Infocatra'>Que es CATRA  </a></p>
-      <p><a href='/cursos'>Nuestros Servicios </a></p>
-      <p><a href='/home#blog'>Instalaciones </a></p>
-      <p><a href='#categorias'>Categorias </a></p>
+      <p><Link to={"/"}>Home</Link></p>
+      <p><Link to={"/info-catra"}>¿Qué es CATRA?</Link></p>
+      <p><Link to={"/nuestros-cursos"}>Nuestros servicios</Link></p>
+      <p><a href='/#categorias'>Categorias</a></p>
+      <p><a href='/#blog'>Instalaciones</a></p>
     </>
   );
 }
 
 const BotonesNavbar = () => {
-
   const auth = useAuth()
-
+  
   if (auth.isAuthenticated) {
     return (
       <button type="button"><Link to='/dashboard' style={{ textDecoration: 'none', color: 'white' }}>

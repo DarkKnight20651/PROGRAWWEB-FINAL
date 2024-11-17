@@ -2,37 +2,33 @@ import * as React from 'react'
 import {
   createFileRoute,
   Link,
-  redirect,
   useRouter,
   useRouterState,
 } from '@tanstack/react-router'
+import '/src/pages/login/Login.css'
+import useAuth from '/src/useAuth'
 
-import '../pages/login/Login.css'
-
-import useAuth from '../useAuth'
-
-const fallback = '/dashboard'
+import { fallback } from '/src/auth-utils'
+import guestGuard from '../util/guestGuard'
 
 export const Route = createFileRoute('/login')({
-  beforeLoad: ({ context, search }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({ to: fallback })
-    }
+  beforeLoad: async ({ context }) => {
+    await guestGuard(context, fallback);
   },
   component: LoginComponent,
 })
 
 function LoginComponent() {
   const auth = useAuth()
+  const navigate = Route.useNavigate()
   const router = useRouter()
   const isLoading = useRouterState({ select: (s) => s.isLoading })
-  const navigate = Route.useNavigate()
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [errors, setErrors] = React.useState({});
 
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
-
+  
   const search = Route.useSearch()
 
   const onFormSubmit = async (evt) => {

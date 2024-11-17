@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 
-import useAuth from '../../useAuth'
+import useAuth from '/src/useAuth'
 
 export const Route = createFileRoute('/_auth/perfil')({
   component: ProfilePage,
@@ -24,7 +24,7 @@ function ProfilePage() {
   return (
     <section className="grid gap-2 p-2">
       <h1>Ruta Autenticada</h1>
-      <p>Tu rol es {auth.user.role}</p>
+      <p>Tu rol es {auth.user?.role}</p>
       {auth.cliente && <p>{auth.cliente.name}</p>}
       <p>Estás actualmente en la ruta del perfil.</p>
 
