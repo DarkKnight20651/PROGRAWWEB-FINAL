@@ -54,37 +54,6 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: '/',
-        element: <GuestLayout />,
-        children: [
-            {
-                path: '/login',
-                element: <Login />
-            },
-            
-            {
-                path: '/signup',
-                element: <Signup />
-            },
-            {
-                path: '/infocatra',
-                element: <Infocatra />
-            },
-            {
-                path: '/evaluaciones',
-                element: <Evaluaciones />
-            },
-            {
-                path: '/crud',
-                element: <Crud />
-            },
-            {
-                path: '/cursos',
-                element: <Cursos />
-            }
-        ]
-    },
-    {
         path: '*',
         element: <NotFound />
     }
