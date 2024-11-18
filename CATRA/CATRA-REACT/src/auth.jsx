@@ -8,6 +8,7 @@ import {
   SIGNUP,
   cleanUserStorage,
   AuthContext,
+  access_token_key,
 } from "./auth-utils";
 import {
   useCallback,
@@ -23,12 +24,13 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     try {
-      await axiosClient.post("/logout");
       dispatch({ type: LOGOUT });
-      cleanUserStorage();
+      await axiosClient.post("/logout");
       console.log("Se cerró la sesión");
     } catch(err) {
       console.log(err);
+    } finally {
+      cleanUserStorage();
     }
   }, []);
 
@@ -80,32 +82,29 @@ export function AuthProvider({ children }) {
   );
 
   useEffect(() => {
-    console.log("Ejecutando USE_EFFECT AuthProvider");
-
     const controller = new AbortController();
-    const signal = controller.signal;
-    
-    (async () => {
-      try {
-        const response = await axiosClient.get("/user", { signal });
-        if (response.status === 200 && response.data) {
-          dispatch({
-            type: LOGIN,
-            payload: {
-              user: response.data.user
-            },
-          });
-          persistUserInfo(response.data.user, response.data.token);
+    if(localStorage.getItem(access_token_key) && !state.isAuthenticated) {
+      (async () => {
+        try {
+          const response = await axiosClient.get("/user", { signal: controller.signal });
+          if (response.status === 200 && response.data) {
+            dispatch({
+              type: LOGIN,
+              payload: {
+                user: response.data.user
+              },
+            });
+            persistUserInfo(response.data.user, response.data.token);
+          }
+        } catch (err) {
+          console.log("ERROR DE USE EFFECT", err);
         }
-      } catch (err) {
-        console.log("ERROR DE USE EFFECT", err);
-      }
-    })();
-
+      })();
+    }
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [state.isAuthenticated]);
 
   return (
     <AuthContext.Provider

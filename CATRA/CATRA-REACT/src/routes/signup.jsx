@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useRouter, useRouterState } from '@tanstack/react-router';
 import useAuth from '../useAuth'
 import { useState } from 'react';
-import '../styles/index.css'
-import '../assets/bootstrap.min.css'
-import '../pages/signup/Signup.css'
+
+import '/src/styles/index.css'
+import '/src/assets/bootstrap.min.css'
+import '/src/pages/signup/Signup.css'
 
 import { fallback } from '/src/auth-utils'
 import guestGuard from '../util/guestGuard';

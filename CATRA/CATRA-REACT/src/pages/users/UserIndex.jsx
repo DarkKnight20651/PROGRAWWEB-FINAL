@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import axiosClient from '../../axios-client';
 import { useNavigate } from '@tanstack/react-router';
+import '/src/styles/index.css'
+import '/src/assets/bootstrap.min.css'
+import '/src/styles/styles.css'
 
 const UserManager = () => {
   const [users, setUsers] = useState([]);
@@ -16,10 +19,10 @@ const UserManager = () => {
   }, []);
 
   const createUser = () => {
-    navigate("/usuarios/crear");
+    navigate({to: "/usuarios/crear"});
   }
   const handleEditUser = (user) => {
-    navigate(`/usuarios/editar/${user.id}`);
+    navigate({to: `/usuarios/editar/${user.id}`});
   };
   const deleteUser = async (id) => {
     await axiosClient.delete(`/users/${id}`);

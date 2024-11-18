@@ -1,7 +1,6 @@
-import React from 'react'
+import { Navbar2 } from '../components'
+import { Footer } from '../containers'
 import './evaluaciones.css'
-import {Footer, Header,Blog,Features,Posibility,WhatCATRA} from './containers'
-import {Article, Cta, Navbar2,Brand} from './components'
 const evaluaciones = () => {
   return (
     <div className="container">
