@@ -24,14 +24,14 @@ class ClientePolicy
 
     public function update(User $user, Cliente $cliente)
     {
-        return $user->id === $cliente->user_id || in_array($user->rol, ['admin', 'secre'])
+        return $user->id === $cliente->user_id || in_array($user->role, ['admin', 'secre'])
             ? Response::allow()
             : Response::deny('No puedes modificar la información de otro.');
     }
 
     public function delete(User $user)
     {
-        return in_array($user->rol, ['admin', 'secre'])
+        return in_array($user->role, ['admin', 'secre'])
             ? Response::allow()
             : Response::deny('No puedes eliminar usuarios.');
     }

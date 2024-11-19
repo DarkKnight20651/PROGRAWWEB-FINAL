@@ -24,7 +24,7 @@ class ClienteController extends Controller implements HasMiddleware
 
     public function index()
     {
-        Gate::authorize('viewAny');
+        Gate::authorize('viewAny', Cliente::class);
         $clientes = Cliente::with('user')->paginate(15);
         return response()->json($clientes);
     }
@@ -106,7 +106,7 @@ class ClienteController extends Controller implements HasMiddleware
     {
         try {
             $cliente = Cliente::where('curp', $curp)->with('user')->firstOrFail();
-            Gate::authorize('view', [$cliente]);
+            Gate::authorize('view', $cliente);
             return response()->json($cliente);
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -137,7 +137,7 @@ class ClienteController extends Controller implements HasMiddleware
         try {
             DB::beginTransaction();
             $cliente = Cliente::where('curp', $curp)->firstOrFail();
-            Gate::authorize("update", [$cliente]);
+            Gate::authorize("update", $cliente);
 
             $cliente->update([
                 'telefono' => $validated['telefono'],
@@ -172,7 +172,7 @@ class ClienteController extends Controller implements HasMiddleware
 
     public function destroy($curp)
     {
-        Gate::authorize('delete');
+        Gate::authorize('delete', Cliente::class);
         try {
             $cliente = Cliente::findOrFail($curp);
             $cliente->delete();

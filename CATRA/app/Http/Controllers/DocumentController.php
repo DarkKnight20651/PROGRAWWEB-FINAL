@@ -6,7 +6,6 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
 {
@@ -29,8 +28,7 @@ class DocumentController extends Controller
                 ];
             } else {
                 $documentosDetalles[$tipo] = [
-                    'subido' => false,
-                    'estado' => null,
+                    'subido' => false
                 ];
             }
         }
@@ -41,16 +39,9 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        //Log::info("info document");
-        //Gate::authorize('upload');
+        $response = Gate::inspect('upload', Document::class);
 
-        $response = Gate::inspect('upload');
-
-        if ($response->allowed()) {
-            Log::info("autorizado para subir documentos");
-        } else {
-            Log::info($request->user()->role);
-            Log::info("no autorizado para subir documentos");
+        if (!$response->allowed()) {
             return response()->json(["error" => "No autorizado"], 403);
         }
 
@@ -99,7 +90,8 @@ class DocumentController extends Controller
             return response()->json(['message' => 'Documentos subidos con éxito'], 201);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Ocurrió un error al subir los documentos'], 500);
+            return response()->json(['error' => 'Ocurrió un error al subir los documentos', 
+                "err_obj" => $e], 500);
         }
     }
 
@@ -111,7 +103,7 @@ class DocumentController extends Controller
 
         $documento = Document::findOrFail($id);
 
-        Gate::authorize('view', [$documento]);
+        Gate::authorize('view', $documento);
 
         return response()->file(storage_path("app/private/{$documento->ruta}"));
     }
@@ -124,7 +116,7 @@ class DocumentController extends Controller
 
         $documento = Document::findOrFail($id);
 
-        Gate::authorize('updateEstado', [$documento]);
+        Gate::authorize('updateEstado', $documento);
 
         $validated = $request->validate([
             'estado' => 'required|in:pendiente,aprobado,rechazado',

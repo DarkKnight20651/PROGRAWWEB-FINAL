@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('nombre');
             $table->string('ruta');
             $table->text("comentarios");
             $table->enum('tipo', ['ine', 'comprobante_domicilio', 'curp']);

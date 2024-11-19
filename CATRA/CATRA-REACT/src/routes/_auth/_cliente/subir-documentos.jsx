@@ -10,9 +10,9 @@ export const Route = createFileRoute('/_auth/_cliente/subir-documentos')({
 
 function DocumentUpload() {
   const [documents, setDocuments] = useState({
-    ine: { file: null, status: "No subido", loading: false },
-    comprobante_domicilio: { file: null, status: "No subido", loading: false },
-    curp: { file: null, status: "No subido", loading: false },
+    ine: { file: null, status: "No subido" },
+    comprobante_domicilio: { file: null, status: "No subido" },
+    curp: { file: null, status: "No subido" },
   });
 
   const [loadingState, setLoadingState] = useState(false);
@@ -52,26 +52,22 @@ function DocumentUpload() {
 
   const handleUpload = async () => {
     const formData = new FormData();
-    let hasFiles = false;
-
+    
+    let hasFiles = true;
     Object.keys(documents).forEach((tipo) => {
       if (documents[tipo].file) {
         formData.append(tipo, documents[tipo].file);
-        setDocuments((prev) => ({
-          ...prev,
-          [tipo]: { ...prev[tipo], loading: true },
-        }));
-        hasFiles = true;
+      } else {
+        hasFiles = false;
       }
     });
 
     if (!hasFiles) {
-      alert("Por favor selecciona al menos un archivo para subir.");
+      alert("Por favor los tres archivos para subir.");
       return;
     }
 
     setLoadingState(true);
-
     try {
       await axiosClient.post("/documents/upload", formData, {
         headers: {
@@ -80,15 +76,8 @@ function DocumentUpload() {
       });
 
       alert("Documentos subidos con éxito.");
-      setDocuments((prev) =>
-        Object.keys(prev).reduce((acc, tipo) => {
-          acc[tipo] = { ...prev[tipo], loading: false, status: "Pendiente" };
-          return acc;
-        }, {})
-      );
     } catch (error) {
       console.log("Error al subir los documentos:", error);
-      alert("Ocurrió un error al subir los documentos.");
     } finally {
       setLoadingState(false);
     }
@@ -105,14 +94,12 @@ function DocumentUpload() {
               <input
                 type="file"
                 accept=".pdf"
-                disabled={documents[tipo].loading || loadingState}
+                disabled={loadingState}
                 onChange={(e) => handleFileChange(e, tipo)}
               />
             </label>
             <p>
-              {documents[tipo].loading
-                ? "Cargando..."
-                : documents[tipo].status}
+              {documents[tipo].status}
             </p>
           </div>
         ))}

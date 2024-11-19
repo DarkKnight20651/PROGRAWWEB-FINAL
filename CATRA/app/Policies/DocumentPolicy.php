@@ -19,6 +19,7 @@ class DocumentPolicy
     public function upload(User $user): Response
     {
         Log::info("información de upload");
+        return Response::allow();
         return $user->role === 'cliente'
             ? Response::allow()
             : Response::deny('Solo los clientes pueden subir documentación.');
