@@ -1,16 +1,16 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import authGuard from '/src/util/AuthGuard'
-import Header from '../../components/auth/Header';
-import Sidebar from '../../components/auth/Sidebar';
+import authGuard from 'src/util/authGuard'
+import Header from 'src/components/auth/Header';
+import Sidebar from 'src/components/auth/Sidebar';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/_auth')({
-  beforeLoad: async ({ context, location }) => {
-    console.log('CONTEXTO BEFORE LOAD /AUTH', context)
-    await authGuard(context, { location, url: '/login' });
+  beforeLoad: ({ context, location }) => {
+    console.log('CONTEXTO BEFORE LOAD /AUTH', context);
+    authGuard(context, { location, url: '/login' });
   },
   component: AuthLayout
-})
+});
 
 function AuthLayout() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)

@@ -8,6 +8,7 @@ const Downloads = () => {
     { name: 'Archivo 2', url: '/path/to/file2.pdf' },
     { name: 'Archivo 3', url: '/path/to/file3.pdf' },
     { name: 'Archivo 4', url: '/path/to/file4.pdf' },
+    { name: 'Archivo 5', url: '/path/to/file5.pdf' },
   ];
 
   return (

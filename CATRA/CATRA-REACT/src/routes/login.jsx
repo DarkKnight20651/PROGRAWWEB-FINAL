@@ -5,15 +5,15 @@ import {
   useRouterState,
 } from '@tanstack/react-router'
 
-import '/src/pages/login/Login.css'
-import useAuth from '/src/useAuth'
-import { fallback } from '/src/auth-utils'
-import guestGuard from '/src/util/guestGuard'
+import 'src/pages/login/Login.css'
+import useAuth from 'src/useAuth'
+import { fallback } from 'src/auth-utils'
+import guestGuard from 'src/util/guestGuard'
 import { useRef, useState } from 'react'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async ({ context }) => {
-    await guestGuard(context, fallback);
+    guestGuard(context, fallback);
   },
   component: LoginComponent,
 })

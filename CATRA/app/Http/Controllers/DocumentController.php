@@ -6,10 +6,10 @@ use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
 {
-
     public function getDocumentDetails(Request $request)
     {
         $user = $request->user();
@@ -41,12 +41,23 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        Gate::authorize('upload');
+        //Log::info("info document");
+        //Gate::authorize('upload');
+
+        $response = Gate::inspect('upload');
+
+        if ($response->allowed()) {
+            Log::info("autorizado para subir documentos");
+        } else {
+            Log::info($request->user()->role);
+            Log::info("no autorizado para subir documentos");
+            return response()->json(["error" => "No autorizado"], 403);
+        }
 
         $request->validate([
-            'ine' => 'nullable|file|mimes:pdf|max:5000',
-            'comprobante_domicilio' => 'nullable|file|mimes:pdf|max:5000',
-            'curp' => 'nullable|file|mimes:pdf|max:5000',
+            'ine' => 'required|file|mimes:pdf|max:5000',
+            'comprobante_domicilio' => 'required|file|mimes:pdf|max:5000',
+            'curp' => 'required|file|mimes:pdf|max:5000',
         ]);
 
         $user = $request->user();
@@ -84,7 +95,6 @@ class DocumentController extends Controller
                     }
                 }
             }
-
             DB::commit();
             return response()->json(['message' => 'Documentos subidos con éxito'], 201);
         } catch (\Exception $e) {
@@ -93,9 +103,6 @@ class DocumentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         if (!is_numeric($id)) {
@@ -104,7 +111,7 @@ class DocumentController extends Controller
 
         $documento = Document::findOrFail($id);
 
-        Gate::authorize('view', $documento);
+        Gate::authorize('view', [$documento]);
 
         return response()->file(storage_path("app/private/{$documento->ruta}"));
     }
@@ -115,15 +122,17 @@ class DocumentController extends Controller
             return response()->json(['error' => 'ID no válido'], 400);
         }
 
-        Gate::authorize('updateEstado');
-
         $documento = Document::findOrFail($id);
+
+        Gate::authorize('updateEstado', [$documento]);
 
         $validated = $request->validate([
             'estado' => 'required|in:pendiente,aprobado,rechazado',
+            'comentarios' => 'nullable|string|max:15000'
         ]);
 
         $documento->estado = $validated['estado'];
+        $documento->comentarios = $validated['comentarios'];
         $documento->save();
 
         return response()->json(['message' => 'Se actualizó el estado del documento con éxito'], 201);

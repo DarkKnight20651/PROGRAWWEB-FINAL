@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+
     public function index()
     {
         return User::all();
@@ -18,16 +20,16 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'role' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|min:8',
         ]);
 
         $user = User::create([
-            'role' => $request->role,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'role' => $validated["role"],
+            'email' => $validated["email"],
+            'password' => Hash::make($validated["password"]),
         ]);
 
         return response()->json($user, 201);
@@ -42,17 +44,21 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
+            'email' => ['required', 'email', 'unique:users,email,' . $request->user()->id],
             'role' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users,email',
         ]);
 
-        $user->update($request->only(['email', 'role']));
+        $userUpdateData = [
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+        ];
 
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-            $user->save();
+        if (!empty($validated['password'])) {
+            $userUpdateData['password'] = Hash::make($validated['password']);
         }
+
+        $user->update($userUpdateData);
 
         return response()->json($user, 200);
     }

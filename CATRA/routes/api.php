@@ -7,9 +7,12 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 
+
+Route::apiResource('clientes', ClienteController::class);
+
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::apiResource('users', UserController::class);
-    Route::apiResource('clientes', ClienteController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -29,6 +32,4 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::post('/registrar-cliente', [ClienteController::class, 'registrar']);
-//Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

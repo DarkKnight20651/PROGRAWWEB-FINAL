@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignupRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,16 +23,6 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken($user->email)->plainTextToken;
-
-        /* $cliente = $user->cliente;
-
-        if ($cliente) {
-            return response()->json([
-                'user' => $user,
-                'token' => $token,
-                'cliente' => $cliente
-            ], 200);
-        } */
 
         return response()->json([
             'user' => $user,

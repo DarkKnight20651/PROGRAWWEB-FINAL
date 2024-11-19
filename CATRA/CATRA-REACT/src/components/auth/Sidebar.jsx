@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { Nav } from "react-bootstrap"
 import PropTypes from 'prop-types';
-import useAuth from '/src/useAuth'
+import useAuth from 'src/useAuth'
 import './style.css'
 
 const rutasClientes = [
@@ -35,28 +35,29 @@ function getRoutesByRole(role) {
   }
 }
 
-function Sidebar({openSidebarToggle, OpenSidebar}) {
+function Sidebar({ openSidebarToggle, OpenSidebar }) {
 
   const auth = useAuth();
+  console.log("Sidebar values = ", auth);
 
   return (
-    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
-        <div className='sidebar-title'>
-            <div className='sidebar-brand'>
-                CATRA
-            </div>
-            <span className='icon close_icon' onClick={OpenSidebar}>X</span>
+    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
+      <div className='sidebar-title'>
+        <div className='sidebar-brand'>
+          CATRA
         </div>
+        <span className='icon close_icon' onClick={OpenSidebar}>X</span>
+      </div>
 
-        <ul className='sidebar-list'>
-            {getRoutesByRole(auth.user.role).map((route) => (
-            <Nav.Item key={route.path}>
-              <Link to={route.path} className="nav-link">
-                {route.name}
-              </Link>
-            </Nav.Item>
-            ))}
-        </ul>
+      <ul className='sidebar-list'>
+        {getRoutesByRole(auth.user?.role).map((route) => (
+          <Nav.Item key={route.path}>
+            <Link to={route.path} className="nav-link">
+              {route.name}
+            </Link>
+          </Nav.Item>
+        ))}
+      </ul>
     </aside>
   )
 }

@@ -66,7 +66,6 @@ const ClientesCreate = () => {
         <h1 className="text-center">Nuevo Cliente</h1><br></br>
         <form onSubmit={onFormSubmit}>
           <fieldset disabled={isRegistering}>
-          {/* Personal Information Section */}
           <div className="section">
             <h3 className='subtitle'>Información Personal</h3>
             <br></br>
@@ -161,7 +160,7 @@ const ClientesCreate = () => {
             </div>
           </div>
           <br></br>
-          {/* Contact Information Section */}
+          
           <div className="section">
             <h3 className='subtitle'>Información de Contacto</h3>
             <br></br>
@@ -190,7 +189,6 @@ const ClientesCreate = () => {
           </div>
           <br></br>
 
-          {/* Account Credentials Section */}
           <div className="section">
             <h3 className='subtitle'>Seguridad </h3>
             <br></br>
@@ -218,7 +216,6 @@ const ClientesCreate = () => {
             </div>
           </div>
 
-          {/* Submit Button Section */}
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
               Registrarse

@@ -36,9 +36,9 @@ const UserEdit = () => {
             emailRef.current.value = data.email;
 
           })
-          .catch((error) => console.error('Error en la primera solicitud:', error));
+          .catch((error) => console.error('Error en la primera solicitud', error));
       })
-      .catch((error) => console.error('Error en la segunda solicitud:', error));
+      .catch((error) => console.error('Error en la segunda solicitud', error));
 
   })
 

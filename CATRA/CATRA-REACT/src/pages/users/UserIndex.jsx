@@ -19,10 +19,10 @@ const UserManager = () => {
   }, []);
 
   const createUser = () => {
-    navigate({to: "/usuarios/crear"});
+    navigate({ to: "/usuarios/crear" });
   }
   const handleEditUser = (user) => {
-    navigate({to: `/usuarios/editar/${user.id}`});
+    navigate({ to: `/usuarios/editar/${user.id}` });
   };
   const deleteUser = async (id) => {
     await axiosClient.delete(`/users/${id}`);

@@ -14,14 +14,13 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('nombre');
             $table->string('ruta');
-            $table->enum('tipo', ['ine', 'comprobante_domicilio']);
+            $table->text("comentarios");
+            $table->enum('tipo', ['ine', 'comprobante_domicilio', 'curp']);
             $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
             $table->timestamps();
-
-            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

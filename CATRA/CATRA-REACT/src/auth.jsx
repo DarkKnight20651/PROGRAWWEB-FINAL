@@ -1,4 +1,4 @@
-import axiosClient from "./axios-client";
+import axiosClient from "src/axios-client";
 import {
   authReducer,
   initialState,
@@ -8,11 +8,9 @@ import {
   SIGNUP,
   cleanUserStorage,
   AuthContext,
-  access_token_key,
 } from "./auth-utils";
 import {
   useCallback,
-  useEffect,
   useReducer,
 } from "react";
 
@@ -24,12 +22,12 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     try {
-      dispatch({ type: LOGOUT });
       await axiosClient.post("/logout");
       console.log("Se cerró la sesión");
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     } finally {
+      dispatch({ type: LOGOUT });
       cleanUserStorage();
     }
   }, []);
@@ -39,6 +37,8 @@ export function AuthProvider({ children }) {
       try {
         const respuesta = await axiosClient.post("/login", { email, password });
 
+        persistUserInfo(respuesta.data.user, respuesta.data.token);
+
         dispatch({
           type: LOGIN,
           payload: {
@@ -46,7 +46,6 @@ export function AuthProvider({ children }) {
           },
         });
 
-        persistUserInfo(respuesta.data.user, respuesta.data.token);
         return "Success";
 
       } catch (error) {
@@ -60,8 +59,10 @@ export function AuthProvider({ children }) {
   const signup = useCallback(
     async (payload) => {
       try {
-        const respuesta = await axiosClient.post("/registrar-cliente", payload);
-        
+        const respuesta = await axiosClient.post("/clientes?signup=true", payload);
+
+        persistUserInfo(respuesta.data.user, respuesta.data.token);
+
         dispatch({
           type: SIGNUP,
           payload: {
@@ -69,8 +70,7 @@ export function AuthProvider({ children }) {
             cliente: null
           },
         });
-      
-        persistUserInfo(respuesta.data.user, respuesta.data.token);
+
         return "Success";
 
       } catch (error) {
@@ -81,20 +81,20 @@ export function AuthProvider({ children }) {
     []
   );
 
-  useEffect(() => {
+  /* useEffect(() => {
     const controller = new AbortController();
     if(localStorage.getItem(access_token_key) && !state.isAuthenticated) {
       (async () => {
         try {
           const response = await axiosClient.get("/user", { signal: controller.signal });
           if (response.status === 200 && response.data) {
+            persistUserInfo(response.data.user, response.data.token);
             dispatch({
               type: LOGIN,
               payload: {
                 user: response.data.user
               },
             });
-            persistUserInfo(response.data.user, response.data.token);
           }
         } catch (err) {
           console.log("ERROR DE USE EFFECT", err);
@@ -104,7 +104,7 @@ export function AuthProvider({ children }) {
     return () => {
       controller.abort();
     };
-  }, [state.isAuthenticated]);
+  }, [state.isAuthenticated]); */
 
   return (
     <AuthContext.Provider
