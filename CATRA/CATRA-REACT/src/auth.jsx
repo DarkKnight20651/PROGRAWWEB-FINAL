@@ -8,9 +8,11 @@ import {
   SIGNUP,
   cleanUserStorage,
   AuthContext,
+  access_token_key,
 } from "./auth-utils";
 import {
   useCallback,
+  useEffect,
   useReducer,
 } from "react";
 
@@ -81,9 +83,9 @@ export function AuthProvider({ children }) {
     []
   );
 
-  /* useEffect(() => {
+  useEffect(() => {
     const controller = new AbortController();
-    if(localStorage.getItem(access_token_key) && !state.isAuthenticated) {
+    if (localStorage.getItem(access_token_key)) {
       (async () => {
         try {
           const response = await axiosClient.get("/user", { signal: controller.signal });
@@ -104,7 +106,7 @@ export function AuthProvider({ children }) {
     return () => {
       controller.abort();
     };
-  }, [state.isAuthenticated]); */
+  }, []);
 
   return (
     <AuthContext.Provider
