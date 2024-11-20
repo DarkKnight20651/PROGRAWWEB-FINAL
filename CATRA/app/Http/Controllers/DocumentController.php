@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
@@ -29,6 +27,7 @@ class DocumentController extends Controller
                     'id' => $documento->id,
                     'subido' => true,
                     'estado' => $documento->estado,
+                    'updated_at' => $documento->updated_at
                 ];
             } else {
                 $documentosDetalles[$tipo] = [
@@ -59,19 +58,26 @@ class DocumentController extends Controller
             $documentosExistentes->count() === 4 &&
             $documentosExistentes->every(fn($doc) => $doc->estado === 'aprobado')
         ) {
-            return response()->json(['message' => 'Todos los documentos ya han sido aprobados.'], 200);
+            return response()->json(['mensaje' => 'Todos los documentos ya han sido aprobados.'], 200);
         }
 
         $rules = [];
-        $documentosNoAprobadosSubidos = [];
+        $documentosAIngresar = [];
 
         foreach (['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'] as $tipo) {
             $documentoExistente = $documentosExistentes[$tipo] ?? null;
+            
+            if(!$documentoExistente || $documentoExistente->estado !== "aprobado") {
+                $rules[$tipo] = 'file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
 
-            //if (!$documentoExistente || $documentoExistente->estado !== 'aprobado') {
-            if (!$documentoExistente || $documentoExistente->estado === 'rechazado') {
-                $rules[$tipo] = 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
-                $documentosNoAprobadosSubidos[$tipo] = $request->file($tipo);
+                if($request->hasFile($tipo) && $request->file($tipo)->isValid()) {
+                    $documentosAIngresar[$tipo] = $request->file($tipo);
+                } else return response()->json(
+                    ['mensaje' => 'El documento ' . $tipo . " no es válido"]
+                );
+                
+                if(!$documentoExistente || $documentoExistente->estado === 'rechazado')
+                    $rules[$tipo] = 'required|' . $rules[$tipo];
             }
         }
 
@@ -79,7 +85,7 @@ class DocumentController extends Controller
 
         try {
             DB::beginTransaction();
-            foreach ($documentosNoAprobadosSubidos as $tipo => $archivo) {
+            foreach ($documentosAIngresar as $tipo => $archivo) {
                 $documentoExistenteBd = $documentosExistentes[$tipo] ?? null;
                 $extension = $archivo->getClientOriginalExtension();
                 $mimeType = $archivo->getMimeType();
