@@ -67,17 +67,13 @@ class DocumentController extends Controller
         foreach (['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'] as $tipo) {
             $documentoExistente = $documentosExistentes[$tipo] ?? null;
             
-            if(!$documentoExistente || $documentoExistente->estado !== "aprobado") {
+            if(!$documentoExistente || $documentoExistente->estado !== 'aprobado') {
                 $rules[$tipo] = 'file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
-
-                if($request->hasFile($tipo) && $request->file($tipo)->isValid()) {
-                    $documentosAIngresar[$tipo] = $request->file($tipo);
-                } else return response()->json(
-                    ['mensaje' => 'El documento ' . $tipo . " no es válido"]
-                );
                 
                 if(!$documentoExistente || $documentoExistente->estado === 'rechazado')
                     $rules[$tipo] = 'required|' . $rules[$tipo];
+
+                $documentosAIngresar[$tipo] = $request->file($tipo);
             }
         }
 
@@ -128,9 +124,11 @@ class DocumentController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $documento = Document::find($id);
+
+        $mustDownload = $request->query('download') ? true : false;
 
         if (!$documento) {
             return response()->json(['error' => 'Documento no encontrado'], 404);
@@ -147,6 +145,17 @@ class DocumentController extends Controller
         }
 
         $mimeType = $documento->mime_type ?? 'application/octet-stream';
+
+        if($mustDownload) {
+            return response()->download(
+                Storage::disk('private')->path($rutaArchivo),
+                basename($rutaArchivo),
+                [
+                    'Content-Type' => $mimeType,
+                    'Content-Disposition' => 'attachment; filename="' . basename($rutaArchivo) . '"',
+                ]
+            );
+        }
 
         return response()->file(
             Storage::disk('private')->path($rutaArchivo),
