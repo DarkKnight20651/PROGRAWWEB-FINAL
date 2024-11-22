@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react';
 import axiosClient from '../../axios-client';
 import { useNavigate } from '@tanstack/react-router';
-import '/src/styles/index.css'
-import '/src/assets/bootstrap.min.css'
-import '/src/styles/styles.css'
+
+import 'src/styles/index.css'
+import 'src/assets/bootstrap.min.css'
+import 'src/styles/styles.css'
 
 const UserManager = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
-    const response = await axiosClient.get('/users');
-    setUsers(response.data);
-  };
-
   useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchUsers = async () => {
+      const response = await axiosClient.get('/users', {signal: controller.signal});
+      setUsers(response.data);
+    };
+
     fetchUsers();
+
+    return () => controller.abort();
   }, []);
 
   const createUser = () => {
@@ -25,9 +30,14 @@ const UserManager = () => {
     navigate({ to: `/usuarios/editar/${user.id}` });
   };
   const deleteUser = async (id) => {
-    await axiosClient.delete(`/users/${id}`);
-    setUsers(users.filter((user) => user.id !== id));
+    try {
+      await axiosClient.delete(`/users/${id}`);
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (error) {
+      console.log("Error al eliminar el usuario", error);
+    }
   };
+
   return (
     <div>
       <h1>Administración de Usuarios</h1>

@@ -25,7 +25,7 @@ class ClienteController extends Controller implements HasMiddleware
     public function index()
     {
         Gate::authorize('viewAny', Cliente::class);
-        $clientes = Cliente::with('user')->paginate(15);
+        $clientes = Cliente::with('user')->get();/*->paginate(15)*/;
         return response()->json($clientes);
     }
 
@@ -154,7 +154,7 @@ class ClienteController extends Controller implements HasMiddleware
                 'email' => $validated['email'],
             ];
 
-            if (!empty($validated['password'])) {
+            if (!empty($validated['password']) || $validated['password'] !== "") {
                 $userUpdateData['password'] = Hash::make($validated['password']);
             }
 
