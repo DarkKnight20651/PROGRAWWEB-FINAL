@@ -38,7 +38,6 @@ function getRoutesByRole(role) {
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
 
   const auth = useAuth();
-  console.log("Sidebar values = ", auth);
 
   return (
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>

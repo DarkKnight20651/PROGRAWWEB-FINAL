@@ -27,7 +27,8 @@ class DocumentController extends Controller
                     'id' => $documento->id,
                     'subido' => true,
                     'estado' => $documento->estado,
-                    'updated_at' => $documento->updated_at
+                    'updated_at' => $documento->updated_at,
+                    'comentarios' => $documento->comentarios
                 ];
             } else {
                 $documentosDetalles[$tipo] = [
@@ -66,18 +67,25 @@ class DocumentController extends Controller
 
         foreach (['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'] as $tipo) {
             $documentoExistente = $documentosExistentes[$tipo] ?? null;
-            
-            if(!$documentoExistente || $documentoExistente->estado !== 'aprobado') {
-                $rules[$tipo] = 'file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
-                
-                if(!$documentoExistente || $documentoExistente->estado === 'rechazado')
-                    $rules[$tipo] = 'required|' . $rules[$tipo];
 
+            if (!$documentoExistente || $documentoExistente->estado === 'rechazado') {
+                $rules[$tipo] = 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
+                $documentosAIngresar[$tipo] = $request->file($tipo);
+            }
+            if (
+                $documentoExistente && $documentoExistente->estado === 'pendiente'
+                && $request->hasFile($tipo)
+            ) {
+                $rules[$tipo] = 'file|mimes:pdf,jpg,jpeg,png,webp|max:5000';
                 $documentosAIngresar[$tipo] = $request->file($tipo);
             }
         }
 
         $request->validate($rules);
+
+        if (empty($documentosAIngresar)) {
+            return response()->json(['mensaje' => 'No se envío ningún archivo'], 204);
+        }
 
         try {
             DB::beginTransaction();
@@ -140,19 +148,21 @@ class DocumentController extends Controller
 
         $rutaArchivo = $documento->ruta;
 
+        $nombreArchivo = $documento->tipo . '';
+
         if (!Storage::disk('private')->exists($rutaArchivo)) {
             return response()->json(['error' => 'El archivo no existe en el servidor'], 404);
         }
 
         $mimeType = $documento->mime_type ?? 'application/octet-stream';
 
-        if($mustDownload) {
+        if ($mustDownload) {
             return response()->download(
                 Storage::disk('private')->path($rutaArchivo),
-                basename($rutaArchivo),
+                $nombreArchivo,
                 [
                     'Content-Type' => $mimeType,
-                    'Content-Disposition' => 'attachment; filename="' . basename($rutaArchivo) . '"',
+                    'Content-Disposition' => 'attachment; filename="' . $nombreArchivo . '"',
                 ]
             );
         }
