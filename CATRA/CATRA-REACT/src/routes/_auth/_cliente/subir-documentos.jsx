@@ -4,24 +4,23 @@ import axiosClient from "src/axios-client";
 
 import 'src/assets/bootstrap.min.css'
 
+import OpenFileButton from 'src/components/documentos/OpenFileButton';
+import DownloadButton from 'src/components/documentos/DownloadButton';
+
 export const Route = createFileRoute('/_auth/_cliente/subir-documentos')({
   component: DocumentUpload,
 })
 
 function formatDateToLocal(dateString) {
   const date = new Date(dateString);
-  const day = ("0" + date.getDate()).slice(-2); 
-  const month = ("0" + (date.getMonth() + 1)).slice(-2); 
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const hours = ("0" + date.getHours()).slice(-2);
   const minutes = ("0" + date.getMinutes()).slice(-2);
   const seconds = ("0" + date.getSeconds()).slice(-2);
 
   return `${day}-${month}-${date.getFullYear()} ${hours}:${minutes}:${seconds}`;
 }
-
-const handleOpenDocument = (documentId) => {
-  window.open(`/api/documents/${documentId}`, '_blank');
-};
 
 const fetchDocumentDetails = async (setDocuments, setIsFetching) => {
   try {
@@ -32,13 +31,15 @@ const fetchDocumentDetails = async (setDocuments, setIsFetching) => {
     setDocuments((prev) =>
       prev.map(doc => {
 
-        if(documentos[doc.tipo]?.subido) {
+        if (documentos[doc.tipo]?.subido) {
           return {
             ...doc,
             tipo: doc.tipo,
             status: documentos[doc.tipo].estado,
             updated_at: formatDateToLocal(documentos[doc.tipo].updated_at),
-            id: documentos[doc.tipo].id
+            id: documentos[doc.tipo].id,
+            hasUploaded: true,
+            comentarios: documentos[doc.tipo].comentarios
           }
         }
 
@@ -59,10 +60,10 @@ const fetchDocumentDetails = async (setDocuments, setIsFetching) => {
 
 function DocumentUpload() {
   const [documents, setDocuments] = useState([
-    { id: null, tipo: 'ine', file: null, status: 'Sin subir', updated_at: null },
-    { id: null, tipo: 'comprobante_domicilio', file: null, status: 'Sin subir', updated_at: null },
-    { id: null, tipo: 'acta_nacimiento', file: null, status: 'Sin subir', updated_at: null },
-    { id: null, tipo: 'curp', file: null, status: 'Sin subir', updated_at: null }
+    { id: null, tipo: 'ine', fileName: null, nombre: 'INE', file: null, status: 'Sin subir', updated_at: null, hasUploaded: false, comentarios: null },
+    { id: null, tipo: 'comprobante_domicilio', fileName: null, nombre: 'Comprobante de domicilio', file: null, status: 'Sin subir', updated_at: null, hasUploaded: false, comentarios: null },
+    { id: null, tipo: 'acta_nacimiento', fileName: null, nombre: 'Acta de nacimiento', file: null, status: 'Sin subir', updated_at: null, hasUploaded: false, comentarios: null },
+    { id: null, tipo: 'curp', fileName: null, nombre: 'CURP', file: null, status: 'Sin subir', updated_at: null, hasUploaded: false, comentarios: null }
   ]);
 
   const [isUploading, setIsUploading] = useState(false);
@@ -80,7 +81,7 @@ function DocumentUpload() {
     const file = e.target.files[0];
     setDocuments(prevDocuments =>
       prevDocuments.map(doc =>
-        doc.tipo === tipo ? { ...doc, file } : doc
+        doc.tipo === tipo ? { ...doc, file, fileName: file.name } : doc
       )
     );
   }, []);
@@ -92,19 +93,25 @@ function DocumentUpload() {
     documents.forEach(doc => {
       if (doc.file && doc.status !== 'aprobado') {
         formData.append(doc.tipo, doc.file);
-      } else if (!doc.file || doc.status === 'Sin subir' || doc.status === 'rechazado') {
+      }
+      if (!doc.file && (doc.status === 'Sin subir' || doc.status === 'rechazado')) {
         hasFiles = false;
       }
     });
 
-    /*if (!hasFiles) {
-      alert("Por favor sube todos los archivos sin subir o rechazados.");
+    if (!hasFiles) {
+      alert("Por favor selecciona todos los archivos sin subir y/o rechazados.");
       return;
-    }*/
+    }
+
+    /* if (reupload) {
+      alert("No has seleccionado ningún archivo");
+      return;
+    } */
 
     setIsUploading(true);
     try {
-      await axiosClient.post("/documents/upload", formData, {
+      const { status } = await axiosClient.post("/documents/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -115,7 +122,8 @@ function DocumentUpload() {
         errors: {}
       });
 
-      alert("Documentos subidos con éxito.");
+      if (status == 204) alert("No se subió ningún archivo");
+      else alert("Documentos subidos con éxito");
     } catch (error) {
 
       console.log("Error al subir los documentos:", error.response?.data?.errors);
@@ -136,38 +144,86 @@ function DocumentUpload() {
   return (
     <div>
       <h2>Subir Documentos</h2>
+      <hr />
       {isLoading && <p>Cargando información ...</p>}
-      <form>
+      <form onSubmit={(e) => { e.preventDefault() }}>
         <fieldset disabled={isLoading}>
           {documents.map((doc) => (
-            <div key={doc.tipo} style={{ marginBottom: "20px" }}>
-              <div style={{marginBottom: '15px'}}>
-                <label>
-                  {doc.tipo.toUpperCase()}:
+            <div key={doc.tipo} style={{ marginBottom: "20px" }} className="mb-3">
+              {!doc.hasUploaded ? (<div style={{ marginBottom: '15px' }}>
+                <label className='form-label'>
+                  {doc.nombre}
+                </label>
+                <input
+                  className='form-control'
+                  type="file"
+                  accept=".pdf, .png, .jpg, .jpeg, .webp"
+                  onChange={(e) => handleFileChange(e, doc.tipo)}
+                />
+                <br />
+              </div>) : doc.hasUploaded && doc.status === "pendiente" ?
+                (<div style={{ marginBottom: '15px' }}>
+                  <p><strong>{doc.nombre}</strong></p>
+                  El documento {doc.nombre} ha sido subido y registrado correctamente,
+                  pero puedes actualizar tu archivo.<br />
+                  <label htmlFor={doc.tipo} className='btn btn-info' style={{ marginTop: '6px' }}>
+                    {doc.fileName ?? 'Subir un nuevo archivo'}
+                  </label>
                   <input
+                    className='form-control'
                     type="file"
+                    id={doc.tipo}
                     accept=".pdf, .png, .jpg, .jpeg, .webp"
                     onChange={(e) => handleFileChange(e, doc.tipo)}
+                    style={{ display: 'none' }}
                   />
-                </label>
-              </div>
-              
+                  <br />
+                </div>) : doc.hasUploaded && doc.status === "rechazado" ?
+                  (<div style={{ marginBottom: '15px' }}>
+                    <label className='form-label'>
+                      {doc.nombre}
+                    </label>
+                    <p>Tu documento ha sido rechazado por el administrador.</p>
+                    <p>Por favor sube de nuevo tu archivo</p>
+                    <input
+                      className='form-control'
+                      type="file"
+                      accept=".pdf, .png, .jpg, .jpeg, .webp"
+                      onChange={(e) => handleFileChange(e, doc.tipo)}
+                    /> <br />
+                    {doc.comentarios ? (
+                      <div className="form-group">
+                        <label htmlFor={`${doc.tipo}-comentarios`}>Comentarios</label>
+                        <textarea id={`${doc.tipo}-comentarios`} className="form-control" rows="3"
+                          defaultValue={doc.comentarios}
+                          disabled>
+                        </textarea><br />
+                        <p>Por favor selecciona un archivo nuevo</p>
+                      </div>) : (<p>No se proporcionaron comentarios sobre el rechazo del documento</p>)}
+                  </div>) :
+                  (<div style={{ marginBottom: '15px' }}>
+                    <p style={{ fontSize: '19px' }}><strong>{doc.nombre}</strong></p>
+                    Tu documento ha sido aprobado.
+                  </div>)
+              }
+
               <p>
                 Estado del documento: <span
-                  style={{color: doc.status === 'aprobado' ? '#0F0' : 
-                    doc.status === 'rechazado' ? '#F00' : 
-                    doc.status === 'pendiente' ? '#00F' : '#000'
+                  style={{
+                    color: doc.status === 'aprobado' ? '#0F0' :
+                      doc.status === 'rechazado' ? '#F00' :
+                        doc.status === 'pendiente' ? '#00F' : '#000'
                   }}
-                >{doc.status}</span>
+                >{doc.status.toUpperCase()}</span>
               </p>
-              {doc.status !== "Sin subir" && (
+              {doc.id && doc.status !== 'Sin subir' && (
                 <div>
-                  <p>Documento subido el: {doc.updated_at}</p>
-                  <p><button onClick={() => handleOpenDocument(doc.id)}>Abrir documento</button></p>
+                  <OpenFileButton documentId={doc.id} />
+                  <DownloadButton documentId={doc.id} tipo={doc.tipo} />
                 </div>
               )}
 
-              {validationState.hasErrors && validationState.errors[doc.tipo] && (
+              {validationState.hasErrors && validationState?.errors?.[doc.tipo] && (
                 <ul className="list-unstyled">
                   {validationState.errors[doc.tipo].map((error, index) => (
                     <li key={index} className="text-danger">
@@ -177,7 +233,7 @@ function DocumentUpload() {
                 </ul>
               )}
 
-            <hr />
+              <hr />
             </div>
           ))}
           <br />
@@ -197,6 +253,6 @@ function DocumentUpload() {
           </button>
         </fieldset>
       </form>
-    </div>
+    </div >
   );
 }
