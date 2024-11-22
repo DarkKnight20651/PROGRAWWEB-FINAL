@@ -8,8 +8,8 @@ import 'src/pages/signup/Signup.css'
 
 import { fallback } from 'src/auth-utils'
 import guestGuard from 'src/util/guestGuard';
-import UserForm from 'src/components/user/UserForm';
-import RegisterUserSubmit from 'src/components/user/RegisterUserSubmit';
+import ClienteForm from 'src/components/user/ClienteForm';
+import RegistrarClienteSubmit from 'src/components/user/RegistrarClienteSubmit';
 
 export const Route = createFileRoute('/signup')({
   beforeLoad: ({ context }) => {
@@ -75,13 +75,13 @@ function SignupComponent() {
   const isRegistering = isLoading || isSubmitting;
 
   return (
-    <UserForm
+    <ClienteForm
       title={'Registrarse'}
       formData={formData}
       setFormData={setFormData}
       onFormSubmit={onFormSubmit}
       isRegistering={isRegistering}
       errors={errors}
-      SubmitComponent={<RegisterUserSubmit />} />
+      SubmitComponent={<RegistrarClienteSubmit />} />
   );
 }

@@ -1,6 +1,7 @@
 
 /* eslint-disable react/prop-types */
-export default function UserForm({ title, formData, setFormData, onFormSubmit, isRegistering, errors, SubmitComponent }) {
+export default function ClienteForm({ title, formData, setFormData, onFormSubmit, 
+  isRegistering, errors, SubmitComponent }) {
   const handleChange = (e) => {
     let { id, value, name } = e.target;
     if (name === "genero") {

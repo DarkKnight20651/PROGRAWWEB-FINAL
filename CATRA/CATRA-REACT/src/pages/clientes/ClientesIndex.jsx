@@ -11,24 +11,35 @@ const UserManager = () => {
   const [clientes, setClientes] = useState([]);
   const navigate = useNavigate();
 
-  const fetchClientes = async () => {
-    const response = await axiosClient.get('/clientes');
-    setClientes(response.data);
-  };
-
   useEffect(() => {
-    fetchClientes();
+    const controller = new AbortController();
+    (async () => {
+      try {
+        const response = await axiosClient.get('/clientes', { signal: controller.signal });
+        setClientes(response.data);
+      } catch(err) {
+        console.log(err);
+      }
+    })();
+    return () => controller.abort();
   }, []);
-  const createUser = () => {
-    navigate({to: "/clientes/crear"});
+
+  const createUser = async() => {
+    await navigate({to: "/clientes/crear"});
   }
-  /* const handleEditUser = (cliente) => {
-    navigate(`/clientes/editar/${cliente.curp}`);
-  }; */
+  const handleEditUser = async(curp) => {
+    await navigate({to: `/clientes/editar/${curp}`});
+  };
   
   const deleteUser = async (curp) => {
-    await axiosClient.delete(`/clientes/${curp}`);
+    try {
+      await axiosClient.delete(`/clientes/${curp}`);
+      alert("Cliente borrado");
+    } catch(err) {
+      console.log(err);
+    }
   };
+
   return (
     <>
       <Navbar2 />
@@ -52,7 +63,7 @@ const UserManager = () => {
                   <td>{cliente.nombre}</td>
                   <td>{cliente.telefono}</td>
                   <td>
-                    {/* <button onClick={() => handleEditUser(cliente)} className="edit">Editar</button> */}
+                    <button onClick={() => handleEditUser(cliente.curp)} className="edit">Editar</button>
                     <button onClick={() => deleteUser(cliente.curp)} className="delete">Eliminar</button>
                   </td>
                 </tr>
@@ -60,7 +71,8 @@ const UserManager = () => {
             </tbody>
           </table>
         </div>
-      </div></>
+      </div>
+    </>
   );
 };
 

@@ -12,7 +12,7 @@ const UserCreate = () => {
   const password_confirmationRef = createRef();
   const roleRef = createRef();
 
-  const onSubmit = ev => {
+  const onSubmit = async (ev) => {
     ev.preventDefault();
 
     const payload = {
@@ -22,19 +22,17 @@ const UserCreate = () => {
       password_confirmation: password_confirmationRef.current.value,
     };
 
-    axiosClient.post('/users', payload)
-      .then(() => {
-        navigate("/usuarios");
-      })
-      .catch((err) => {
-        /* const response = err.response;
-        if (response && response.status === 422) {
-            setMessage(response.data.message);
-        } */
-      });
+    try {
+      await axiosClient.post('/users', payload);
+      alert("Usuario creado correctamente");
+      await navigate({to: "/usuarios"});
+    } catch (error) {
+      console.log(err);
+    }
   };
-  const cancelar = () => {
-    navigate("/usuarios");
+
+  const cancelar = async () => {
+    await navigate({to: "/usuarios"});
   }
 
   return (
@@ -52,7 +50,7 @@ const UserCreate = () => {
             >
               <option value="">Selecciona un rol</option>
               <option value="admin">Admin</option>
-              <option value="secretaria">Secretaria</option>
+              <option value="secre">Secretaria</option>
             </select>
           </div>
 
@@ -99,13 +97,8 @@ const UserCreate = () => {
             </button>
             <button onClick={cancelar} className="edit" >Cancelar</button>
           </div>
-
-
         </form>
-
       </div>
-
-
     </>
 
   );
