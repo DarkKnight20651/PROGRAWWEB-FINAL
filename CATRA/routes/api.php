@@ -6,9 +6,20 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
-
+use App\Http\Controllers\ExamenController;
+use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\RespuestaController;
 
 Route::apiResource('clientes', ClienteController::class);
+
+Route::get('examen/{id}/all', [ExamenController::class, 'getAll']);
+Route::get('cliente/{curp}/examenes', [ClienteController::class, 'getExamens']);
+Route::get('examen/{id_examen}/preguntas', [PreguntaController::class, 'getPreguntasByExamen']);
+Route::get('pregunta/{id_pregunta}/respuestas', [RespuestaController::class, 'getRespuestasByPregunta']);
+
+Route::apiResource('preguntas', PreguntaController::class);
+Route::apiResource('examenes', ExamenController::class);
+Route::apiResource('respuestas', RespuestaController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
 

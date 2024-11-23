@@ -7,19 +7,20 @@ import './style.css'
 const rutasClientes = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Subir Documentos', path: '/subir-documentos' },
-  { name: 'Realizar Examen', path: '/realizar-examen' },
 ]
 
 const rutasAdmin = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
+  { name: 'Examenes', path: '/examenes' }
 ]
 
 const rutasSecre = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
+  { name: 'Examenes', path: '/examenes' }
 ]
 
 function getRoutesByRole(role) {

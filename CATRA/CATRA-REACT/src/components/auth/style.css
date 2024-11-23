@@ -134,7 +134,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .card-inner {
