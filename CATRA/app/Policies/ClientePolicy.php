@@ -10,7 +10,7 @@ class ClientePolicy
 {
     public function viewAny(User $user)
     {
-        return $user->id === in_array($user->role, ['admin', 'secre'])
+        return in_array($user->role, ['admin', 'secre'])
             ? Response::allow()
             : Response::deny('No puedes ver la lista de usuarios.');
     }

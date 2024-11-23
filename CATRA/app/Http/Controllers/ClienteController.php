@@ -11,6 +11,8 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class ClienteController extends Controller implements HasMiddleware
@@ -118,27 +120,38 @@ class ClienteController extends Controller implements HasMiddleware
 
     public function update(Request $request, $curp)
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email', 'unique:users,email,' . $request->user()->id],
-            'curp' => 'required|string|max:20',
-            'telefono' => 'required|string|max:15',
-            'nombre' => 'required|string|max:255',
-            'ape_p' => 'required|string|max:255',
-            'ape_m' => 'required|string|max:255',
-            'fecha_nac' => 'required|date',
-            'genero' => 'required|integer|max:1',
-            'password' => [
-                'nullable',
-                'confirmed',
-                Password::min(8)
-            ],
-        ]);
-
         try {
-            DB::beginTransaction();
             $cliente = Cliente::where('curp', $curp)->firstOrFail();
             Gate::authorize("update", $cliente);
 
+            $validated = $request->validate([
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('users')->ignore($cliente->user->id)
+                ],
+                'curp' => [
+                    'required',
+                    'string',
+                    'max:20',
+                    Rule::unique('clientes')->ignore($cliente->curp, 'curp')
+                ],
+                'telefono' => 'required|string|max:15',
+                'nombre' => 'required|string|max:255',
+                'ape_p' => 'required|string|max:255',
+                'ape_m' => 'required|string|max:255',
+                'fecha_nac' => 'required|date',
+                'genero' => 'required|integer|max:1',
+                'password' => [
+                    'nullable',
+                    'confirmed',
+                    Password::min(8)
+                ],
+            ]);
+
+            Log::info("despues validacion");
+
+            DB::beginTransaction();
             $cliente->update([
                 'telefono' => $validated['telefono'],
                 'nombre' => $validated['nombre'],
@@ -160,13 +173,19 @@ class ClienteController extends Controller implements HasMiddleware
 
             $user->update($userUpdateData);
 
+            DB::commit();
+
             return response()->json(['message' => 'Se actualizó el cliente y su usuario asociado.']);
         } catch (ModelNotFoundException $e) {
             DB::rollBack();
             return response()->json(['error' => 'El cliente no se encontró.'], 404);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Un error ocurrió al actualizar los datos.'], 500);
+            return response()->json([
+                'error' => 'Un error ocurrió al actualizar los datos.',
+                "error_obj" => $e,
+                'stack_trace' => env('APP_DEBUG') == true ? $e->getTrace() : null,
+            ], 500);
         }
     }
 

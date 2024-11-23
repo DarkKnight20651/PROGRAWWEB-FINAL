@@ -25,82 +25,79 @@ const UserCreate = () => {
     try {
       await axiosClient.post('/users', payload);
       alert("Usuario creado correctamente");
-      await navigate({to: "/usuarios"});
+      await navigate({ to: "/usuarios" });
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
   };
 
   const cancelar = async () => {
-    await navigate({to: "/usuarios"});
+    await navigate({ to: "/usuarios" });
   }
 
   return (
-    <>
-      <div className="container">
-        <h1 className="titulo" id="titulo">Crear nuevo usuario</h1>
-        <form onSubmit={onSubmit}>
-          <div className="mb-3">
-            <label htmlFor="role" className="form-label">Rol</label>
-            <select
-              ref={roleRef}
-              className="form-control"
-              id="role"
-              required
-            >
-              <option value="">Selecciona un rol</option>
-              <option value="admin">Admin</option>
-              <option value="secre">Secretaria</option>
-            </select>
-          </div>
+    <div className="container">
+      <h1 className="titulo" id="titulo">Crear nuevo usuario</h1>
+      <form onSubmit={onSubmit}>
+        <div className="mb-3">
+          <label htmlFor="role" className="form-label">Rol</label>
+          <select
+            ref={roleRef}
+            className="form-control"
+            id="role"
+            required
+          >
+            <option value="">Selecciona un rol</option>
+            <option value="admin">Admin</option>
+            <option value="secre">Secretaria</option>
+          </select>
+        </div>
 
-          <div className="mb-3">
-            <label htmlFor="correo" className="form-label">Correo</label>
-            <input
-              ref={emailRef}
-              type="text"
-              className="form-control"
-              id="email"
-              placeholder="Correo Electrónico"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input
-              ref={passwordRef}
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Contraseña"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="ConfPassword" className="form-label">Confirmar Contraseña</label>
-            <input
-              ref={password_confirmationRef}
-              type="password"
-              className="form-control"
-              id="ConfPassword"
-              placeholder="Confirmar Contraseña"
-              required
-            />
-          </div>
-          <div className="d-flex justify-content-center">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              style={{ padding: '10px 60px', fontSize: '25px' }}
-            >
-              Crear
-            </button>
-            <button onClick={cancelar} className="edit" >Cancelar</button>
-          </div>
-        </form>
-      </div>
-    </>
-
+        <div className="mb-3">
+          <label htmlFor="correo" className="form-label">Correo</label>
+          <input
+            ref={emailRef}
+            type="text"
+            className="form-control"
+            id="email"
+            placeholder="Correo Electrónico"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Contraseña</label>
+          <input
+            ref={passwordRef}
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="Contraseña"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="ConfPassword" className="form-label">Confirmar Contraseña</label>
+          <input
+            ref={password_confirmationRef}
+            type="password"
+            className="form-control"
+            id="ConfPassword"
+            placeholder="Confirmar Contraseña"
+            required
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ padding: '10px 60px', fontSize: '25px' }}
+          >
+            Crear
+          </button>
+          <button onClick={cancelar} className="edit" >Cancelar</button>
+        </div>
+      </form>
+    </div>
   );
 }
 export default UserCreate;

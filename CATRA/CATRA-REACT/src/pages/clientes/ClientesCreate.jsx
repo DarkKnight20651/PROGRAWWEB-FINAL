@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate, useRouter, useRouterState } from '@tanstack/react-router';
+import { useNavigate, useRouter, useRouterState } from '@tanstack/react-router';
 import axiosClient from 'src/axios-client';
-import RegistrarClienteSubmit from 'src/components/user/RegistrarClienteSubmit';
-import ClienteForm from 'src/components/user/ClienteForm';
+import ClienteForm from 'src/components/cliente/ClienteForm';
+import RegistrarClienteSubmit from 'src/components/cliente/RegistrarClienteSubmit';
 
 const ClientesCreate = () => {
   const router = useRouter();
@@ -32,13 +32,13 @@ const ClientesCreate = () => {
       const resultado = await axiosClient.post("/clientes", payload);
 
       if (resultado === "Success") {
+        setErrors({});
         alert("El cliente se creo correctamente");
         await router.invalidate();
         await navigate({ to: "/clientes" });
       }
     } catch (error) {
-      console.log("ERROR SIGNUP - ", error);
-      setErrors(() => error.mensajes || {});
+      if (error.response?.data?.errors) setErrors(() => error.response.data.errors);
     } finally {
       setIsSubmitting(false);
     }
@@ -47,14 +47,16 @@ const ClientesCreate = () => {
   const isRegistering = isLoading || isSubmitting;
 
   return (
-    <ClienteForm
-      title={'Crear nuevo cliente'}
-      formData={formData}
-      setFormData={setFormData}
-      onFormSubmit={onFormSubmit}
-      isRegistering={isRegistering}
-      errors={errors}
-      SubmitComponent={<RegistrarClienteSubmit />} />
+    <div>
+      <ClienteForm
+        title={'Crear nuevo cliente'}
+        formData={formData}
+        setFormData={setFormData}
+        onFormSubmit={onFormSubmit}
+        isRegistering={isRegistering}
+        errors={errors}
+        SubmitComponent={<RegistrarClienteSubmit />} />
+    </div>
   );
 }
 export default ClientesCreate;

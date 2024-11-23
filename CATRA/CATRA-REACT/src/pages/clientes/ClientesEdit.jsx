@@ -1,12 +1,22 @@
-import { useEffect, useRef, useState, } from 'react';
-import axiosClient from '../../axios-client';
-import { useNavigate, useParams, useRouter, useRouterState } from '@tanstack/react-router';
-import RegistrarClienteSubmit from 'src/components/user/RegistrarClienteSubmit';
+import { useNavigate, useParams, useRouterState } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import axiosClient from 'src/axios-client';
+import ClienteForm from 'src/components/cliente/ClienteForm';
 
-const getClienteByCurp = async (signal, curp, setFormData, setErrors, setIsClienteLoading) => {
-  setIsClienteLoading(true);
+import 'src/assets/bootstrap.min.css'
+
+export function EditarClienteSubmit() {
+  return (<div className="d-grid">
+    <button type="submit" className="btn btn-primary">
+      Editar
+    </button>
+  </div>);
+}
+
+const getClienteByCurp = async (signal, curp, setFormData, setIsClienteLoading) => {
   try {
-    const respuesta = await axiosClient.get(`/clientes/${curp}`, signal ? {signal} : {});
+    setIsClienteLoading(true);
+    const respuesta = await axiosClient.get(`/clientes/${curp}`, signal ? { signal } : {});
     setFormData((p) => ({
       ...p,
       nombre: respuesta.data.nombre,
@@ -18,10 +28,11 @@ const getClienteByCurp = async (signal, curp, setFormData, setErrors, setIsClien
       email: respuesta.data.user.email,
       telefono: respuesta.data.telefono,
     }));
+    console.log("informacion obtenida");
   } catch (error) {
     console.log(error);
-    if(error.response?.data?.errors) setErrors(error.response?.data?.errors);
   } finally {
+    console.log("setIsClienteLoading = false");
     setIsClienteLoading(false);
   }
 }
@@ -31,7 +42,7 @@ const UserEdit = () => {
   const isLoading = useRouterState({ select: (s) => s.isLoading });
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isClienteLoading, setIsClienteLoading] = useState(false);
+  const [isClienteLoading, setIsClienteLoading] = useState(true);
   const [formData, setFormData] = useState({
     nombre: "",
     ape_p: "",
@@ -48,25 +59,27 @@ const UserEdit = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    (async () => await getClienteByCurp(controller.signal, curp, setFormData, setErrors, 
+    (async () => await getClienteByCurp(controller.signal, curp, setFormData,
       setIsClienteLoading))();
-    return () => controller.abort();
+    return () => { controller.abort() };
   }, [curp]);
 
   const onFormSubmit = async (ev) => {
     ev.preventDefault();
     setIsSubmitting(true);
     try {
-      await axiosClient.put(`/clientes/${curp}`, { ...formData});
-      await getClienteByCurp(null, curp, setFormData, setErrors, setIsClienteLoading);
+      await axiosClient.put(`/clientes/${curp}`, { ...formData });
+      await getClienteByCurp(null, curp, setFormData, setIsClienteLoading);
     } catch (error) {
       console.log(error);
+      if (error.response?.data?.errors) setErrors(error.response?.data?.errors);
     } finally {
       setIsSubmitting(false);
     }
   };
+
   const cancelar = async () => {
-    await navigate({to: "/clientes"});
+    await navigate({ to: "/clientes" });
   }
 
   const isRegistering = isLoading || isSubmitting;
@@ -74,16 +87,17 @@ const UserEdit = () => {
   return (
     <div>
       {isClienteLoading ? (<p>Cargando información ...</p>) : (
-      <>
-      <ClienteForm
-        title={'Editar cliente'}
-        formData={formData}
-        setFormData={setFormData}
-        onFormSubmit={onFormSubmit}
-        isRegistering={isRegistering}
-        errors={errors}
-        SubmitComponent={<RegistrarClienteSubmit />} />
-        <p><button onClick={cancelar}>Cancelar</button></p></>
+        <>
+          <ClienteForm
+            title={'Editar cliente'}
+            formData={formData}
+            setFormData={setFormData}
+            onFormSubmit={onFormSubmit}
+            isRegistering={isRegistering}
+            errors={errors}
+            SubmitComponent={<EditarClienteSubmit />} />
+          <p><button onClick={cancelar}>Cancelar</button></p>
+        </>
       )}
     </div>
   );

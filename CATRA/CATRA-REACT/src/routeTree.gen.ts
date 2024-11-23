@@ -31,6 +31,7 @@ import { Route as AuthClienteSubirDocumentosImport } from './routes/_auth/_clien
 import { Route as AuthClienteRealizarExamenImport } from './routes/_auth/_cliente/realizar-examen'
 import { Route as AuthAdminSoloAdminImport } from './routes/_auth/_admin/solo-admin'
 import { Route as AuthUsuariosEditarUserIdImport } from './routes/_auth/usuarios/editar.$userId'
+import { Route as AuthClientesEditarCurpImport } from './routes/_auth/clientes/editar.$curp'
 
 // Create/Update Routes
 
@@ -151,6 +152,12 @@ const AuthUsuariosEditarUserIdRoute = AuthUsuariosEditarUserIdImport.update({
   id: '/editar/$userId',
   path: '/editar/$userId',
   getParentRoute: () => AuthUsuariosRouteRoute,
+} as any)
+
+const AuthClientesEditarCurpRoute = AuthClientesEditarCurpImport.update({
+  id: '/editar/$curp',
+  path: '/editar/$curp',
+  getParentRoute: () => AuthClientesRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -290,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUsuariosIndexImport
       parentRoute: typeof AuthUsuariosRouteImport
     }
+    '/_auth/clientes/editar/$curp': {
+      id: '/_auth/clientes/editar/$curp'
+      path: '/editar/$curp'
+      fullPath: '/clientes/editar/$curp'
+      preLoaderRoute: typeof AuthClientesEditarCurpImport
+      parentRoute: typeof AuthClientesRouteImport
+    }
     '/_auth/usuarios/editar/$userId': {
       id: '/_auth/usuarios/editar/$userId'
       path: '/editar/$userId'
@@ -330,11 +344,13 @@ const AuthClienteRouteRouteWithChildren =
 interface AuthClientesRouteRouteChildren {
   AuthClientesCrearRoute: typeof AuthClientesCrearRoute
   AuthClientesIndexRoute: typeof AuthClientesIndexRoute
+  AuthClientesEditarCurpRoute: typeof AuthClientesEditarCurpRoute
 }
 
 const AuthClientesRouteRouteChildren: AuthClientesRouteRouteChildren = {
   AuthClientesCrearRoute: AuthClientesCrearRoute,
   AuthClientesIndexRoute: AuthClientesIndexRoute,
+  AuthClientesEditarCurpRoute: AuthClientesEditarCurpRoute,
 }
 
 const AuthClientesRouteRouteWithChildren =
@@ -395,6 +411,7 @@ export interface FileRoutesByFullPath {
   '/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/clientes/': typeof AuthClientesIndexRoute
   '/usuarios/': typeof AuthUsuariosIndexRoute
+  '/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
   '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
@@ -414,6 +431,7 @@ export interface FileRoutesByTo {
   '/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/clientes': typeof AuthClientesIndexRoute
   '/usuarios': typeof AuthUsuariosIndexRoute
+  '/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
   '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
@@ -438,6 +456,7 @@ export interface FileRoutesById {
   '/_auth/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/_auth/clientes/': typeof AuthClientesIndexRoute
   '/_auth/usuarios/': typeof AuthUsuariosIndexRoute
+  '/_auth/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
   '/_auth/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
 }
 
@@ -461,6 +480,7 @@ export interface FileRouteTypes {
     | '/usuarios/crear'
     | '/clientes/'
     | '/usuarios/'
+    | '/clientes/editar/$curp'
     | '/usuarios/editar/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -479,6 +499,7 @@ export interface FileRouteTypes {
     | '/usuarios/crear'
     | '/clientes'
     | '/usuarios'
+    | '/clientes/editar/$curp'
     | '/usuarios/editar/$userId'
   id:
     | '__root__'
@@ -501,6 +522,7 @@ export interface FileRouteTypes {
     | '/_auth/usuarios/crear'
     | '/_auth/clientes/'
     | '/_auth/usuarios/'
+    | '/_auth/clientes/editar/$curp'
     | '/_auth/usuarios/editar/$userId'
   fileRoutesById: FileRoutesById
 }
@@ -587,7 +609,8 @@ export const routeTree = rootRoute
       "parent": "/_auth",
       "children": [
         "/_auth/clientes/crear",
-        "/_auth/clientes/"
+        "/_auth/clientes/",
+        "/_auth/clientes/editar/$curp"
       ]
     },
     "/_auth/usuarios": {
@@ -634,6 +657,10 @@ export const routeTree = rootRoute
     "/_auth/usuarios/": {
       "filePath": "_auth/usuarios/index.jsx",
       "parent": "/_auth/usuarios"
+    },
+    "/_auth/clientes/editar/$curp": {
+      "filePath": "_auth/clientes/editar.$curp.jsx",
+      "parent": "/_auth/clientes"
     },
     "/_auth/usuarios/editar/$userId": {
       "filePath": "_auth/usuarios/editar.$userId.jsx",

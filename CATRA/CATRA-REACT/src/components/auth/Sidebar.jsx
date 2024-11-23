@@ -28,7 +28,7 @@ function getRoutesByRole(role) {
       return rutasClientes;
     case 'admin':
       return rutasAdmin;
-    case 'secretaria':
+    case 'secre':
       return rutasSecre;
     default:
       return [];

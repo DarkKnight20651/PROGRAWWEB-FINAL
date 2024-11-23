@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -43,8 +44,13 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $validated = $request->validate([
-            'email' => ['required', 'email', 'unique:users,email,' . $request->user()->id],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
             'role' => 'string|max:255',
+            'password' => [
+                'nullable',
+                'confirmed',
+                Password::min(8)
+            ],
         ]);
 
         $userUpdateData = [

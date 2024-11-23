@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import axiosClient from 'src/axios-client';
 
+import 'src/assets/bootstrap.min.css'
+
 const UserEdit = () => {
   const { userId } = useParams({ strict: false });
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const UserEdit = () => {
     const controller = new AbortController();
     const fetchUser = async () => {
       try {
-        const { data } = await axiosClient.get(`/users/${userId}`, {signal: controller.signal});
+        const { data } = await axiosClient.get(`/users/${userId}`, { signal: controller.signal });
         setRole(data.role);
         setEmail(data.email);
       } catch (error) {
@@ -40,9 +42,11 @@ const UserEdit = () => {
     };
 
     try {
-      await axiosClient.put(`/users/${userId}`, payload);
-      alert("Usuario creado correctamente");
-      await navigate({to: '/usuarios'});
+      const { data } = await axiosClient.put(`/users/${userId}`, payload);
+      setRole(data.role);
+      setEmail(data.email);
+      alert("Usuario editado correctamente");
+      await navigate({ to: '/usuarios' });
     } catch (err) {
       alert("Error al actualizar el usuario");
       console.log('Error al actualizar usuario:', err);
@@ -50,19 +54,19 @@ const UserEdit = () => {
   };
 
   const cancelar = async () => {
-    await navigate({to: "/usuarios"});
+    await navigate({ to: "/usuarios" });
   };
 
   return (
-    <div className="container">
-      <h1>Editar Usuario</h1>
+    <div className="container mt-5">
+      <h1 className="mb-4 text-center">Editar Usuario</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-3">
           <label htmlFor="role" className="form-label">Rol</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="form-control"
+            className="form-select"
             id="role"
             required
           >
@@ -91,7 +95,6 @@ const UserEdit = () => {
             className="form-control"
             id="password"
             placeholder="Contraseña"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -103,24 +106,26 @@ const UserEdit = () => {
             className="form-control"
             id="ConfPassword"
             placeholder="Confirmar Contraseña"
-            required
             value={passwordConf}
             onChange={(e) => setPasswordConf(e.target.value)}
           />
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mb-3">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary btn-lg"
             style={{ padding: '10px 60px', fontSize: '20px' }}
           >
             Guardar Cambios
           </button>
         </div>
       </form>
-      <button onClick={cancelar} className="edit">Cancelar</button>
-    </div>
-  );
+      <div className="d-flex justify-content-center mt-3">
+        <button onClick={cancelar} className="btn btn-danger btn-sm">
+          Cancelar
+        </button>
+      </div>
+    </div>)
 };
 
 export default UserEdit;

@@ -9,6 +9,8 @@ class Cliente extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $primaryKey = 'curp';
     protected $keyType = 'string';
     public $incrementing = false;

@@ -23,7 +23,6 @@ class CreateClientesTable extends Migration
             $table->string('ape_m');
             $table->date('fecha_nac');
             $table->integer('genero');
-            $table->timestamps();
         });
     }
 

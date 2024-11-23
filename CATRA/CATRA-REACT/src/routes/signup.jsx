@@ -8,8 +8,8 @@ import 'src/pages/signup/Signup.css'
 
 import { fallback } from 'src/auth-utils'
 import guestGuard from 'src/util/guestGuard';
-import ClienteForm from 'src/components/user/ClienteForm';
-import RegistrarClienteSubmit from 'src/components/user/RegistrarClienteSubmit';
+import ClienteForm from 'src/components/cliente/ClienteForm';
+import RegistrarClienteSubmit from 'src/components/cliente/RegistrarClienteSubmit';
 
 export const Route = createFileRoute('/signup')({
   beforeLoad: ({ context }) => {
