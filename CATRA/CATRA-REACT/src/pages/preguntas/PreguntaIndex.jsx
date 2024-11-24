@@ -57,9 +57,9 @@ const PreguntaIndex = () => {
                 <td>{pregunta.texto}</td>
                 <td>{pregunta.id_examen}</td>
                 <td>
-                  {pregunta.imagen_url ? (
+                  {pregunta.path_imagen ? (
                     <img
-                      src={pregunta.imagen_url}
+                      src={`http://localhost:8000/storage/${pregunta.path_imagen}`}
                       alt="Imagen de la pregunta"
                       className="img-fluid"
                       style={{ width: '100px', height: 'auto' }}

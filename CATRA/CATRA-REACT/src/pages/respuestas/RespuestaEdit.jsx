@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import axiosClient from '/src/axios-client.jsx';
 import { useNavigate, useParams } from '@tanstack/react-router';
 
@@ -8,6 +8,16 @@ const RespuestaEdit = () => {
     const textoRef = useRef();
     const pathRef = useRef();
     const correctRef = useRef();
+
+    useEffect(() => {
+        axiosClient.get(`/respuestas/${preguntaId}`)
+            .then(({ data }) => {
+                textoRef.current.value = data.texto;
+                //pathRef.current.value = data.path_imagen;
+                correctRef.current.value = data.is_correct;
+            })
+            .catch((error) => console.error('Error al cargar Examen:', error));
+    }, [preguntaId]);
 
     const onSubmit = async (ev) => {
         ev.preventDefault();

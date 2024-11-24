@@ -30,6 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Storage::disk('private')->deleteDirectory('documentos_clientes');
+
         Schema::dropIfExists('documents');
 
         //Storage::deleteDirectory('/storage/private/documentos_clientes');
