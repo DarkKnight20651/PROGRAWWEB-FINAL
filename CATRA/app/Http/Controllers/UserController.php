@@ -73,11 +73,11 @@ class UserController extends Controller
         return response()->json(null, 204);
     }
 
+    /* if (!Gate::allows('update-documents-status')) {
+        return response()->json(['error' => 'No autorizado para actualizar documentos'], 403);
+    } */
     public function updateDocumentsStatus(Request $request, $id)
     {
-        /* if (!Gate::allows('update-documents-status')) {
-            return response()->json(['error' => 'No autorizado para actualizar documentos'], 403);
-        } */
 
         $user = User::find($id);
         if (!$user) {

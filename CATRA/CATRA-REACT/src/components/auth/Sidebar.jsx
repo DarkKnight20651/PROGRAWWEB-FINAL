@@ -13,14 +13,16 @@ const rutasAdmin = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
-  { name: 'Examenes', path: '/examenes' }
+  { name: 'Examenes', path: '/examenes' },
+  { name: 'Revisar documentos', path: '/validar-documentos' }
 ]
 
 const rutasSecre = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
-  { name: 'Examenes', path: '/examenes' }
+  { name: 'Examenes', path: '/examenes' },
+  { name: 'Revisar documentos', path: '/validar-documentos' }
 ]
 
 function getRoutesByRole(role) {

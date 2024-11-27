@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/users', UserController::class);
 
-    Route::post("/users/documents-status", [UserController::class, 'updateDocumentsStatus']);
+    Route::post("/users/documents-status/{id}", [UserController::class, 'updateDocumentsStatus']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('documents')->group(function () {
         Route::post('/upload', [DocumentController::class, 'store']);
         Route::get('/details', [DocumentController::class, 'getDocumentDetails']);
+        Route::get('/details/{id}', [DocumentController::class, 'getDocumentDetailsById']);
         Route::get('/show/{id}', [DocumentController::class, 'show']);
     });
 });

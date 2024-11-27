@@ -40,6 +40,34 @@ class DocumentController extends Controller
         return response()->json(['documentos' => $documentosDetalles], 200);
     }
 
+    public function getDocumentDetailsById(Request $request, $id)
+    {
+        $tiposDocumentos = ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'];
+        $documentosDetalles = [];
+
+        foreach ($tiposDocumentos as $tipo) {
+            $documento = Document::where('user_id', $id)
+                ->where('tipo', $tipo)
+                ->first();
+
+            if ($documento) {
+                $documentosDetalles[$tipo] = [
+                    'id' => $documento->id,
+                    'subido' => true,
+                    'estado' => $documento->estado,
+                    'updated_at' => $documento->updated_at,
+                    'comentarios' => $documento->comentarios
+                ];
+            } else {
+                $documentosDetalles[$tipo] = [
+                    'subido' => false,
+                ];
+            }
+        }
+
+        return response()->json(['documentos' => $documentosDetalles], 200);
+    }
+
 
     public function store(Request $request)
     {

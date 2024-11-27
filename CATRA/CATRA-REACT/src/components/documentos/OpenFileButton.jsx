@@ -23,7 +23,10 @@ const handleDownload = async (documentId) => {
 // eslint-disable-next-line react/prop-types
 const OpenFileButton = ({ documentId }) => {
 
-    return <button onClick={() => handleDownload(documentId)}
+    return <button onClick={(e) => {
+        e.preventDefault();
+        handleDownload(documentId)
+    }}
         className='btn btn-outline-primary'>Ver Documento</button>;
 };
 
