@@ -165,17 +165,12 @@ const Cursos = () => {
                   </div>
                 </div>
               </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
+            </div >
+          </div >
+        </div >
+      </section >
       <Footer />
-
-    </div>
+    </div >
   )
 }
 

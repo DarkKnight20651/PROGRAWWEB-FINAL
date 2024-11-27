@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -14,14 +15,13 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->string('nombre');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('ruta');
-            $table->enum('tipo', ['ine', 'comprobante_domicilio']);
+            $table->text("comentarios")->nullable(true);
+            $table->enum('tipo', ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp']);
+            $table->string('mime_type')->nullable();
             $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
             $table->timestamps();
-
-            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Storage::disk('private')->deleteDirectory('documentos_clientes');
+
         Schema::dropIfExists('documents');
+
+        //Storage::deleteDirectory('/storage/private/documentos_clientes');
     }
 };

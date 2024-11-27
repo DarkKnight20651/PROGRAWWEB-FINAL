@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 const Downloads = () => {
   // URLs de archivos de ejemplo
@@ -8,17 +7,18 @@ const Downloads = () => {
     { name: 'Archivo 2', url: '/path/to/file2.pdf' },
     { name: 'Archivo 3', url: '/path/to/file3.pdf' },
     { name: 'Archivo 4', url: '/path/to/file4.pdf' },
+    { name: 'Archivo 5', url: '/path/to/file5.pdf' },
   ];
 
   return (
     <>
       <div className="App gradient__bg">
-        
 
-        
-        
+
+
+
       </div>
-      
+
       <Container className="mt-5">
         <h2 className="text-center mb-4">Descargar Archivos</h2>
         <Row className="justify-content-center">
@@ -27,10 +27,10 @@ const Downloads = () => {
               <Card className="text-center">
                 <Card.Body>
                   <Card.Title>{file.name}</Card.Title>
-                  <Button 
-                    variant="primary" 
-                    href={file.url} 
-                    download 
+                  <Button
+                    variant="primary"
+                    href={file.url}
+                    download
                     target="_blank"
                   >
                     Descargar
@@ -41,7 +41,7 @@ const Downloads = () => {
           ))}
         </Row>
       </Container>
-      
+
     </>
   );
 }

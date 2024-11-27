@@ -6,10 +6,26 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ExamenController;
+use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\RespuestaController;
+
+Route::apiResource('clientes', ClienteController::class);
+
+Route::get('examen/{id}/all', [ExamenController::class, 'getAll']);
+Route::get('cliente/{curp}/examenes', [ClienteController::class, 'getExamens']);
+Route::get('examen/{id_examen}/preguntas', [PreguntaController::class, 'getPreguntasByExamen']);
+Route::get('pregunta/{id_pregunta}/respuestas', [RespuestaController::class, 'getRespuestasByPregunta']);
+
+Route::apiResource('preguntas', PreguntaController::class);
+Route::apiResource('examenes', ExamenController::class);
+Route::apiResource('respuestas', RespuestaController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('clientes', ClienteController::class);
+
+    Route::apiResource('/users', UserController::class);
+
+    Route::post("/users/documents-status", [UserController::class, 'updateDocumentsStatus']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -25,10 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/upload', [DocumentController::class, 'store']);
         Route::get('/details', [DocumentController::class, 'getDocumentDetails']);
         Route::get('/show/{id}', [DocumentController::class, 'show']);
-        Route::post('/update/{id}', [DocumentController::class, 'update']);
     });
 });
 
-Route::post('/registrar-cliente', [ClienteController::class, 'registrar']);
-//Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

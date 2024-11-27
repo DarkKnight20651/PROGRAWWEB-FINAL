@@ -6,13 +6,7 @@ import { FaFacebook, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => (
   <div className="catra__footer section__padding">
-    <div className="catra__footer-heading">
-      <h1 className="textred">¿Quieres estar un paso adelante de los demás?</h1>
-    </div>
-
-    <div className="catra__footer-btn">
-      <h1 id='soli'>Solicitar Inscripción </h1>
-    </div>
+   
 
     <div className="catra__footer-links">
       <div className="catra__footer-links_logo">

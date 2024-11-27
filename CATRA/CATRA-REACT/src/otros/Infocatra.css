@@ -1,33 +1,45 @@
 .App {
-    font-family: Arial, sans-serif;
-    color: #333;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
-
-
 .catra__infocatra__values {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .catra__infocatra__value {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.catra__infocatra__value h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
+.catra__infocatra__value h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
 }
 
 .catra__infocatra__value p {
-    font-size: 18px;
-    line-height: 1.6;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.catra__infocatra__image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.historia {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40px;
 }

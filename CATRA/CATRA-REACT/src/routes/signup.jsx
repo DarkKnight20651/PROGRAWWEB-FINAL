@@ -9,8 +9,8 @@ import { fallback } from '/src/auth-utils';
 import guestGuard from '../util/guestGuard';
 
 export const Route = createFileRoute('/signup')({
-  beforeLoad: async ({ context }) => {
-    await guestGuard(context, fallback);
+  beforeLoad: ({ context }) => {
+    guestGuard(context, fallback);
   },
   component: SignupComponent,
 });
@@ -70,7 +70,7 @@ function SignupComponent() {
         await navigate({ to: "/dashboard" });
       }
     } catch (error) {
-      console.log("ERROR - ", error);
+      console.log("ERROR SIGNUP - ", error);
       setErrors(() => error.mensajes || {});
     } finally {
       setIsSubmitting(false);
@@ -214,6 +214,8 @@ function SignupComponent() {
                     className="form-control"
                     placeholder="Ingresa tu número de teléfono"
                     required
+                    pattern="\d{10}" /* Pattern to ensure exactly 10 digits */
+                    title="El número de teléfono debe tener exactamente 10 dígitos."
                   />
                 </div>
               </div>
@@ -266,3 +268,5 @@ function SignupComponent() {
     </div>
   );
 }
+
+export default SignupComponent;

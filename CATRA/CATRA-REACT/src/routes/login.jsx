@@ -1,19 +1,19 @@
-import * as React from 'react'
 import {
   createFileRoute,
   Link,
   useRouter,
   useRouterState,
 } from '@tanstack/react-router'
-import '/src/pages/login/Login.css'
-import useAuth from '/src/useAuth'
 
-import { fallback } from '/src/auth-utils'
-import guestGuard from '../util/guestGuard'
+import 'src/pages/login/Login.css'
+import useAuth from 'src/useAuth'
+import { fallback } from 'src/auth-utils'
+import guestGuard from 'src/util/guestGuard'
+import { useRef, useState } from 'react'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async ({ context }) => {
-    await guestGuard(context, fallback);
+    guestGuard(context, fallback);
   },
   component: LoginComponent,
 })
@@ -23,11 +23,11 @@ function LoginComponent() {
   const navigate = Route.useNavigate()
   const router = useRouter()
   const isLoading = useRouterState({ select: (s) => s.isLoading })
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [errors, setErrors] = React.useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errors, setErrors] = useState({});
 
-  const emailRef = React.createRef();
-  const passwordRef = React.createRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
   
   const search = Route.useSearch()
 
@@ -35,7 +35,7 @@ function LoginComponent() {
     setIsSubmitting(true)
     evt.preventDefault()
     try {
-        const resultado = await auth.login(emailRef.current.value, passwordRef.current.value)
+        const resultado = await auth.login(emailRef.current?.value, passwordRef.current?.value)
 
         if(resultado === "Success") {
             await router.invalidate()
@@ -56,7 +56,7 @@ function LoginComponent() {
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 w-25">
-        <h3 className="text-center">INICIAR SESIÓN</h3>
+        <h3 className="text-center">Iniciar sesión</h3>
 
         {search.redirect && (
         <p className="text-red-500">Primero necesitas iniciar sesión.</p>
@@ -66,13 +66,13 @@ function LoginComponent() {
           <fieldset disabled={isLoggingIn}>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">DIRECCIÓN DE CORREO</label>
+            <label htmlFor="email" className="form-label"> Correo electronico</label>
             <input
               ref={emailRef}
               type="email"
               className="form-control"
               id="email"
-              placeholder="INGRESA EMAIL"
+              placeholder="ejemplo@gmail.com"
             />
 
             {errors.email && (
@@ -86,13 +86,13 @@ function LoginComponent() {
             )}
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">CONTRASEÑA</label>
+            <label htmlFor="password" className="form-label">Contraseña</label>
             <input
               ref={passwordRef}
               type="password"
               className="form-control"
               id="password"
-              placeholder="CONTRASEÑA"
+              placeholder="contraseña"
             />
 
             {errors.password && (

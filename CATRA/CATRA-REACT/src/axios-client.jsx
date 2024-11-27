@@ -12,18 +12,16 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem(access_token_key);
-
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
         } else {
             console.log(
                 "no se proporcionó token para " +
-                    config.url +
-                    ", método HTTP = " +
-                    config.method,
+                config.url +
+                ", método HTTP = " +
+                config.method,
             );
         }
-
         return config;
     }
 );

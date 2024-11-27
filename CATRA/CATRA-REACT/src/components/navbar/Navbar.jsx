@@ -8,7 +8,7 @@ import useAuth from '../../useAuth'
 const Menu = () => {
   return (
     <>
-      <p><Link to={"/"}>Home</Link></p>
+      <p><Link to={"/"}>Inicio</Link></p>
       <p><Link to={"/info-catra"}>¿Qué es CATRA?</Link></p>
       <p><Link to={"/nuestros-cursos"}>Nuestros servicios</Link></p>
       <p><a href='/#categorias'>Categorias</a></p>
@@ -22,17 +22,21 @@ const BotonesNavbar = () => {
   
   if (auth.isAuthenticated) {
     return (
-      <button type="button"><Link to='/dashboard' style={{ textDecoration: 'none', color: 'white' }}>
-        Dashboard</Link>
+      <button type="button"><Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', }}>
+        Funciones </Link>
       </button>
     )
   } else {
     return (<>
-      <button type="button"><Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>
-        Iniciar sesión</Link>
+      <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
+      <Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>
+      Iniciar sesión
+      </Link>
       </button>
-      <button type="button"><Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
-        Registrarse</Link>
+      <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
+      <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
+      Registrarse
+      </Link>
       </button>
     </>)
   }

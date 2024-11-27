@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 
-import useAuth from '/src/useAuth'
+import useAuth from 'src/useAuth'
 
 export const Route = createFileRoute('/_auth/perfil')({
   component: ProfilePage,

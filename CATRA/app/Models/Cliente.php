@@ -9,13 +9,14 @@ class Cliente extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $primaryKey = 'curp';
     protected $keyType = 'string';
     public $incrementing = false;
 
     protected $fillable = [
         'curp',
-        'id_user',
         'telefono',
         'nombre',
         'ape_p',
@@ -26,7 +27,6 @@ class Cliente extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id');
+        return $this->belongsTo(User::class);
     }
-    
 }

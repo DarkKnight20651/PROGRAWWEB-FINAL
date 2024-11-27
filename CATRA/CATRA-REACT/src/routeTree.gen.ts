@@ -24,13 +24,23 @@ import { Route as AuthClientesRouteImport } from './routes/_auth/clientes/route'
 import { Route as AuthClienteRouteImport } from './routes/_auth/_cliente/route'
 import { Route as AuthAdminRouteImport } from './routes/_auth/_admin/route'
 import { Route as AuthUsuariosIndexImport } from './routes/_auth/usuarios/index'
+import { Route as AuthExamenesIndexImport } from './routes/_auth/examenes/index'
 import { Route as AuthClientesIndexImport } from './routes/_auth/clientes/index'
 import { Route as AuthUsuariosCrearImport } from './routes/_auth/usuarios/crear'
+import { Route as AuthExamenesCreateImport } from './routes/_auth/examenes/create'
 import { Route as AuthClientesCrearImport } from './routes/_auth/clientes/crear'
 import { Route as AuthClienteSubirDocumentosImport } from './routes/_auth/_cliente/subir-documentos'
 import { Route as AuthClienteRealizarExamenImport } from './routes/_auth/_cliente/realizar-examen'
 import { Route as AuthAdminSoloAdminImport } from './routes/_auth/_admin/solo-admin'
 import { Route as AuthUsuariosEditarUserIdImport } from './routes/_auth/usuarios/editar.$userId'
+import { Route as AuthExamenesExamenIdEditImport } from './routes/_auth/examenes/$examenId/edit'
+import { Route as AuthClientesEditarCurpImport } from './routes/_auth/clientes/editar.$curp'
+import { Route as AuthExamenesExamenIdPreguntasIndexImport } from './routes/_auth/examenes/$examenId/preguntas/index'
+import { Route as AuthExamenesExamenIdPreguntasCreateImport } from './routes/_auth/examenes/$examenId/preguntas/create'
+import { Route as AuthExamenesExamenIdPreguntasPreguntaIdEditImport } from './routes/_auth/examenes/$examenId/preguntas/$preguntaId/edit'
+import { Route as AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexImport } from './routes/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/index'
+import { Route as AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateImport } from './routes/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+import { Route as AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditImport } from './routes/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId.edit'
 
 // Create/Update Routes
 
@@ -109,6 +119,12 @@ const AuthUsuariosIndexRoute = AuthUsuariosIndexImport.update({
   getParentRoute: () => AuthUsuariosRouteRoute,
 } as any)
 
+const AuthExamenesIndexRoute = AuthExamenesIndexImport.update({
+  id: '/examenes/',
+  path: '/examenes/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
 const AuthClientesIndexRoute = AuthClientesIndexImport.update({
   id: '/',
   path: '/',
@@ -119,6 +135,12 @@ const AuthUsuariosCrearRoute = AuthUsuariosCrearImport.update({
   id: '/crear',
   path: '/crear',
   getParentRoute: () => AuthUsuariosRouteRoute,
+} as any)
+
+const AuthExamenesCreateRoute = AuthExamenesCreateImport.update({
+  id: '/examenes/create',
+  path: '/examenes/create',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthClientesCrearRoute = AuthClientesCrearImport.update({
@@ -152,6 +174,62 @@ const AuthUsuariosEditarUserIdRoute = AuthUsuariosEditarUserIdImport.update({
   path: '/editar/$userId',
   getParentRoute: () => AuthUsuariosRouteRoute,
 } as any)
+
+const AuthExamenesExamenIdEditRoute = AuthExamenesExamenIdEditImport.update({
+  id: '/examenes/$examenId/edit',
+  path: '/examenes/$examenId/edit',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthClientesEditarCurpRoute = AuthClientesEditarCurpImport.update({
+  id: '/editar/$curp',
+  path: '/editar/$curp',
+  getParentRoute: () => AuthClientesRouteRoute,
+} as any)
+
+const AuthExamenesExamenIdPreguntasIndexRoute =
+  AuthExamenesExamenIdPreguntasIndexImport.update({
+    id: '/examenes/$examenId/preguntas/',
+    path: '/examenes/$examenId/preguntas/',
+    getParentRoute: () => AuthRouteRoute,
+  } as any)
+
+const AuthExamenesExamenIdPreguntasCreateRoute =
+  AuthExamenesExamenIdPreguntasCreateImport.update({
+    id: '/examenes/$examenId/preguntas/create',
+    path: '/examenes/$examenId/preguntas/create',
+    getParentRoute: () => AuthRouteRoute,
+  } as any)
+
+const AuthExamenesExamenIdPreguntasPreguntaIdEditRoute =
+  AuthExamenesExamenIdPreguntasPreguntaIdEditImport.update({
+    id: '/examenes/$examenId/preguntas/$preguntaId/edit',
+    path: '/examenes/$examenId/preguntas/$preguntaId/edit',
+    getParentRoute: () => AuthRouteRoute,
+  } as any)
+
+const AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute =
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexImport.update({
+    id: '/examenes/$examenId/preguntas/$preguntaId/respuestas/',
+    path: '/examenes/$examenId/preguntas/$preguntaId/respuestas/',
+    getParentRoute: () => AuthRouteRoute,
+  } as any)
+
+const AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute =
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateImport.update({
+    id: '/examenes/$examenId/preguntas/$preguntaId/respuestas/create',
+    path: '/examenes/$examenId/preguntas/$preguntaId/respuestas/create',
+    getParentRoute: () => AuthRouteRoute,
+  } as any)
+
+const AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute =
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditImport.update(
+    {
+      id: '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit',
+      path: '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit',
+      getParentRoute: () => AuthRouteRoute,
+    } as any,
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -269,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthClientesCrearImport
       parentRoute: typeof AuthClientesRouteImport
     }
+    '/_auth/examenes/create': {
+      id: '/_auth/examenes/create'
+      path: '/examenes/create'
+      fullPath: '/examenes/create'
+      preLoaderRoute: typeof AuthExamenesCreateImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/usuarios/crear': {
       id: '/_auth/usuarios/crear'
       path: '/crear'
@@ -283,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthClientesIndexImport
       parentRoute: typeof AuthClientesRouteImport
     }
+    '/_auth/examenes/': {
+      id: '/_auth/examenes/'
+      path: '/examenes'
+      fullPath: '/examenes'
+      preLoaderRoute: typeof AuthExamenesIndexImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/usuarios/': {
       id: '/_auth/usuarios/'
       path: '/'
@@ -290,12 +382,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUsuariosIndexImport
       parentRoute: typeof AuthUsuariosRouteImport
     }
+    '/_auth/clientes/editar/$curp': {
+      id: '/_auth/clientes/editar/$curp'
+      path: '/editar/$curp'
+      fullPath: '/clientes/editar/$curp'
+      preLoaderRoute: typeof AuthClientesEditarCurpImport
+      parentRoute: typeof AuthClientesRouteImport
+    }
+    '/_auth/examenes/$examenId/edit': {
+      id: '/_auth/examenes/$examenId/edit'
+      path: '/examenes/$examenId/edit'
+      fullPath: '/examenes/$examenId/edit'
+      preLoaderRoute: typeof AuthExamenesExamenIdEditImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/usuarios/editar/$userId': {
       id: '/_auth/usuarios/editar/$userId'
       path: '/editar/$userId'
       fullPath: '/usuarios/editar/$userId'
       preLoaderRoute: typeof AuthUsuariosEditarUserIdImport
       parentRoute: typeof AuthUsuariosRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/create': {
+      id: '/_auth/examenes/$examenId/preguntas/create'
+      path: '/examenes/$examenId/preguntas/create'
+      fullPath: '/examenes/$examenId/preguntas/create'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasCreateImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/': {
+      id: '/_auth/examenes/$examenId/preguntas/'
+      path: '/examenes/$examenId/preguntas'
+      fullPath: '/examenes/$examenId/preguntas'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasIndexImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/$preguntaId/edit': {
+      id: '/_auth/examenes/$examenId/preguntas/$preguntaId/edit'
+      path: '/examenes/$examenId/preguntas/$preguntaId/edit'
+      fullPath: '/examenes/$examenId/preguntas/$preguntaId/edit'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdEditImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create': {
+      id: '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+      path: '/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+      fullPath: '/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/': {
+      id: '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/'
+      path: '/examenes/$examenId/preguntas/$preguntaId/respuestas'
+      fullPath: '/examenes/$examenId/preguntas/$preguntaId/respuestas'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit': {
+      id: '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
+      path: '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
+      fullPath: '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
+      preLoaderRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditImport
+      parentRoute: typeof AuthRouteImport
     }
   }
 }
@@ -330,11 +478,13 @@ const AuthClienteRouteRouteWithChildren =
 interface AuthClientesRouteRouteChildren {
   AuthClientesCrearRoute: typeof AuthClientesCrearRoute
   AuthClientesIndexRoute: typeof AuthClientesIndexRoute
+  AuthClientesEditarCurpRoute: typeof AuthClientesEditarCurpRoute
 }
 
 const AuthClientesRouteRouteChildren: AuthClientesRouteRouteChildren = {
   AuthClientesCrearRoute: AuthClientesCrearRoute,
   AuthClientesIndexRoute: AuthClientesIndexRoute,
+  AuthClientesEditarCurpRoute: AuthClientesEditarCurpRoute,
 }
 
 const AuthClientesRouteRouteWithChildren =
@@ -362,6 +512,15 @@ interface AuthRouteRouteChildren {
   AuthUsuariosRouteRoute: typeof AuthUsuariosRouteRouteWithChildren
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthPerfilRoute: typeof AuthPerfilRoute
+  AuthExamenesCreateRoute: typeof AuthExamenesCreateRoute
+  AuthExamenesIndexRoute: typeof AuthExamenesIndexRoute
+  AuthExamenesExamenIdEditRoute: typeof AuthExamenesExamenIdEditRoute
+  AuthExamenesExamenIdPreguntasCreateRoute: typeof AuthExamenesExamenIdPreguntasCreateRoute
+  AuthExamenesExamenIdPreguntasIndexRoute: typeof AuthExamenesExamenIdPreguntasIndexRoute
+  AuthExamenesExamenIdPreguntasPreguntaIdEditRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdEditRoute
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute: typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
@@ -371,6 +530,21 @@ const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthUsuariosRouteRoute: AuthUsuariosRouteRouteWithChildren,
   AuthDashboardRoute: AuthDashboardRoute,
   AuthPerfilRoute: AuthPerfilRoute,
+  AuthExamenesCreateRoute: AuthExamenesCreateRoute,
+  AuthExamenesIndexRoute: AuthExamenesIndexRoute,
+  AuthExamenesExamenIdEditRoute: AuthExamenesExamenIdEditRoute,
+  AuthExamenesExamenIdPreguntasCreateRoute:
+    AuthExamenesExamenIdPreguntasCreateRoute,
+  AuthExamenesExamenIdPreguntasIndexRoute:
+    AuthExamenesExamenIdPreguntasIndexRoute,
+  AuthExamenesExamenIdPreguntasPreguntaIdEditRoute:
+    AuthExamenesExamenIdPreguntasPreguntaIdEditRoute,
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute:
+    AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute,
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute:
+    AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute,
+  AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute:
+    AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
@@ -392,10 +566,20 @@ export interface FileRoutesByFullPath {
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
   '/clientes/crear': typeof AuthClientesCrearRoute
+  '/examenes/create': typeof AuthExamenesCreateRoute
   '/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/clientes/': typeof AuthClientesIndexRoute
+  '/examenes': typeof AuthExamenesIndexRoute
   '/usuarios/': typeof AuthUsuariosIndexRoute
+  '/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
+  '/examenes/$examenId/edit': typeof AuthExamenesExamenIdEditRoute
   '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
+  '/examenes/$examenId/preguntas/create': typeof AuthExamenesExamenIdPreguntasCreateRoute
+  '/examenes/$examenId/preguntas': typeof AuthExamenesExamenIdPreguntasIndexRoute
+  '/examenes/$examenId/preguntas/$preguntaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdEditRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas/create': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute
 }
 
 export interface FileRoutesByTo {
@@ -411,10 +595,20 @@ export interface FileRoutesByTo {
   '/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/subir-documentos': typeof AuthClienteSubirDocumentosRoute
   '/clientes/crear': typeof AuthClientesCrearRoute
+  '/examenes/create': typeof AuthExamenesCreateRoute
   '/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/clientes': typeof AuthClientesIndexRoute
+  '/examenes': typeof AuthExamenesIndexRoute
   '/usuarios': typeof AuthUsuariosIndexRoute
+  '/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
+  '/examenes/$examenId/edit': typeof AuthExamenesExamenIdEditRoute
   '/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
+  '/examenes/$examenId/preguntas/create': typeof AuthExamenesExamenIdPreguntasCreateRoute
+  '/examenes/$examenId/preguntas': typeof AuthExamenesExamenIdPreguntasIndexRoute
+  '/examenes/$examenId/preguntas/$preguntaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdEditRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas/create': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute
+  '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute
 }
 
 export interface FileRoutesById {
@@ -435,10 +629,20 @@ export interface FileRoutesById {
   '/_auth/_cliente/realizar-examen': typeof AuthClienteRealizarExamenRoute
   '/_auth/_cliente/subir-documentos': typeof AuthClienteSubirDocumentosRoute
   '/_auth/clientes/crear': typeof AuthClientesCrearRoute
+  '/_auth/examenes/create': typeof AuthExamenesCreateRoute
   '/_auth/usuarios/crear': typeof AuthUsuariosCrearRoute
   '/_auth/clientes/': typeof AuthClientesIndexRoute
+  '/_auth/examenes/': typeof AuthExamenesIndexRoute
   '/_auth/usuarios/': typeof AuthUsuariosIndexRoute
+  '/_auth/clientes/editar/$curp': typeof AuthClientesEditarCurpRoute
+  '/_auth/examenes/$examenId/edit': typeof AuthExamenesExamenIdEditRoute
   '/_auth/usuarios/editar/$userId': typeof AuthUsuariosEditarUserIdRoute
+  '/_auth/examenes/$examenId/preguntas/create': typeof AuthExamenesExamenIdPreguntasCreateRoute
+  '/_auth/examenes/$examenId/preguntas/': typeof AuthExamenesExamenIdPreguntasIndexRoute
+  '/_auth/examenes/$examenId/preguntas/$preguntaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdEditRoute
+  '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasCreateRoute
+  '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasIndexRoute
+  '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit': typeof AuthExamenesExamenIdPreguntasPreguntaIdRespuestasRespuestaIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -458,10 +662,20 @@ export interface FileRouteTypes {
     | '/realizar-examen'
     | '/subir-documentos'
     | '/clientes/crear'
+    | '/examenes/create'
     | '/usuarios/crear'
     | '/clientes/'
+    | '/examenes'
     | '/usuarios/'
+    | '/clientes/editar/$curp'
+    | '/examenes/$examenId/edit'
     | '/usuarios/editar/$userId'
+    | '/examenes/$examenId/preguntas/create'
+    | '/examenes/$examenId/preguntas'
+    | '/examenes/$examenId/preguntas/$preguntaId/edit'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -476,10 +690,20 @@ export interface FileRouteTypes {
     | '/realizar-examen'
     | '/subir-documentos'
     | '/clientes/crear'
+    | '/examenes/create'
     | '/usuarios/crear'
     | '/clientes'
+    | '/examenes'
     | '/usuarios'
+    | '/clientes/editar/$curp'
+    | '/examenes/$examenId/edit'
     | '/usuarios/editar/$userId'
+    | '/examenes/$examenId/preguntas/create'
+    | '/examenes/$examenId/preguntas'
+    | '/examenes/$examenId/preguntas/$preguntaId/edit'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas'
+    | '/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
   id:
     | '__root__'
     | '/'
@@ -498,10 +722,20 @@ export interface FileRouteTypes {
     | '/_auth/_cliente/realizar-examen'
     | '/_auth/_cliente/subir-documentos'
     | '/_auth/clientes/crear'
+    | '/_auth/examenes/create'
     | '/_auth/usuarios/crear'
     | '/_auth/clientes/'
+    | '/_auth/examenes/'
     | '/_auth/usuarios/'
+    | '/_auth/clientes/editar/$curp'
+    | '/_auth/examenes/$examenId/edit'
     | '/_auth/usuarios/editar/$userId'
+    | '/_auth/examenes/$examenId/preguntas/create'
+    | '/_auth/examenes/$examenId/preguntas/'
+    | '/_auth/examenes/$examenId/preguntas/$preguntaId/edit'
+    | '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create'
+    | '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/'
+    | '/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -552,7 +786,16 @@ export const routeTree = rootRoute
         "/_auth/clientes",
         "/_auth/usuarios",
         "/_auth/dashboard",
-        "/_auth/perfil"
+        "/_auth/perfil",
+        "/_auth/examenes/create",
+        "/_auth/examenes/",
+        "/_auth/examenes/$examenId/edit",
+        "/_auth/examenes/$examenId/preguntas/create",
+        "/_auth/examenes/$examenId/preguntas/",
+        "/_auth/examenes/$examenId/preguntas/$preguntaId/edit",
+        "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create",
+        "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/",
+        "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit"
       ]
     },
     "/info-catra": {
@@ -587,7 +830,8 @@ export const routeTree = rootRoute
       "parent": "/_auth",
       "children": [
         "/_auth/clientes/crear",
-        "/_auth/clientes/"
+        "/_auth/clientes/",
+        "/_auth/clientes/editar/$curp"
       ]
     },
     "/_auth/usuarios": {
@@ -623,6 +867,10 @@ export const routeTree = rootRoute
       "filePath": "_auth/clientes/crear.jsx",
       "parent": "/_auth/clientes"
     },
+    "/_auth/examenes/create": {
+      "filePath": "_auth/examenes/create.jsx",
+      "parent": "/_auth"
+    },
     "/_auth/usuarios/crear": {
       "filePath": "_auth/usuarios/crear.jsx",
       "parent": "/_auth/usuarios"
@@ -631,13 +879,49 @@ export const routeTree = rootRoute
       "filePath": "_auth/clientes/index.jsx",
       "parent": "/_auth/clientes"
     },
+    "/_auth/examenes/": {
+      "filePath": "_auth/examenes/index.jsx",
+      "parent": "/_auth"
+    },
     "/_auth/usuarios/": {
       "filePath": "_auth/usuarios/index.jsx",
       "parent": "/_auth/usuarios"
     },
+    "/_auth/clientes/editar/$curp": {
+      "filePath": "_auth/clientes/editar.$curp.jsx",
+      "parent": "/_auth/clientes"
+    },
+    "/_auth/examenes/$examenId/edit": {
+      "filePath": "_auth/examenes/$examenId/edit.jsx",
+      "parent": "/_auth"
+    },
     "/_auth/usuarios/editar/$userId": {
       "filePath": "_auth/usuarios/editar.$userId.jsx",
       "parent": "/_auth/usuarios"
+    },
+    "/_auth/examenes/$examenId/preguntas/create": {
+      "filePath": "_auth/examenes/$examenId/preguntas/create.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/examenes/$examenId/preguntas/": {
+      "filePath": "_auth/examenes/$examenId/preguntas/index.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/examenes/$examenId/preguntas/$preguntaId/edit": {
+      "filePath": "_auth/examenes/$examenId/preguntas/$preguntaId/edit.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create": {
+      "filePath": "_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/create.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/": {
+      "filePath": "_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/index.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId/edit": {
+      "filePath": "_auth/examenes/$examenId/preguntas/$preguntaId/respuestas/$respuestaId.edit.jsx",
+      "parent": "/_auth"
     }
   }
 }

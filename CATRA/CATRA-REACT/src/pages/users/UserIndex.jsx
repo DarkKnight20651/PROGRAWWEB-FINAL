@@ -2,35 +2,51 @@ import { useState, useEffect } from 'react';
 import axiosClient from '../../axios-client';
 import { useNavigate } from '@tanstack/react-router';
 
+import 'src/assets/bootstrap.min.css'
+
 const UserManager = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
-    const response = await axiosClient.get('/users');
-    setUsers(response.data);
-  };
-
   useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchUsers = async () => {
+      const response = await axiosClient.get('/users', { signal: controller.signal });
+      setUsers(response.data);
+    };
+
     fetchUsers();
+
+    return () => controller.abort();
   }, []);
 
-  const createUser = () => {
-    navigate("/usuarios/crear");
+  const createUser = async () => {
+    await navigate({ to: "/usuarios/crear" });
   }
-  const handleEditUser = (user) => {
-    navigate(`/usuarios/editar/${user.id}`);
+  const handleEditUser = async (user) => {
+    await navigate({ to: `/usuarios/editar/${user.id}` });
   };
+
   const deleteUser = async (id) => {
-    await axiosClient.delete(`/users/${id}`);
-    setUsers(users.filter((user) => user.id !== id));
+    try {
+      await axiosClient.delete(`/users/${id}`);
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (error) {
+      console.log("Error al eliminar el usuario", error);
+    }
   };
+
   return (
     <div>
-      <h1>Administración de Usuarios</h1>
+      <h1 className="text-center mb-4">Administración de Usuarios</h1>
       <div className="container">
-        <button onClick={createUser} className="edit">Nuevo Usuario</button>
-        <table>
+        <div className="d-flex justify-content-end mb-3">
+          <button onClick={createUser} className="btn btn-success">
+            Nuevo Usuario
+          </button>
+        </div>
+        <table className="table table-bordered table-striped table-responsive">
           <thead>
             <tr>
               <th>ID</th>
@@ -46,8 +62,18 @@ const UserManager = () => {
                 <td>{user.role}</td>
                 <td>{user.email}</td>
                 <td>
-                  <button onClick={() => handleEditUser(user)} className="edit">Editar</button>
-                  <button onClick={() => deleteUser(user.id)} className="delete">Eliminar</button>
+                  <button
+                    onClick={() => handleEditUser(user)}
+                    className="btn btn-primary btn-sm me-2"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="btn btn-danger btn-sm"
+                  >
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}
@@ -55,7 +81,7 @@ const UserManager = () => {
         </table>
       </div>
     </div>
-  );
+  )
 };
 
 export default UserManager;

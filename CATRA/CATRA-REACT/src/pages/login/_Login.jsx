@@ -40,23 +40,23 @@ const Login = () => {
                 <p>{message}</p>
               </div>
             )}
-            <label htmlFor="email" className="form-label">DIRECCIÓN DE CORREO</label>
+            <label htmlFor="email" className="form-label">Correo electrónico</label>
             <input
               ref={emailRef}
               type="email"
               className="form-control"
               id="email"
-              placeholder="INGRESA EMAIL"
+              placeholder="example@gmail.com"
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">CONTRASEÑA</label>
+            <label htmlFor="password" className="form-label">contraseña</label>
             <input
               ref={passwordRef}
               type="password"
               className="form-control"
               id="password"
-              placeholder="CONTRASEÑA"
+              placeholder="Contraseña"
             />
           </div>
           <div className="d-grid">

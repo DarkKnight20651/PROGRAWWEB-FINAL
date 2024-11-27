@@ -14,9 +14,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-radius: var(--navbar-links-border-radius);
-    border: var(--navbar-links-border);
-    
+   
     box-shadow: var(--navbar-links-box-shadow);
     padding: var(--navbar-links-padding);
 }
@@ -33,7 +31,7 @@
 .catra__navbar-links_container {
     display: flex;
     flex-direction: row;
-    
+   
 
 }
 .catra__navbar-links_container  a{
@@ -41,6 +39,9 @@
     text-decoration: none;
     font-family: var(--font-family);
     font-weight: 650;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 25px;
 }
 
 
@@ -69,12 +70,16 @@
 .catra__navbar-sign p {
     margin-right: 1rem;
 }
+.catra__navbar-sign button{
+    margin-right: 1rem;
+    font-size: 25px;
+}
 
 .catra__navbar-sign button,
 .catra__navbar-sign_container button {
     padding: 0.5rem 1rem;
     color: #fff;
-   
+   font-size: 25px;
     font-family: var(--font-family);
     font-weight: 500;
     font-size: 18px;

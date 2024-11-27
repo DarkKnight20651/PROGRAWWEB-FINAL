@@ -1,0 +1,26 @@
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between; /* Espacio entre información y botones */
+    align-items: center; /* Centra verticalmente */
+}
+
+.card-info {
+    text-align: left; /* Asegura que la información quede a la izquierda */
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px; /* Espacio entre botones */
+}
+p{
+    text-transform: uppercase;
+}

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { fallback } from '/src/auth-utils.js'
-import roleGuard from '../../../util/roleGuard';
+import { fallback } from 'src/auth-utils.js'
+import roleGuard from 'src/util/roleGuard';
 
 export const Route = createFileRoute('/_auth/usuarios')({
   beforeLoad: async ({ context }) => {
