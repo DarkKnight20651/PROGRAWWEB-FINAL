@@ -19,6 +19,8 @@ import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthPerfilImport } from './routes/_auth/perfil'
 import { Route as AuthDashboardImport } from './routes/_auth/dashboard'
+import { Route as AuthSeleccionCursoImport } from './routes/_auth/Seleccion-Curso'
+import { Route as AuthListaDistribucionImport } from './routes/_auth/Lista-Distribucion'
 import { Route as AuthUsuariosRouteImport } from './routes/_auth/usuarios/route'
 import { Route as AuthClientesRouteImport } from './routes/_auth/clientes/route'
 import { Route as AuthClienteRouteImport } from './routes/_auth/_cliente/route'
@@ -90,6 +92,18 @@ const AuthPerfilRoute = AuthPerfilImport.update({
 const AuthDashboardRoute = AuthDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthSeleccionCursoRoute = AuthSeleccionCursoImport.update({
+  id: '/Seleccion-Curso',
+  path: '/Seleccion-Curso',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthListaDistribucionRoute = AuthListaDistribucionImport.update({
+  id: '/Lista-Distribucion',
+  path: '/Lista-Distribucion',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
@@ -322,6 +336,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUsuariosRouteImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/Lista-Distribucion': {
+      id: '/_auth/Lista-Distribucion'
+      path: '/Lista-Distribucion'
+      fullPath: '/Lista-Distribucion'
+      preLoaderRoute: typeof AuthListaDistribucionImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/Seleccion-Curso': {
+      id: '/_auth/Seleccion-Curso'
+      path: '/Seleccion-Curso'
+      fullPath: '/Seleccion-Curso'
+      preLoaderRoute: typeof AuthSeleccionCursoImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -541,6 +569,8 @@ interface AuthRouteRouteChildren {
   AuthClienteRouteRoute: typeof AuthClienteRouteRouteWithChildren
   AuthClientesRouteRoute: typeof AuthClientesRouteRouteWithChildren
   AuthUsuariosRouteRoute: typeof AuthUsuariosRouteRouteWithChildren
+  AuthListaDistribucionRoute: typeof AuthListaDistribucionRoute
+  AuthSeleccionCursoRoute: typeof AuthSeleccionCursoRoute
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthPerfilRoute: typeof AuthPerfilRoute
   AuthExamenesCreateRoute: typeof AuthExamenesCreateRoute
@@ -561,6 +591,8 @@ const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthClienteRouteRoute: AuthClienteRouteRouteWithChildren,
   AuthClientesRouteRoute: AuthClientesRouteRouteWithChildren,
   AuthUsuariosRouteRoute: AuthUsuariosRouteRouteWithChildren,
+  AuthListaDistribucionRoute: AuthListaDistribucionRoute,
+  AuthSeleccionCursoRoute: AuthSeleccionCursoRoute,
   AuthDashboardRoute: AuthDashboardRoute,
   AuthPerfilRoute: AuthPerfilRoute,
   AuthExamenesCreateRoute: AuthExamenesCreateRoute,
@@ -595,6 +627,8 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/clientes': typeof AuthClientesRouteRouteWithChildren
   '/usuarios': typeof AuthUsuariosRouteRouteWithChildren
+  '/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
   '/solo-admin': typeof AuthAdminSoloAdminRoute
@@ -626,6 +660,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/nuestros-cursos': typeof NuestrosCursosRoute
   '/signup': typeof SignupRoute
+  '/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
   '/solo-admin': typeof AuthAdminSoloAdminRoute
@@ -662,6 +698,8 @@ export interface FileRoutesById {
   '/_auth/_cliente': typeof AuthClienteRouteRouteWithChildren
   '/_auth/clientes': typeof AuthClientesRouteRouteWithChildren
   '/_auth/usuarios': typeof AuthUsuariosRouteRouteWithChildren
+  '/_auth/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/_auth/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/perfil': typeof AuthPerfilRoute
   '/_auth/_admin/solo-admin': typeof AuthAdminSoloAdminRoute
@@ -697,6 +735,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/clientes'
     | '/usuarios'
+    | '/Lista-Distribucion'
+    | '/Seleccion-Curso'
     | '/dashboard'
     | '/perfil'
     | '/solo-admin'
@@ -727,6 +767,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/nuestros-cursos'
     | '/signup'
+    | '/Lista-Distribucion'
+    | '/Seleccion-Curso'
     | '/dashboard'
     | '/perfil'
     | '/solo-admin'
@@ -761,6 +803,8 @@ export interface FileRouteTypes {
     | '/_auth/_cliente'
     | '/_auth/clientes'
     | '/_auth/usuarios'
+    | '/_auth/Lista-Distribucion'
+    | '/_auth/Seleccion-Curso'
     | '/_auth/dashboard'
     | '/_auth/perfil'
     | '/_auth/_admin/solo-admin'
@@ -832,6 +876,8 @@ export const routeTree = rootRoute
         "/_auth/_cliente",
         "/_auth/clientes",
         "/_auth/usuarios",
+        "/_auth/Lista-Distribucion",
+        "/_auth/Seleccion-Curso",
         "/_auth/dashboard",
         "/_auth/perfil",
         "/_auth/examenes/create",
@@ -891,6 +937,14 @@ export const routeTree = rootRoute
         "/_auth/usuarios/",
         "/_auth/usuarios/editar/$userId"
       ]
+    },
+    "/_auth/Lista-Distribucion": {
+      "filePath": "_auth/Lista-Distribucion.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/Seleccion-Curso": {
+      "filePath": "_auth/Seleccion-Curso.jsx",
+      "parent": "/_auth"
     },
     "/_auth/dashboard": {
       "filePath": "_auth/dashboard.jsx",

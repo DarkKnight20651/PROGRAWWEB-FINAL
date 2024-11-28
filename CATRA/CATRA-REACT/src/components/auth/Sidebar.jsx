@@ -7,6 +7,7 @@ import './style.css'
 const rutasClientes = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Subir Documentos', path: '/subir-documentos' },
+  { name: 'Solicitar Curso', path: '/Seleccion-Curso' }
 ]
 
 const rutasAdmin = [
@@ -14,6 +15,7 @@ const rutasAdmin = [
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
   { name: 'Examenes', path: '/examenes' },
+  { name: 'Lista de Distribucion', path: '/Lista-Distribucion' },
   { name: 'Revisar documentos', path: '/validar-documentos' }
 ]
 

@@ -9,6 +9,13 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\RespuestaController;
+use App\Http\Controllers\InscriptionController;
+
+Route::post('/inscriptions', [InscriptionController::class, 'store']);
+Route::post('/user/documents', [DocumentController::class, 'getUserDocuments']);
+Route::get('/inscriptions', [InscriptionController::class, 'index']);
+Route::put('/inscriptions/{id}', [InscriptionController::class, 'update']);
+
 
 Route::apiResource('clientes', ClienteController::class);
 
