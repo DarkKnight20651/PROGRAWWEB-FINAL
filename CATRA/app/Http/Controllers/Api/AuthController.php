@@ -7,14 +7,15 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
         $validated = $request->validated();
 
-        $user = User::where('email', $validated['email'])->first();
+        $user = User::where('email', $validated['email'])->with('Cliente')->first();
+        Log::info('User fetched:', ['user' => $user]);
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return response()->json([

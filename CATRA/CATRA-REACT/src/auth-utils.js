@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 export const user_key = 'auth.user';
+export const cliente_key = 'auth.cliente';
 export const access_token_key = 'auth.access_token';
 
 export const fallback = "/dashboard";
@@ -14,16 +15,24 @@ export const AuthContext = createContext(null);
 export function getStoredUser() {
   return JSON.parse(localStorage.getItem(user_key));
 }
-
-export function persistUserInfo(user, token) {
+export function getStoredCliente() {
+  return JSON.parse(localStorage.getItem(cliente_key));
+}
+export function persistUserInfo(user, token, cliente) {
   localStorage.setItem(user_key, JSON.stringify(user));
   localStorage.setItem(access_token_key, token);
+  localStorage.setItem(cliente_key, JSON.stringify(cliente)); // Guardar cliente
 }
+
 
 export const initialState = {
   user: getStoredUser(),
+  cliente: getStoredCliente(),  // Nueva propiedad cliente
   isAuthenticated: getStoredUser() ? true : false,
 };
+
+
+
 
 export function authReducer(state, action) {
   switch (action.type) {
@@ -32,6 +41,7 @@ export function authReducer(state, action) {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
+        cliente: action.payload.cliente,
       };
     case LOGOUT:
       return {
@@ -44,6 +54,7 @@ export function authReducer(state, action) {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
+        cliente: action.payload.cliente,
       };
     default:
       return state;
@@ -51,6 +62,7 @@ export function authReducer(state, action) {
 }
 
 export function cleanUserStorage() {
-  localStorage.removeItem(access_token_key);
-  localStorage.removeItem(user_key);
+  localStorage.removeItem(access_token_key);  // Elimina el token de acceso
+  localStorage.removeItem(user_key);  // Elimina el usuario
+  localStorage.removeItem(cliente_key);  // Elimina la información del cliente
 }

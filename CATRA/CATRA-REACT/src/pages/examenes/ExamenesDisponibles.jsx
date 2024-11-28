@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router'
 import axiosClient from '/src/axios-client.jsx';
 import '/src/pages/examenes/ExamenesDisponibles.css';
-const ExamenesDisponibles = () => {
+import useAuth from 'src/useAuth'
+function ExamenesDisponibles ()  {
     const [examenes, setExamenes] = useState([]);
     const navigate = useNavigate();
-
+    const curp =useAuth().cliente.curp;
+    
     const fetchExamenes = async () => {
-        const response = await axiosClient.get('/cliente/qwsasqsq1/examenes');
+        const response = await axiosClient.get(`/cliente/${curp}/examenes`);
         setExamenes(response.data);
-        console.log(response.data);
+        
     };
     const getTipoExamen = (tipo) => {
         switch (tipo) {
@@ -26,8 +28,8 @@ const ExamenesDisponibles = () => {
     useEffect(() => {
         fetchExamenes();
     }, []);
-    const createExamen = () => {
-        navigate("/examenes/create");
+    const realizar = (id) => {
+        navigate({ to: `/examenes/${id}/realizar`});
     }
     
     
@@ -54,7 +56,7 @@ const ExamenesDisponibles = () => {
                                 <p><strong>Disponible Hasta:</strong> {examen.fecha_fin_asignado}</p>
                             </div>
                             <div className="card-actions">
-                                <button onClick={() => handleEditExamen(examen)} className="edit">Realizar Examen</button>
+                                <button onClick={() => realizar(examen.examen.id)} className="edit">Realizar Examen</button>
                                 
                             </div>
                         </div>

@@ -39,12 +39,14 @@ export function AuthProvider({ children }) {
       try {
         const respuesta = await axiosClient.post("/login", { email, password });
 
-        persistUserInfo(respuesta.data.user, respuesta.data.token);
+        persistUserInfo(respuesta.data.user, respuesta.data.token, respuesta.data.user.cliente);
+
 
         dispatch({
           type: LOGIN,
           payload: {
             user: respuesta.data.user,
+            cliente: respuesta.data.cliente,
           },
         });
 
@@ -90,11 +92,13 @@ export function AuthProvider({ children }) {
         try {
           const response = await axiosClient.get("/user", { signal: controller.signal });
           if (response.status === 200 && response.data) {
-            persistUserInfo(response.data.user, response.data.token);
+            persistUserInfo(respuesta.data.user, respuesta.data.token, respuesta.data.user.cliente);
+
             dispatch({
               type: LOGIN,
               payload: {
-                user: response.data.user
+                user: response.data.user,
+                cliente: response.data.user.cliente,
               },
             });
           }
