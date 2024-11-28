@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-
+use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     public function index()
@@ -36,7 +36,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return User::findOrFail($id);
+        return User::with('Cliente')->findOrFail($id);
+        Log::info('User fetched:', ['user' => $user]);
     }
 
     public function update(Request $request, $id)

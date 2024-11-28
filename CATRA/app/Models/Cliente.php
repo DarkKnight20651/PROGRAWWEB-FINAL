@@ -29,4 +29,8 @@ class Cliente extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function examenes_asignados()
+    {
+        return $this->hasMany(Examens_Asignado::class, 'id_cliente');
+    }
 }

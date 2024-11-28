@@ -203,4 +203,12 @@ class ClienteController extends Controller implements HasMiddleware
             ], 404);
         }
     }
+    public function getExamens($curp){
+        
+        $cliente = Cliente::where('curp', $curp)->firstOrFail();
+        
+        $examenes=$cliente->examenes_asignados()->with('Examen')->get();
+        
+        return response()->json($examenes);
+    }
 }
