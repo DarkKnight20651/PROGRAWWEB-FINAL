@@ -18,10 +18,10 @@ const ListaDistribucion = () => {
           throw new Error("No se pudo obtener las inscripciones");
         }
         const data = await response.json();
-
+        
         const distribucionConDocumentos = await Promise.all(
           data.map(async (persona) => {
-            const documentos = await fetchUserDocuments(persona.id);
+            const documentos = await fetchUserDocuments(persona.user_id);
             return { ...persona, documents: documentos };
           })
         );

@@ -164,8 +164,6 @@ class DocumentController extends Controller
     {
         // Obtener el user_id desde el cuerpo de la solicitud
         $userId = $request->input('user_id');
-
-        Log::info($userId);
     
         $tiposDocumentos = ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'];
         $documentosDetalles = [];
