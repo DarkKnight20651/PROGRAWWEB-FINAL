@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
         try {
           const response = await axiosClient.get("/user", { signal: controller.signal });
           if (response.status === 200 && response.data) {
-            persistUserInfo(respuesta.data.user, respuesta.data.token, respuesta.data.user.cliente);
+            persistUserInfo(response.data.user, response.data.token, response.data.user.cliente);
 
             dispatch({
               type: LOGIN,

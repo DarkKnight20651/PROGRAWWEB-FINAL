@@ -167,7 +167,7 @@ const ListaDistribucion = () => {
                     </td>
                     {["ine", "comprobante_domicilio", "acta_nacimiento", "curp"].map((docTipo) => (
                       <td key={docTipo} style={{ textAlign: "center", fontSize: "18px" }}>
-                        {persona.documents?.[docTipo]?.estado === "verificado" ? "✔️" : "❌"}
+                        {persona.documents?.[docTipo]?.estado === "aprobado" ? "✔️" : "❌"}
                       </td>
                     ))}
                     <td>

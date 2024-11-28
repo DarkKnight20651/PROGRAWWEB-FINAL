@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
 {
@@ -39,37 +40,34 @@ class DocumentController extends Controller
 
         return response()->json(['documentos' => $documentosDetalles], 200);
     }
-    public function getUserDocuments(Request $request)
+
+    public function getDocumentDetailsById(Request $request, $id)
     {
-        // Obtener el user_id desde el cuerpo de la solicitud
-        $userId = $request->input('user_id');
-    
         $tiposDocumentos = ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'];
         $documentosDetalles = [];
-    
+
         foreach ($tiposDocumentos as $tipo) {
-            $documento = Document::where('user_id', $userId)
+            $documento = Document::where('user_id', $id)
                 ->where('tipo', $tipo)
                 ->first();
-    
+
             if ($documento) {
                 $documentosDetalles[$tipo] = [
-                    'estado' => $documento->estado, // Estado del documento
+                    'id' => $documento->id,
+                    'subido' => true,
+                    'estado' => $documento->estado,
+                    'updated_at' => $documento->updated_at,
+                    'comentarios' => $documento->comentarios
                 ];
             } else {
                 $documentosDetalles[$tipo] = [
-                    'estado' => 'no_subido', // Si no existe, marcarlo como no subido
+                    'subido' => false,
                 ];
             }
         }
-    
-        return response()->json([
-            'user_id' => $userId,
-            'documentos' => $documentosDetalles,
-        ], 200); // Retornar la información en formato JSON
-    }
-    
 
+        return response()->json(['documentos' => $documentosDetalles], 200);
+    }
 
 
     public function store(Request $request)
@@ -162,6 +160,38 @@ class DocumentController extends Controller
             ], 500);
         }
     }
+	public function getUserDocuments(Request $request)
+    {
+        // Obtener el user_id desde el cuerpo de la solicitud
+        $userId = $request->input('user_id');
+
+        Log::info($userId);
+    
+        $tiposDocumentos = ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'];
+        $documentosDetalles = [];
+    
+        foreach ($tiposDocumentos as $tipo) {
+            $documento = Document::where('user_id', $userId)
+                ->where('tipo', $tipo)
+                ->first();
+    
+            if ($documento) {
+                $documentosDetalles[$tipo] = [
+                    'estado' => $documento->estado, // Estado del documento
+                ];
+            } else {
+                $documentosDetalles[$tipo] = [
+                    'estado' => 'no_subido', // Si no existe, marcarlo como no subido
+                ];
+            }
+        }
+    
+        return response()->json([
+            'user_id' => $userId,
+            'documentos' => $documentosDetalles,
+        ], 200); // Retornar la información en formato JSON
+    }
+
 
     public function show(Request $request, $id)
     {
