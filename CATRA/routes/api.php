@@ -37,7 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/user', function (Request $request) {
-        $user = $request->user();
+        $user = $request->user()->load('cliente');
+
         return response()->json([
             'user' => $user,
             'token' => $request->bearerToken()
@@ -53,4 +54,3 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-
