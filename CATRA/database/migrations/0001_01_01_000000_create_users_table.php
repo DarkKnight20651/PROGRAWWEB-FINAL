@@ -36,6 +36,9 @@ return new class extends Migration
         Schema::dropIfExists('documents');
         Schema::dropIfExists('clientes');
 
+        Schema::dropIfExists('course_user');
+        Schema::dropIfExists('courses');
+
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
     }

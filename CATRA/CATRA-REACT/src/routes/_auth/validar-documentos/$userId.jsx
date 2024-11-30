@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axiosClient from 'src/axios-client';
 import DownloadButton from 'src/components/documentos/DownloadButton';
 import OpenFileButton from 'src/components/documentos/OpenFileButton';
+import Loader from 'src/components/loader';
 
 export const Route = createFileRoute('/_auth/validar-documentos/$userId')({
   component: DocumentoRevision,
@@ -15,6 +16,7 @@ async function fetchDocuments(userId, setDocuments, setIsLoading, setError) {
     setDocuments(response.data.documentos);
     setIsLoading(false);
   } catch (err) {
+    console.log(err);
     setError('Error al cargar los documentos');
     setIsLoading(false);
   }
@@ -67,13 +69,14 @@ function DocumentoRevision() {
       await axiosClient.post(`/users/documents-status/${userId}`, payload);
       alert('Estados actualizados con éxito');
     } catch (err) {
+      console.log(err);
       alert('Error al actualizar los estados');
     } finally {
       fetchDocuments(userId, setDocuments, setIsLoading, setError);
     }
   };
 
-  if (isLoading) return <p>Cargando documentos...</p>;
+  if (isLoading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   const hasUploadedDocuments = Object.values(documents).some(

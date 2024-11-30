@@ -4,6 +4,7 @@ import axiosClient from 'src/axios-client';
 import ClienteForm from 'src/components/cliente/ClienteForm';
 
 import 'src/assets/bootstrap.min.css'
+import Loader from 'src/components/loader';
 
 export function EditarClienteSubmit() {
     return (<div className="d-grid">
@@ -14,6 +15,7 @@ export function EditarClienteSubmit() {
 }
 
 const getClienteByCurp = async (signal, curp, setFormData, setIsClienteLoading) => {
+    let signalError = false;
     try {
         setIsClienteLoading(true);
         const respuesta = await axiosClient.get(`/clientes/${curp}`, signal ? { signal } : {});
@@ -30,10 +32,10 @@ const getClienteByCurp = async (signal, curp, setFormData, setIsClienteLoading) 
         }));
         console.log("informacion obtenida");
     } catch (error) {
+        if (error.code === "ERR_CANCELED") signalError = true;
         console.log(error);
     } finally {
-        console.log("setIsClienteLoading = false");
-        setIsClienteLoading(false);
+        if (!signalError) setIsClienteLoading(false);
     }
 }
 
@@ -86,7 +88,7 @@ const UserEdit = () => {
 
     return (
         <div>
-            {isClienteLoading ? (<p>Cargando información ...</p>) : (
+            {isClienteLoading ? (<Loader />) : (
                 <>
                     <ClienteForm
                         title={'Editar cliente'}

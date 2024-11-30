@@ -3,19 +3,26 @@ import { useEffect, useState } from 'react';
 import axiosClient from 'src/axios-client.jsx';
 
 import 'src/assets/bootstrap.min.css';
+import Loader from 'src/components/loader';
 
 const UserManager = () => {
   const [clientes, setClientes] = useState([]);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
+    let signalError = false;
     (async () => {
       try {
+        setIsLoading(true);
         const response = await axiosClient.get('/clientes', { signal: controller.signal });
         setClientes(response.data);
       } catch (err) {
+        if (err.code === "ERR_CANCELED") signalError = true;
         console.log(err);
+      } finally {
+        if (!signalError) setIsLoading(false);
       }
     })();
     return () => controller.abort();
@@ -37,51 +44,54 @@ const UserManager = () => {
     }
   };
 
-  return (
-    <div>
-      <h1 className="text-center mb-4">Administración de Clientes</h1>
-      <div className="container">
-        <div className="d-flex justify-content-end mb-3">
-          <button onClick={createUser} className="btn btn-success">
-            Nuevo Usuario
-          </button>
-        </div>
-        <table className="table table-bordered table-striped table-responsive">
-          <thead>
-            <tr>
-              <th>CURP</th>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map(cliente => (
-              <tr key={cliente.curp}>
-                <td>{cliente.curp}</td>
-                <td>{cliente.nombre}</td>
-                <td>{cliente.telefono}</td>
-                <td>
-                  <button
-                    onClick={() => handleEditUser(cliente.curp)}
-                    className="btn btn-primary btn-sm me-2"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => deleteUser(cliente.curp)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Eliminar
-                  </button>
-                </td>
+  if (isLoading) {
+    return <Loader />
+  } else
+    return (
+      <div>
+        <h1 className="text-center mb-4">Administración de Clientes</h1>
+        <div className="container">
+          <div className="d-flex justify-content-end mb-3">
+            <button onClick={createUser} className="btn btn-success">
+              Nuevo Usuario
+            </button>
+          </div>
+          <table className="table table-bordered table-striped table-responsive">
+            <thead>
+              <tr>
+                <th>CURP</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clientes.map(cliente => (
+                <tr key={cliente.curp}>
+                  <td>{cliente.curp}</td>
+                  <td>{cliente.nombre}</td>
+                  <td>{cliente.telefono}</td>
+                  <td>
+                    <button
+                      onClick={() => handleEditUser(cliente.curp)}
+                      className="btn btn-primary btn-sm me-2"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deleteUser(cliente.curp)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  )
+    )
 };
 
 export default UserManager;
