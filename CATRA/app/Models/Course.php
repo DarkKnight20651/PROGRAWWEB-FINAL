@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
     use HasFactory;
 
-    protected $table = 'courses';
+    // Define los campos que se pueden asignar de forma masiva (mass assignment)
+    protected $fillable = ['category', 'name', 'instructor_curp'];
 
-    protected $fillable = [
-        'name', //string
-        'category', //text
-     ];
-     
-        public function users()
+    // Relación con el modelo Instructor
+    public function instructor()
     {
-        return $this->belongsToMany(User::class, 'course_user');
+        return $this->belongsTo(Instructor::class, 'instructor_curp', 'curp');
     }
 }

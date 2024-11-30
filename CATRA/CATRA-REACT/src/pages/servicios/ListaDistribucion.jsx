@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/index.css";
 import logo from "/src/assets/logo.png";
 import "./Cursos.css";
+import axios from "axios";
 
 const ListaDistribucion = () => {
   const [distribucion, setDistribucion] = useState([]);
@@ -11,29 +12,47 @@ const ListaDistribucion = () => {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    const fetchInscriptionsWithDocuments = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/inscriptions");
-        if (!response.ok) {
+        // Obtiene las inscripciones
+        const inscriptionsResponse = await fetch("http://localhost:8000/api/inscriptions");
+        if (!inscriptionsResponse.ok) {
           throw new Error("No se pudo obtener las inscripciones");
         }
-        const data = await response.json();
+        const inscriptionsData = await inscriptionsResponse.json();
         
+        // Obtiene los usuarios ya registrados en course_user
+        const courseUsersResponse = await fetch("http://localhost:8000/api/course-user");
+        if (!courseUsersResponse.ok) {
+          throw new Error("No se pudo obtener los usuarios registrados en cursos");
+        }
+        const courseUsersData = await courseUsersResponse.json();
+  
+        // Extrae los IDs de usuarios registrados en cursos
+        const registeredUserIds = courseUsersData.map((entry) => entry.user_id);
+  
+        // Filtra las inscripciones para excluir las de usuarios ya registrados
+        const filteredInscriptions = inscriptionsData.filter(
+          (inscription) => !registeredUserIds.includes(inscription.user_id)
+        );
+  
+        // Agrega los documentos a las inscripciones filtradas
         const distribucionConDocumentos = await Promise.all(
-          data.map(async (persona) => {
+          filteredInscriptions.map(async (persona) => {
             const documentos = await fetchUserDocuments(persona.user_id);
             return { ...persona, documents: documentos };
           })
         );
-
+  
         setDistribucion(distribucionConDocumentos);
       } catch (error) {
-        console.error("Error al obtener las inscripciones:", error);
+        console.error("Error al obtener los datos:", error);
       }
     };
-
-    fetchInscriptionsWithDocuments();
+  
+    fetchData();
   }, []);
+  
 
   const fetchUserDocuments = async (userId) => {
     try {
@@ -57,7 +76,57 @@ const ListaDistribucion = () => {
     }
   };
   
+  const generateCourses = async () => {
+    try {
+      // Agrupamos los usuarios por categoría
+      const groupedByCategory = distribucion.reduce((groups, item) => {
+        const category = item.category || "Unknown";
+        if (!groups[category]) groups[category] = [];
+        groups[category].push(item);
+        return groups;
+      }, {});
 
+      console.log("Grupos:", groupedByCategory);
+
+      // Realizamos todas las solicitudes de creación de curso en paralelo
+      const responses = await Promise.all(
+        Object.entries(groupedByCategory).map(async ([category, users]) => {
+          const payload = {
+            category,
+            users: users.map((user) => ({
+              id: user.user_id,
+              name: user.nombre, // Enviar el nombre del usuario
+            })),
+          };
+  
+          console.log("Cursos:", payload);
+  
+          // Usando Axios para enviar la solicitud
+          const response = await axios.post("http://localhost:8000/api/courses", payload, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          console.log("Respuesta del servidor:", response.data);
+
+          // Verificamos si la respuesta es exitosa
+          if (response.status !== 201) {
+            throw new Error(`Failed to create course for category: ${category}`);
+          }
+
+          return response.data; // Retorna la respuesta para su posterior uso
+        })
+      );
+
+      // Mostramos los cursos generados
+      console.log("Cursos generados:", responses);
+      alert("Cursos generados exitosamente.");
+    } catch (error) {
+      console.error("Error generando cursos:", error);
+      alert("Error generando cursos.");
+    }
+  };
   // Lógica de paginación
   const totalPages = Math.ceil(distribucion.length / rowsPerPage);
   const paginatedData = distribucion.slice(
@@ -107,6 +176,8 @@ const ListaDistribucion = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+
   
   return (
     <div className="App gradient__bg">
@@ -212,6 +283,14 @@ const ListaDistribucion = () => {
               Siguiente
             </button>
           </div>
+          <div className="text-center mt-4">
+      <button
+        className="btn btn-success"
+        onClick={generateCourses}
+      >
+        Generar Cursos
+      </button>
+    </div>
         </div>
       </div>
 

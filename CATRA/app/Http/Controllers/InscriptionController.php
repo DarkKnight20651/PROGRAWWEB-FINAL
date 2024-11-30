@@ -43,48 +43,47 @@ class InscriptionController extends Controller
 
     // Método para manejar la inserción
     public function store(Request $request)
-    {
-        // Validación de los datos entrantes
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',  // Asegurarse de que el user_id existe en la tabla users
-            'category' => 'required|string|max:1', // El curso debe tener solo una letra
-            'tipo' => 'required|string|in:Renovacion,Obtencion',  // El tipo debe ser Renovación u Obtención
-            'alcance' => 'required|string|in:Nacional,Internacional', // El alcance debe ser Nacional o Internacional
-            'responsable' => 'nullable|string|max:25', // Opcional y de máximo 25 caracteres
-            'observaciones' => 'nullable|string|max:50', // Opcional y de máximo 50 caracteres
+{
+    // Validación de los datos entrantes
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',  // Asegurarse de que el user_id existe en la tabla users
+        'category' => 'required|string|max:1', // La categoría debe tener solo una letra
+        'tipo' => 'required|string|in:Renovacion,Obtencion',  // El tipo debe ser Renovación u Obtención
+        'alcance' => 'required|string|in:Nacional,Internacional', // El alcance debe ser Nacional o Internacional
+        'responsable' => 'nullable|string|max:25', // Opcional y de máximo 25 caracteres
+        'observaciones' => 'nullable|string|max:50', // Opcional y de máximo 50 caracteres
+    ]);
+
+    // Verificar si el usuario ya está inscrito en cualquier curso
+    $existingInscription = Inscription::where('user_id', $validated['user_id'])->first();
+
+    if ($existingInscription) {
+        return response()->json([
+            'message' => 'El usuario ya tiene una inscripción registrada.',
+        ], 400); // Responde con un código de error 400 (Bad Request)
+    }
+
+    try {
+        // Crear la inscripción en la base de datos
+        $inscription = Inscription::create([
+            'user_id' => $validated['user_id'],
+            'category' => $validated['category'],
+            'tipo' => $validated['tipo'],
+            'alcance' => $validated['alcance'],
+            'responsable' => $validated['responsable'] ?? null, // Si no hay responsable, se pone null
+            'observaciones' => $validated['observaciones'] ?? null, // Si no hay observaciones, se pone null
         ]);
 
-        // Verificar si el usuario ya está inscrito en un curso de la misma categoría
-        $existingInscription = Inscription::where('user_id', $validated['user_id'])
-            ->where('category', $validated['category'])
-            ->first();
-
-        if ($existingInscription) {
-            return response()->json([
-                'message' => 'Ya estás inscrito en un curso de esta categoría.',
-            ], 400); // Responde con un código de error 400 (Bad Request)
-        }
-
-        try {
-            // Crear la inscripción en la base de datos
-            $inscription = Inscription::create([
-                'user_id' => $validated['user_id'],
-                'category' => $validated['category'],
-                'tipo' => $validated['tipo'],
-                'alcance' => $validated['alcance'],
-                'responsable' => $validated['responsable'] ?? null, // Si no hay responsable, se pone null
-                'observaciones' => $validated['observaciones'] ?? null, // Si no hay observaciones, se pone null
-            ]);
-
-            return response()->json([
-                'message' => 'Inscripción realizada con éxito',
-                'inscription' => $inscription
-            ], 201); // Retorna la inscripción y un mensaje de éxito
-        } catch (\Exception $e) {
-            // Manejo de errores
-            return response()->json([
-                'message' => 'Error al realizar la inscripción: ' . $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'Inscripción realizada con éxito',
+            'inscription' => $inscription
+        ], 201); // Retorna la inscripción y un mensaje de éxito
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return response()->json([
+            'message' => 'Error al realizar la inscripción: ' . $e->getMessage()
+        ], 500);
     }
+}
+
 }
