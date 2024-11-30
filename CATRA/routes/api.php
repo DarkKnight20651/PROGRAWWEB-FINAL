@@ -13,6 +13,8 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseUserController;
 
+Route::post('/user/courses', [CourseController::class, 'getUserCourses']);
+//Route::get('/courses', [CourseController::class, 'getAllCourses']);
 Route::get('/course-user', [CourseUserController::class, 'getCourseUsers']);
 Route::post('/inscriptions', [InscriptionController::class, 'store']);
 Route::post('/user/documents', [DocumentController::class, 'getUserDocuments']);

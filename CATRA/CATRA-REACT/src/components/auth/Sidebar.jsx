@@ -16,7 +16,13 @@ const rutasAdmin = [
   { name: 'Gestionar usuarios', path: '/usuarios' },
   { name: 'Examenes', path: '/examenes' },
   { name: 'Lista de Distribucion', path: '/Lista-Distribucion' },
-  { name: 'Revisar documentos', path: '/validar-documentos' }
+  { name: 'Revisar documentos', path: '/validar-documentos' },
+  { name: 'Cursos', path: '/Lista-Cursos' }
+]
+
+const rutasIns = [
+  { name: 'Perfil', path: '/perfil' },
+  { name: 'Cursos', path: '/Lista-Cursos' }
 ]
 
 const rutasSecre = [
@@ -35,6 +41,8 @@ function getRoutesByRole(role) {
       return rutasAdmin;
     case 'secre':
       return rutasSecre;
+    case 'instructor':
+    return rutasIns;
     default:
       return [];
   }

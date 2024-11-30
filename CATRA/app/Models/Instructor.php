@@ -29,5 +29,9 @@ class Instructor extends Model
     {
         return $this->belongsTo(User::class); // Relación inversa uno a uno
     }
+    public function course()
+    {
+        return $this->belongsTo(Course::class); // Relación inversa uno a uno
+    }
 
 }

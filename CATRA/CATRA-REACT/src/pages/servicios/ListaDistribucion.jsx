@@ -3,6 +3,7 @@ import "../../styles/index.css";
 import logo from "/src/assets/logo.png";
 import "./Cursos.css";
 import axios from "axios";
+import useAuth from 'src/useAuth';  // Importar el hook useAuth
 
 const ListaDistribucion = () => {
   const [distribucion, setDistribucion] = useState([]);

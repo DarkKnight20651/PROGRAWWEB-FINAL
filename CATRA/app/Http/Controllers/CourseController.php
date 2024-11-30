@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\CourseUser;
+use App\Models\User;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 
@@ -68,5 +69,54 @@ class CourseController extends Controller
         ], 500); // Código 500: Internal Server Error
     }
 }
+
+public function getUserCourses(Request $request)
+{
+    try {
+        // Validar que el 'user_id' esté presente en la solicitud
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // Obtener el usuario especificado por el user_id
+        $user = User::find($request->user_id);
+
+        // Verificar el rol del usuario
+        if ($user->role === 'admin') {
+            // Si es admin, obtener todos los cursos con los datos del instructor y su usuario
+            $courses = Course::with('instructor.user')->get(); // Cargar la relación instructor y su usuario
+        } elseif ($user->role === 'instructor') {
+            // Si es instructor, obtener el instructor relacionado usando el user_id
+            $instructor = $user->instructor; // Esto obtiene el Instructor asociado al User
+
+            // Obtener los cursos que están relacionados con el instructor usando su CURP
+            $courses = Course::with('instructor.user') // Cargar instructor y su usuario
+                ->where('instructor_curp', $instructor->curp) // Usamos el CURP del instructor
+                ->get();
+        } else {
+            // Si el usuario no es admin ni instructor, retornar acceso denegado
+            return response()->json(['message' => 'Acceso denegado'], 403);
+        }
+
+        // Formatear los datos para incluir el nombre del instructor y del usuario relacionado
+        $data = $courses->map(function ($course) {
+            return [
+                'id' => $course->id,
+                'name' => $course->name,
+                'instructor_name' => $course->instructor ? $course->instructor->nombre : 'No asignado',
+            ];
+        });
+
+        return response()->json(['courses' => $data], 200);
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return response()->json([
+            'message' => 'Error al obtener los cursos',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+        
 
 }

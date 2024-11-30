@@ -13,8 +13,9 @@ class Course extends Model
     protected $fillable = ['category', 'name', 'instructor_curp'];
 
     // Relación con el modelo Instructor
-    public function instructor()
+        public function instructor()
     {
         return $this->belongsTo(Instructor::class, 'instructor_curp', 'curp');
     }
+
 }
