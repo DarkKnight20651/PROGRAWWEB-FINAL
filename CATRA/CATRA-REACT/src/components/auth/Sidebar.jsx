@@ -7,6 +7,7 @@ import './style.css'
 const rutasClientes = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Subir Documentos', path: '/subir-documentos' },
+  { name: 'Examenes', path: '/examenes/disponibles' },
 ]
 
 const rutasAdmin = [

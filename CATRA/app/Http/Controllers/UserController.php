@@ -37,7 +37,7 @@ class UserController extends Controller
     public function show($id)
     {
         return User::with('Cliente')->findOrFail($id);
-        Log::info('User fetched:', ['user' => $user]);
+       
     }
 
     public function update(Request $request, $id)

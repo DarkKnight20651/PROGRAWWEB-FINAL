@@ -27,4 +27,8 @@ class Respuesta extends Model
         }
         return null;
     }
+    public function RespuestaExamen()
+    {
+        return $this->hasMany(RespuestaExamen::class, 'id_respuesta');
+    }
 }

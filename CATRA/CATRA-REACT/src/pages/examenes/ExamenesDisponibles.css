@@ -1,26 +1,59 @@
-.card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 16px 0;
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-content {
+    width: 300px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-info {
+    margin-bottom: 20px;
+  }
+  
+  .exam-name {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .card-actions {
     display: flex;
-    justify-content: space-between; /* Espacio entre información y botones */
-    align-items: center; /* Centra verticalmente */
-}
-
-.card-info {
-    text-align: left; /* Asegura que la información quede a la izquierda */
-    flex: 1; /* Ocupa todo el espacio disponible */
-}
-
-.card-actions {
+    justify-content: flex-end;
+  }
+  
+  .button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
     display: flex;
-    gap: 10px; /* Espacio entre botones */
-}
-p{
-    text-transform: uppercase;
-}
+    align-items: center;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .button i {
+    margin-right: 8px;
+  }
+  

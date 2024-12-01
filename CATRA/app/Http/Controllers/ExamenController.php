@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Examen;
+use App\Models\Examens_asignado;
+use App\Models\RespuestaExamen;
+use Illuminate\Support\Carbon;
 
 class ExamenController extends Controller
 {
@@ -12,7 +15,36 @@ class ExamenController extends Controller
         $examenes = Examen::all();
         return response()->json($examenes);
     }
+    public function comenzar(Request $request)
+    {
+        $examen = Examens_asignado::where('id_cliente', $request->curp)
+            ->where('id_examen', $request->examenId)
+            ->where('estado', 'asignado')
+            ->firstOrFail();
+        $examen->estado = 'realizando';
+        $examen->hora_inicio = Carbon::now();
+        $examen->save();
+    }
+    public function terminar(Request $request){
+        $examen = Examens_asignado::where('id_cliente', $request->curp)
+        ->where('id_examen', $request->examenId)
+        ->where('estado', 'realizando')
+        ->firstOrFail();
 
+        $examenId=$examen->id;
+        $respuestas = $request->respuestas;
+
+        foreach ($respuestas as $preguntaId => $respuestaId) {
+            // Aquí puedes procesar cada par de pregunta y respuesta
+            // Ejemplo: guardar en la base de datos
+            RespuestaExamen::create([
+                'id_pregunta' => $preguntaId,
+                'id_respuesta' => $respuestaId,
+                'id_examen_asignado' => $examenId,
+            ]);
+        }
+        
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([

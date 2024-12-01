@@ -15,6 +15,7 @@ class examens_asignado extends Model
         'fecha_fin_asignado',
         'hora_inicio',
         'hora_fin',
+        'estado',
     ];
     public function cliente()
     {
@@ -23,5 +24,9 @@ class examens_asignado extends Model
     public function examen()
     {
         return $this->belongsTo(Examen::class, 'id_examen');
+    }
+    public function RespuestaExamen()
+    {
+        return $this->hasMany(RespuestaExamen::class, 'id_examen_asignado');
     }
 }

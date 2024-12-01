@@ -9,6 +9,9 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\RespuestaController;
+Route::post('/examenes/terminar', [ExamenController::class, 'terminar']);
+Route::post('/examenes/comenzar', [ExamenController::class, 'comenzar']);
+
 
 Route::apiResource('clientes', ClienteController::class);
 

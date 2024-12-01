@@ -33,4 +33,5 @@ class Cliente extends Model
     {
         return $this->hasMany(Examens_Asignado::class, 'id_cliente');
     }
+    
 }
