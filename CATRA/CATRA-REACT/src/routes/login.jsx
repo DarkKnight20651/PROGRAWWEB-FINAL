@@ -24,26 +24,31 @@ function LoginComponent() {
   const router = useRouter()
   const isLoading = useRouterState({ select: (s) => s.isLoading })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCredentialsIncorrect, setIsCrendetialsIncorrect] = useState(false)
   const [errors, setErrors] = useState({});
 
   const emailRef = useRef();
   const passwordRef = useRef();
-  
-  const search = Route.useSearch()
+
+  const search = Route.useSearch();
 
   const onFormSubmit = async (evt) => {
     setIsSubmitting(true)
     evt.preventDefault()
     try {
-        const resultado = await auth.login(emailRef.current?.value, passwordRef.current?.value)
+      const resultado = await auth.login(emailRef.current?.value, passwordRef.current?.value)
 
-        if(resultado === "Success") {
-            await router.invalidate()
-            await navigate({ to: search.redirect || fallback })
-        }
+      if (resultado === "Success") {
+        await router.invalidate()
+        await navigate({ to: search.redirect || fallback })
+      }
     } catch (error) {
       console.log(error.mensajes);
-      
+
+      if (error.response?.status === 401) {
+        setIsCrendetialsIncorrect(true);
+      }
+
       setErrors(() => error.mensajes || {});
     } finally {
       setIsSubmitting(false)
@@ -59,58 +64,61 @@ function LoginComponent() {
         <h3 className="text-center">Iniciar sesión</h3>
 
         {search.redirect && (
-        <p className="text-red-500">Primero necesitas iniciar sesión.</p>
+          <p className="text-red-500">Primero necesitas iniciar sesión.</p>
         )}
+
+        {isCredentialsIncorrect && <p className="text-red-500"
+          style={{ textTransform: "initial" }}>Usuario y/o contraseña incorrectos</p>}
 
         <form onSubmit={onFormSubmit}>
           <fieldset disabled={isLoggingIn}>
 
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label"> Correo electronico</label>
-            <input
-              ref={emailRef}
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="ejemplo@gmail.com"
-            />
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label"> Correo electronico</label>
+              <input
+                ref={emailRef}
+                type="email"
+                className="form-control"
+                id="email"
+                placeholder="ejemplo@gmail.com"
+              />
 
-            {errors.email && (
-              <ul className="list-unstyled"> {/* Elimina el margen izquierdo */}
-                {errors.email.map((error, index) => (
-                  <li key={index} className="text-danger">
-                    {error}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input
-              ref={passwordRef}
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="contraseña"
-            />
+              {errors.email && (
+                <ul className="list-unstyled"> {/* Elimina el margen izquierdo */}
+                  {errors.email.map((error, index) => (
+                    <li key={index} className="text-danger">
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Contraseña</label>
+              <input
+                ref={passwordRef}
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="contraseña"
+              />
 
-            {errors.password && (
-              <ul className="list-unstyled"> {/* Elimina el margen izquierdo */}
-                {errors.password.map((error, index) => (
-                  <li key={index} className="text-danger">
-                    {error}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              INGRESAR
-            </button>
-          </div>
-          ¿Aún no te has registrado? <Link to="/signup">Registrarse</Link>
+              {errors.password && (
+                <ul className="list-unstyled"> {/* Elimina el margen izquierdo */}
+                  {errors.password.map((error, index) => (
+                    <li key={index} className="text-danger">
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="d-grid">
+              <button type="submit" className="btn btn-primary">
+                INGRESAR
+              </button>
+            </div>
+            ¿Aún no te has registrado? <Link to="/signup">Registrarse</Link>
           </fieldset>
         </form>
       </div>

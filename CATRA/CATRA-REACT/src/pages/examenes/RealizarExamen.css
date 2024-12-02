@@ -42,7 +42,48 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+  .alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.alert p {
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.alert button {
+    background-color: #f5c6cb;
+    color: #721c24;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.alert button:hover {
+    background-color: #f1b0b7;
+}
+
+.hidden {
+    display: none;
+}
+
   .answers-grid {
     display: grid;
     gap: 15px;

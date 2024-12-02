@@ -8,6 +8,7 @@ const rutasClientes = [
   { name: 'Perfil', path: '/perfil' },
   { name: 'Subir Documentos', path: '/subir-documentos' },
   { name: 'Examenes', path: '/examenes/disponibles' },
+  { name: 'Solicitar Curso', path: '/Seleccion-Curso' }
 ]
 
 const rutasAdmin = [
@@ -15,7 +16,14 @@ const rutasAdmin = [
   { name: 'Administrar Clientes', path: '/clientes' },
   { name: 'Gestionar usuarios', path: '/usuarios' },
   { name: 'Examenes', path: '/examenes' },
-  { name: 'Revisar documentos', path: '/validar-documentos' }
+  { name: 'Lista de Distribucion', path: '/Lista-Distribucion' },
+  { name: 'Revisar documentos', path: '/validar-documentos' },
+  { name: 'Cursos', path: '/Lista-Cursos' }
+]
+
+const rutasIns = [
+  { name: 'Perfil', path: '/perfil' },
+  { name: 'Cursos', path: '/Lista-Cursos' }
 ]
 
 const rutasSecre = [
@@ -34,6 +42,8 @@ function getRoutesByRole(role) {
       return rutasAdmin;
     case 'secre':
       return rutasSecre;
+    case 'instructor':
+    return rutasIns;
     default:
       return [];
   }

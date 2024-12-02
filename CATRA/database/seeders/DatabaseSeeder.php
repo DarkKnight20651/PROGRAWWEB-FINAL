@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersAdminOrSecreWithoutClienteSeeder::class,
             UsersWithClienteAssociatedSeeder::class,
+            InstructorsTableSeeder::class
         ]);
     }
 }

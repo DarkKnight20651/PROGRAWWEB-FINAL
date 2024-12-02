@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cliente::class);
     }
+    // En el modelo User (User.php)
+    public function instructor()
+    {
+        return $this->hasOne(Instructor::class);
+    }
+
 }

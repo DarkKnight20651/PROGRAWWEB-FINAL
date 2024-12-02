@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class examens_asignado extends Model
+class Examens_asignado extends Model
 {
     use HasFactory;
     protected $fillable = [

@@ -27,7 +27,7 @@ class Cliente extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); // Relación inversa uno a uno
     }
     public function examenes_asignados()
     {

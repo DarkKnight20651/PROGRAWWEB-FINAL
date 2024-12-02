@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from '@tanstack/react-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axiosClient from '/src/axios-client.jsx';
+import Loader from 'src/components/loader';
 
 const PreguntaEdit = () => {
     const { preguntaId, examenId } = useParams({ strict: false });
@@ -9,13 +10,25 @@ const PreguntaEdit = () => {
     const textoRef = useRef();
     const pathRef = useRef();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        axiosClient.get(`/preguntas/${preguntaId}`)
-            .then(({ data }) => {
-                textoRef.current.value = data.texto;
-                pathRef.current.value = data.path_imagen;
-            })
-            .catch((error) => console.error('Error al cargar Examen:', error));
+        const fetchPregunta = async () => {
+            try {
+                setIsLoading(true);
+                const { data } = await axiosClient.get(`/preguntas/${preguntaId}`);
+                console.log(data);
+
+                if (textoRef.current) textoRef.current.value = data.texto;
+                //pathRef.current.value = data.path_imagen;
+            } catch (error) {
+                console.error('Error al cargar Examen:', error)
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchPregunta();
     }, [preguntaId]);
 
     const onSubmit = async (ev) => {
@@ -39,7 +52,9 @@ const PreguntaEdit = () => {
         await navigate({ to: `/examenes/${examenId}/preguntas` });
     }
 
-    return (
+    if (isLoading) {
+        return <Loader />
+    } else return (
         <div className="container">
             <h1 className="titulo" id="titulo">Editar Pregunta</h1>
             <form onSubmit={onSubmit}>

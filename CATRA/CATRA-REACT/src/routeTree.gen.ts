@@ -17,8 +17,12 @@ import { Route as LoginImport } from './routes/login'
 import { Route as InfoCatraImport } from './routes/info-catra'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthSubirDocumentosImport } from './routes/_auth/subir-documentos'
 import { Route as AuthPerfilImport } from './routes/_auth/perfil'
 import { Route as AuthDashboardImport } from './routes/_auth/dashboard'
+import { Route as AuthSeleccionCursoImport } from './routes/_auth/Seleccion-Curso'
+import { Route as AuthListaDistribucionImport } from './routes/_auth/Lista-Distribucion'
+import { Route as AuthListaCursosImport } from './routes/_auth/Lista-Cursos'
 import { Route as AuthUsuariosRouteImport } from './routes/_auth/usuarios/route'
 import { Route as AuthClientesRouteImport } from './routes/_auth/clientes/route'
 import { Route as AuthValidarDocumentosIndexImport } from './routes/_auth/validar-documentos/index'
@@ -78,6 +82,12 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthSubirDocumentosRoute = AuthSubirDocumentosImport.update({
+  id: '/subir-documentos',
+  path: '/subir-documentos',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
 const AuthPerfilRoute = AuthPerfilImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -87,6 +97,24 @@ const AuthPerfilRoute = AuthPerfilImport.update({
 const AuthDashboardRoute = AuthDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthSeleccionCursoRoute = AuthSeleccionCursoImport.update({
+  id: '/Seleccion-Curso',
+  path: '/Seleccion-Curso',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthListaDistribucionRoute = AuthListaDistribucionImport.update({
+  id: '/Lista-Distribucion',
+  path: '/Lista-Distribucion',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthListaCursosRoute = AuthListaCursosImport.update({
+  id: '/Lista-Cursos',
+  path: '/Lista-Cursos',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
@@ -288,6 +316,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUsuariosRouteImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/Lista-Cursos': {
+      id: '/_auth/Lista-Cursos'
+      path: '/Lista-Cursos'
+      fullPath: '/Lista-Cursos'
+      preLoaderRoute: typeof AuthListaCursosImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/Lista-Distribucion': {
+      id: '/_auth/Lista-Distribucion'
+      path: '/Lista-Distribucion'
+      fullPath: '/Lista-Distribucion'
+      preLoaderRoute: typeof AuthListaDistribucionImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/Seleccion-Curso': {
+      id: '/_auth/Seleccion-Curso'
+      path: '/Seleccion-Curso'
+      fullPath: '/Seleccion-Curso'
+      preLoaderRoute: typeof AuthSeleccionCursoImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -300,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof AuthPerfilImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/subir-documentos': {
+      id: '/_auth/subir-documentos'
+      path: '/subir-documentos'
+      fullPath: '/subir-documentos'
+      preLoaderRoute: typeof AuthSubirDocumentosImport
       parentRoute: typeof AuthRouteImport
     }
     '/_auth/clientes/crear': {
@@ -473,8 +529,12 @@ const AuthUsuariosRouteRouteWithChildren =
 interface AuthRouteRouteChildren {
   AuthClientesRouteRoute: typeof AuthClientesRouteRouteWithChildren
   AuthUsuariosRouteRoute: typeof AuthUsuariosRouteRouteWithChildren
+  AuthListaCursosRoute: typeof AuthListaCursosRoute
+  AuthListaDistribucionRoute: typeof AuthListaDistribucionRoute
+  AuthSeleccionCursoRoute: typeof AuthSeleccionCursoRoute
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthPerfilRoute: typeof AuthPerfilRoute
+  AuthSubirDocumentosRoute: typeof AuthSubirDocumentosRoute
   AuthExamenesCreateRoute: typeof AuthExamenesCreateRoute
   AuthExamenesDisponiblesRoute: typeof AuthExamenesDisponiblesRoute
   AuthValidarDocumentosUserIdRoute: typeof AuthValidarDocumentosUserIdRoute
@@ -493,8 +553,12 @@ interface AuthRouteRouteChildren {
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthClientesRouteRoute: AuthClientesRouteRouteWithChildren,
   AuthUsuariosRouteRoute: AuthUsuariosRouteRouteWithChildren,
+  AuthListaCursosRoute: AuthListaCursosRoute,
+  AuthListaDistribucionRoute: AuthListaDistribucionRoute,
+  AuthSeleccionCursoRoute: AuthSeleccionCursoRoute,
   AuthDashboardRoute: AuthDashboardRoute,
   AuthPerfilRoute: AuthPerfilRoute,
+  AuthSubirDocumentosRoute: AuthSubirDocumentosRoute,
   AuthExamenesCreateRoute: AuthExamenesCreateRoute,
   AuthExamenesDisponiblesRoute: AuthExamenesDisponiblesRoute,
   AuthValidarDocumentosUserIdRoute: AuthValidarDocumentosUserIdRoute,
@@ -529,8 +593,12 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/clientes': typeof AuthClientesRouteRouteWithChildren
   '/usuarios': typeof AuthUsuariosRouteRouteWithChildren
+  '/Lista-Cursos': typeof AuthListaCursosRoute
+  '/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
+  '/subir-documentos': typeof AuthSubirDocumentosRoute
   '/clientes/crear': typeof AuthClientesCrearRoute
   '/examenes/create': typeof AuthExamenesCreateRoute
   '/examenes/disponibles': typeof AuthExamenesDisponiblesRoute
@@ -559,8 +627,12 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/nuestros-cursos': typeof NuestrosCursosRoute
   '/signup': typeof SignupRoute
+  '/Lista-Cursos': typeof AuthListaCursosRoute
+  '/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/dashboard': typeof AuthDashboardRoute
   '/perfil': typeof AuthPerfilRoute
+  '/subir-documentos': typeof AuthSubirDocumentosRoute
   '/clientes/crear': typeof AuthClientesCrearRoute
   '/examenes/create': typeof AuthExamenesCreateRoute
   '/examenes/disponibles': typeof AuthExamenesDisponiblesRoute
@@ -592,8 +664,12 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_auth/clientes': typeof AuthClientesRouteRouteWithChildren
   '/_auth/usuarios': typeof AuthUsuariosRouteRouteWithChildren
+  '/_auth/Lista-Cursos': typeof AuthListaCursosRoute
+  '/_auth/Lista-Distribucion': typeof AuthListaDistribucionRoute
+  '/_auth/Seleccion-Curso': typeof AuthSeleccionCursoRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/perfil': typeof AuthPerfilRoute
+  '/_auth/subir-documentos': typeof AuthSubirDocumentosRoute
   '/_auth/clientes/crear': typeof AuthClientesCrearRoute
   '/_auth/examenes/create': typeof AuthExamenesCreateRoute
   '/_auth/examenes/disponibles': typeof AuthExamenesDisponiblesRoute
@@ -626,8 +702,12 @@ export interface FileRouteTypes {
     | '/signup'
     | '/clientes'
     | '/usuarios'
+    | '/Lista-Cursos'
+    | '/Lista-Distribucion'
+    | '/Seleccion-Curso'
     | '/dashboard'
     | '/perfil'
+    | '/subir-documentos'
     | '/clientes/crear'
     | '/examenes/create'
     | '/examenes/disponibles'
@@ -655,8 +735,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/nuestros-cursos'
     | '/signup'
+    | '/Lista-Cursos'
+    | '/Lista-Distribucion'
+    | '/Seleccion-Curso'
     | '/dashboard'
     | '/perfil'
+    | '/subir-documentos'
     | '/clientes/crear'
     | '/examenes/create'
     | '/examenes/disponibles'
@@ -686,8 +770,12 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_auth/clientes'
     | '/_auth/usuarios'
+    | '/_auth/Lista-Cursos'
+    | '/_auth/Lista-Distribucion'
+    | '/_auth/Seleccion-Curso'
     | '/_auth/dashboard'
     | '/_auth/perfil'
+    | '/_auth/subir-documentos'
     | '/_auth/clientes/crear'
     | '/_auth/examenes/create'
     | '/_auth/examenes/disponibles'
@@ -754,8 +842,12 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/clientes",
         "/_auth/usuarios",
+        "/_auth/Lista-Cursos",
+        "/_auth/Lista-Distribucion",
+        "/_auth/Seleccion-Curso",
         "/_auth/dashboard",
         "/_auth/perfil",
+        "/_auth/subir-documentos",
         "/_auth/examenes/create",
         "/_auth/examenes/disponibles",
         "/_auth/validar-documentos/$userId",
@@ -801,6 +893,18 @@ export const routeTree = rootRoute
         "/_auth/usuarios/editar/$userId"
       ]
     },
+    "/_auth/Lista-Cursos": {
+      "filePath": "_auth/Lista-Cursos.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/Lista-Distribucion": {
+      "filePath": "_auth/Lista-Distribucion.jsx",
+      "parent": "/_auth"
+    },
+    "/_auth/Seleccion-Curso": {
+      "filePath": "_auth/Seleccion-Curso.jsx",
+      "parent": "/_auth"
+    },
     "/_auth/dashboard": {
       "filePath": "_auth/dashboard.jsx",
       "parent": "/_auth"
@@ -809,6 +913,13 @@ export const routeTree = rootRoute
       "filePath": "_auth/perfil.jsx",
       "parent": "/_auth"
     },
+<<<<<<< HEAD
+=======
+    "/_auth/subir-documentos": {
+      "filePath": "_auth/subir-documentos.jsx",
+      "parent": "/_auth"
+    },
+>>>>>>> 6e43e0cbec677718343bd422a6126db976b76e1b
     "/_auth/clientes/crear": {
       "filePath": "_auth/clientes/crear.jsx",
       "parent": "/_auth/clientes"

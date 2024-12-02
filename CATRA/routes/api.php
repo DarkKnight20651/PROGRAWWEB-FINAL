@@ -9,9 +9,23 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\RespuestaController;
+use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseUserController;
+
+
 Route::post('/examenes/terminar', [ExamenController::class, 'terminar']);
 Route::post('/examenes/comenzar', [ExamenController::class, 'comenzar']);
-
+Route::post('/examenes/getTiempoRestante', [ExamenController::class, 'getTiempoRestante']);
+Route::post('/examenes/autoguardar', [ExamenController::class, 'autoguardado']);
+Route::post('/user/courses', [CourseController::class, 'getUserCourses']);
+//Route::get('/courses', [CourseController::class, 'getAllCourses']);
+Route::get('/course-user', [CourseUserController::class, 'getCourseUsers']);
+Route::post('/inscriptions', [InscriptionController::class, 'store']);
+Route::post('/user/documents', [DocumentController::class, 'getUserDocuments']);
+Route::get('/inscriptions', [InscriptionController::class, 'index']);
+Route::put('/inscriptions/{id}', [InscriptionController::class, 'update']);
+Route::post('/courses', [CourseController::class, 'store']);
 
 Route::apiResource('clientes', ClienteController::class);
 
@@ -33,7 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/user', function (Request $request) {
-        $user = $request->user();
+        $user = $request->user()->load('cliente');
+
         return response()->json([
             'user' => $user,
             'token' => $request->bearerToken()

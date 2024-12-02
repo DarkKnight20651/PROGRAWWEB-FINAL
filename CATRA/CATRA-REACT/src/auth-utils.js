@@ -18,21 +18,15 @@ export function getStoredUser() {
 export function getStoredCliente() {
   return JSON.parse(localStorage.getItem(cliente_key));
 }
-export function persistUserInfo(user, token, cliente) {
+export function persistUserInfo(user, token) {
   localStorage.setItem(user_key, JSON.stringify(user));
   localStorage.setItem(access_token_key, token);
-  localStorage.setItem(cliente_key, JSON.stringify(cliente)); // Guardar cliente
 }
-
 
 export const initialState = {
   user: getStoredUser(),
-  cliente: getStoredCliente(),  // Nueva propiedad cliente
   isAuthenticated: getStoredUser() ? true : false,
 };
-
-
-
 
 export function authReducer(state, action) {
   switch (action.type) {
@@ -41,7 +35,6 @@ export function authReducer(state, action) {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        cliente: action.payload.cliente,
       };
     case LOGOUT:
       return {
@@ -54,7 +47,6 @@ export function authReducer(state, action) {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        cliente: action.payload.cliente,
       };
     default:
       return state;
@@ -62,7 +54,6 @@ export function authReducer(state, action) {
 }
 
 export function cleanUserStorage() {
-  localStorage.removeItem(access_token_key);  // Elimina el token de acceso
-  localStorage.removeItem(user_key);  // Elimina el usuario
-  localStorage.removeItem(cliente_key);  // Elimina la información del cliente
+  localStorage.removeItem(access_token_key);
+  localStorage.removeItem(user_key); 
 }
