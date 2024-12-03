@@ -913,13 +913,10 @@ export const routeTree = rootRoute
       "filePath": "_auth/perfil.jsx",
       "parent": "/_auth"
     },
-<<<<<<< HEAD
-=======
     "/_auth/subir-documentos": {
       "filePath": "_auth/subir-documentos.jsx",
       "parent": "/_auth"
     },
->>>>>>> 6e43e0cbec677718343bd422a6126db976b76e1b
     "/_auth/clientes/crear": {
       "filePath": "_auth/clientes/crear.jsx",
       "parent": "/_auth/clientes"

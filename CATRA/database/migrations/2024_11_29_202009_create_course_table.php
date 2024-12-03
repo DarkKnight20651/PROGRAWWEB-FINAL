@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category'); // Campo para la categoría del curso
             $table->foreignIdFor(Instructor::class)->unique()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps(); // Aquí asumo que tienes una tabla instructors
-    });
+        });
     }
 
     /**
@@ -26,6 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('course_users');
+
         Schema::dropIfExists('courses');
     }
 };

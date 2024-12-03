@@ -19,25 +19,25 @@ const Menu = () => {
 
 const BotonesNavbar = () => {
   const auth = useAuth()
-  
+
   if (auth.isAuthenticated) {
     return (
-      <button type="button"><Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', }}>
-        Funciones </Link>
-      </button>
+      <Link to='/dashboard' style={{ textDecoration: 'none', color: 'white', }}><button type="button">
+        Funciones
+      </button></Link>
     )
   } else {
     return (<>
-      <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
       <Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>
-      Iniciar sesión
+        <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
+          Iniciar sesión
+        </button>
       </Link>
-      </button>
-      <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
       <Link to='/signup' style={{ textDecoration: 'none', color: 'white' }}>
-      Registrarse
+        <button type="button" style={{ fontSize: '1.2em', padding: '10px 20px', backgroundColor: 'var(--button-color-red)' }}>
+          Registrarse
+        </button>
       </Link>
-      </button>
     </>)
   }
 }
@@ -48,20 +48,20 @@ const Navbar = () => {
 
     <div className='catra__navbar'>
       <div className='catra__navbar-links_logo'>
-          <img src={logo} alt='logo' />
-        </div>
+        <img src={logo} alt='logo' />
+      </div>
       <div className='catra__navbar-links'>
-        
+
         <div className='catra__navbar-links_container'>
           <Menu />
         </div>
 
-      <div className='catra__navbar-sign'>
-        <BotonesNavbar />
-      </div>
+        <div className='catra__navbar-sign'>
+          <BotonesNavbar />
+        </div>
       </div>
 
-     
+
       <div className='catra__navbar-menu'>
         {toggleMenu
 

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
 {
@@ -160,19 +159,19 @@ class DocumentController extends Controller
             ], 500);
         }
     }
-	public function getUserDocuments(Request $request)
+    public function getUserDocuments(Request $request)
     {
         // Obtener el user_id desde el cuerpo de la solicitud
         $userId = $request->input('user_id');
-    
+
         $tiposDocumentos = ['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'];
         $documentosDetalles = [];
-    
+
         foreach ($tiposDocumentos as $tipo) {
             $documento = Document::where('user_id', $userId)
                 ->where('tipo', $tipo)
                 ->first();
-    
+
             if ($documento) {
                 $documentosDetalles[$tipo] = [
                     'estado' => $documento->estado, // Estado del documento
@@ -183,7 +182,7 @@ class DocumentController extends Controller
                 ];
             }
         }
-    
+
         return response()->json([
             'user_id' => $userId,
             'documentos' => $documentosDetalles,

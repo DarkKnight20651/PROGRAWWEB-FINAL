@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import '../../styles/index.css';
+import { useState } from 'react';
+import useAuth from 'src/useAuth'; // Importar el hook useAuth
 import '../../assets/bootstrap.min.css';
+import '../../styles/index.css';
 import './Cursos.css';
-import useAuth from 'src/useAuth';  // Importar el hook useAuth
 
 const SeleccionCursos = () => {
   const [cursoLetra, setCursoLetra] = useState('');
   const [isSelected, setIsSelected] = useState(null);
   const [alcance, setAlcance] = useState('');
-  const { user } = useAuth();  // Obtener los datos del usuario autenticado
+  const { user } = useAuth();
 
   const handleRadioChange = (event) => {
     setIsSelected(event.target.value);
@@ -123,12 +123,10 @@ const SeleccionCursos = () => {
           </label>
         </div>
 
-        {/* Agregar espacio entre las preguntas */}
         <div className="mt-4">
           <h2>Alcance</h2>
         </div>
 
-        {/* Agregar el input para nacional o internacional */}
         <div className="form-check">
           <input
             className="form-check-input"

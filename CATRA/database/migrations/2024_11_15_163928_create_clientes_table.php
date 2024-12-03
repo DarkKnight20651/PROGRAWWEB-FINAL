@@ -20,7 +20,7 @@ class CreateClientesTable extends Migration
             $table->string('telefono');
             $table->string('nombre');
             $table->string('ape_p');
-            $table->string('ape_m');
+            $table->string('ape_m')->nullable(true);
             $table->date('fecha_nac');
             $table->integer('genero');
         });
