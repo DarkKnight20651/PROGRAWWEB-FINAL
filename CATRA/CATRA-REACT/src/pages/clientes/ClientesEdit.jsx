@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axiosClient from 'src/axios-client';
 import ClienteForm from 'src/components/cliente/ClienteForm';
 
-import 'src/assets/bootstrap.min.css'
+import 'src/assets/bootstrap.min.css';
 import Loader from 'src/components/loader';
 
 export function EditarClienteSubmit() {
@@ -23,7 +23,7 @@ const getClienteByCurp = async (signal, curp, setFormData, setIsClienteLoading) 
             ...p,
             nombre: respuesta.data.nombre,
             ape_p: respuesta.data.ape_p,
-            ape_m: respuesta.data.ape_m,
+            ape_m: respuesta.data.ape_m ?? "",
             curp: respuesta.data.curp,
             fecha_nac: respuesta.data.fecha_nac,
             genero: respuesta.data.genero,
@@ -71,6 +71,7 @@ const UserEdit = () => {
         setIsSubmitting(true);
         try {
             await axiosClient.put(`/clientes/${curp}`, { ...formData });
+            alert("Se actualizó correctamente");
             await getClienteByCurp(null, curp, setFormData, setIsClienteLoading);
         } catch (error) {
             console.log(error);
@@ -96,9 +97,11 @@ const UserEdit = () => {
                         setFormData={setFormData}
                         onFormSubmit={onFormSubmit}
                         isRegistering={isRegistering}
-                        errors={errors}
-                        SubmitComponent={<EditarClienteSubmit />} />
-                    <p><button onClick={cancelar}>Cancelar</button></p>
+                        /* errors={errors} */
+                        SubmitComponent={<EditarClienteSubmit />}
+                        isEditing={true}
+                    />
+                    <p><button className='btn border' onClick={cancelar}>Cancelar</button></p>
                 </>
             )}
         </div>

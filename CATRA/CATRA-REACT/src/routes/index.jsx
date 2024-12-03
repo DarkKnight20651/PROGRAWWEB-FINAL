@@ -17,12 +17,6 @@ function HomeComponent() {
         <Navbar />
         <Header />
       </div>
-
-
-
-
-      
-      
       <Footer />
     </div>
   )

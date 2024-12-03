@@ -41,7 +41,7 @@ class ClienteController extends Controller implements HasMiddleware
             'telefono' => 'required|string|max:15',
             'nombre' => 'required|string|max:255',
             'ape_p' => 'required|string|max:255',
-            'ape_m' => 'required|string|max:255',
+            'ape_m' => 'nullable|string|max:255',
             'fecha_nac' => 'required|date',
             'genero' => 'required|integer|max:1',
             'password' => [
@@ -139,7 +139,7 @@ class ClienteController extends Controller implements HasMiddleware
                 'telefono' => 'required|string|max:15',
                 'nombre' => 'required|string|max:255',
                 'ape_p' => 'required|string|max:255',
-                'ape_m' => 'required|string|max:255',
+                'ape_m' => 'nullable|string|max:255',
                 'fecha_nac' => 'required|date',
                 'genero' => 'required|integer|max:1',
                 'password' => [
@@ -203,12 +203,13 @@ class ClienteController extends Controller implements HasMiddleware
             ], 404);
         }
     }
-    public function getExamens($curp){
-        
+    public function getExamens($curp)
+    {
+
         $cliente = Cliente::where('curp', $curp)->firstOrFail();
-        
-        $examenes=$cliente->examenes_asignados()->with('Examen')->get();
-        
+
+        $examenes = $cliente->examenes_asignados()->with('Examen')->get();
+
         return response()->json($examenes);
     }
 }

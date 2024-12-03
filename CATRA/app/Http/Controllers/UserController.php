@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NuevoEstadoDocumentos;
 use App\Models\Document;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 class UserController extends Controller
 {
     public function index()
@@ -37,7 +40,6 @@ class UserController extends Controller
     public function show($id)
     {
         return User::with('Cliente')->findOrFail($id);
-       
     }
 
     public function update(Request $request, $id)
@@ -97,6 +99,7 @@ class UserController extends Controller
         ]);
 
         try {
+            $estadoDocumentos = [];
             DB::beginTransaction();
 
             foreach (['ine', 'comprobante_domicilio', 'acta_nacimiento', 'curp'] as $tipo) {
@@ -107,10 +110,21 @@ class UserController extends Controller
                         'estado' => $validated[$tipo]['estado'],
                         'comentarios' => $validated[$tipo]['comentarios'] ?? $documento->comentarios,
                     ]);
+
+                    $estadoDocumentos[$tipo] = [
+                        'estado' => $validated[$tipo]['estado'],
+                        'comentarios' => $validated[$tipo]['comentarios'] ?? null
+                    ];
                 }
             }
 
             DB::commit();
+
+            $nombre = $user->cliente->nombre;
+
+            Mail::to($user->email)
+                ->send(new NuevoEstadoDocumentos($nombre, $estadoDocumentos, $request->user()->email));
+
             return response()->json(['message' => 'Estados de documentos actualizados con éxito'], 200);
         } catch (\Exception $e) {
             DB::rollBack();

@@ -38,6 +38,7 @@ function DocumentoRevision() {
   const [documents, setDocuments] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEnviando, setIsEnviando] = useState(false);
 
   useEffect(() => {
     fetchDocuments(userId, setDocuments, setIsLoading, setError);
@@ -55,6 +56,7 @@ function DocumentoRevision() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsEnviando(true);
     try {
       const payload = Object.keys(documents).reduce((acc, tipo) => {
         if (documents[tipo].subido) {
@@ -73,6 +75,7 @@ function DocumentoRevision() {
       alert('Error al actualizar los estados');
     } finally {
       fetchDocuments(userId, setDocuments, setIsLoading, setError);
+      setIsEnviando(false);
     }
   };
 
@@ -85,63 +88,66 @@ function DocumentoRevision() {
 
   return (
     <form onSubmit={handleSubmit} className="container" style={{ marginTop: '0px' }}>
-      {Object.keys(documents).map((tipo) => (
-        <div key={tipo} className="mb-4 p-3 border rounded shadow-sm bg-light">
-          <h3 className="text-primary text-uppercase">{tipo.replace('_', ' ')}</h3>
-          {documents[tipo].subido ? (
-            <>
-              <div className="mb-3">
-                <OpenFileButton documentId={documents[tipo].id} />
-                <DownloadButton documentId={documents[tipo].id} tipo={tipo} />
-              </div>
-              <p className="text-muted">
-                Última actualización: {formatDateToLocal(documents[tipo].updated_at)}
-              </p>
-              <p>
-                <strong>Estado actual:</strong> {documents[tipo].estado}
-              </p>
-              <div className="mb-3">
-                <label className="form-label">
-                  Cambiar estado:
-                  <select
-                    value={documents[tipo]?.estado || 'pendiente'}
-                    onChange={(e) =>
-                      handleStatusChange(tipo, 'estado', e.target.value)
-                    }
-                    className="form-select"
-                  >
-                    <option value="pendiente">Pendiente</option>
-                    <option value="aprobado">Aprobado</option>
-                    <option value="rechazado">Rechazado</option>
-                  </select>
-                </label>
-              </div>
-              <div className="w-100">
-                <label className="form-label">
-                  Comentarios:
-                  <textarea
-                    value={documents[tipo]?.comentarios || ''}
-                    onChange={(e) =>
-                      handleStatusChange(tipo, 'comentarios', e.target.value)
-                    }
-                    className="form-control"
-                    rows="5" style={{ width: '350px' }}
-                  ></textarea>
-                </label>
-              </div>
-            </>
-          ) : (
-            <p className="text-danger">Documento no subido</p>
-          )}
-        </div>
-      ))}
-      <button
-        type="submit"
-        disabled={!hasUploadedDocuments}
-        className={`btn btn-lg w-100 ${hasUploadedDocuments ? 'btn-primary' : 'btn-secondary disabled'}`}
-      >
-        Actualizar Estados
-      </button>
+      <fieldset disabled={isEnviando}>
+        {Object.keys(documents).map((tipo) => (
+          <div key={tipo} className="mb-4 p-3 border rounded shadow-sm bg-light">
+            <h3 className="text-primary text-uppercase">{tipo.replace('_', ' ')}</h3>
+            {documents[tipo].subido ? (
+              <>
+                <div className="mb-3">
+                  <OpenFileButton documentId={documents[tipo].id} />
+                  <DownloadButton documentId={documents[tipo].id} tipo={tipo} />
+                </div>
+                <p className="text-muted">
+                  Última actualización: {formatDateToLocal(documents[tipo].updated_at)}
+                </p>
+                <p>
+                  <strong>Estado actual:</strong> {documents[tipo].estado}
+                </p>
+                <div className="mb-3">
+                  <label className="form-label">
+                    Cambiar estado:
+                    <select
+                      value={documents[tipo]?.estado || 'pendiente'}
+                      onChange={(e) =>
+                        handleStatusChange(tipo, 'estado', e.target.value)
+                      }
+                      className="form-select"
+                    >
+                      <option value="pendiente">Pendiente</option>
+                      <option value="aprobado">Aprobado</option>
+                      <option value="rechazado">Rechazado</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="w-100">
+                  <label className="form-label">
+                    Comentarios:
+                    <textarea
+                      value={documents[tipo]?.comentarios || ''}
+                      onChange={(e) =>
+                        handleStatusChange(tipo, 'comentarios', e.target.value)
+                      }
+                      className="form-control"
+                      rows="5" style={{ width: '350px' }}
+                    ></textarea>
+                  </label>
+                </div>
+              </>
+            ) : (
+              <p className="text-danger">Documento no subido</p>
+            )}
+          </div>
+        ))}
+        <button
+          type="submit"
+          disabled={!hasUploadedDocuments}
+          className={`btn btn-lg w-100 ${hasUploadedDocuments ? 'btn-primary' : 'btn-secondary disabled'}`}
+          style={{ backgroundColor: "rgb(184, 28, 28)" }}
+        >
+          {isEnviando ? "Actualizando..." : "Actualizar Estados"}
+        </button>
+      </fieldset>
     </form>
   );
 }

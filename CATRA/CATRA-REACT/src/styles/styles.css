@@ -23,3 +23,10 @@
 .dashboard .nav-link:hover {
     color: #ced4da;
 }
+
+/* Estilo para el botón cuando está deshabilitado */
+button:disabled {
+    filter: brightness(0.6);
+    opacity: 0.6;
+    background-color: inherit;
+}
