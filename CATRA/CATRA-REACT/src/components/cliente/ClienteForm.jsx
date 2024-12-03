@@ -57,7 +57,7 @@ export default function ClienteForm({ title, formData, setFormData, onFormSubmit
 
   const validateField = (field, value) => {
     const errors = [];
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const phoneRegex = /^\d{10}$/;
 
     if (field === "email") {

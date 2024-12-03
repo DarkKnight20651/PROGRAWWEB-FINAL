@@ -17,7 +17,7 @@ const ClientesCreate = () => {
         ape_p: "",
         ape_m: "",
         curp: "",
-        fecha_nac: "",
+        fecha_nac: "1990-10-15",
         genero: 1,
         email: "",
         telefono: "",
