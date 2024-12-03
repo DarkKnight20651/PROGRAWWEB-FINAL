@@ -105,10 +105,10 @@ const RealizarExamen = () => {
                             {examenItem.preguntas.map((pregunta, index) => (
                                 <div className="question-card" key={pregunta.id}>
                                     <h2 className="question-title">Pregunta {index + 1}: {pregunta.texto}</h2>
-                                    {pregunta.imagen_url && (
+                                    {pregunta.path_imagen && (
                                         <div className="question-image-container">
                                             <img
-                                                src={pregunta.imagen_url}
+                                                src={`http://localhost:8000/storage/${pregunta.path_imagen}`}
                                                 alt={`Imagen de la pregunta ${index + 1}`}
                                                 className="question-image"
                                             />
@@ -128,9 +128,9 @@ const RealizarExamen = () => {
                                                     />
                                                     <div className="answer-content">
                                                         <span className="answer-text">{respuesta.texto}</span>
-                                                        {respuesta.imagen_url && (
+                                                        {respuesta.path_imagen && (
                                                             <img
-                                                                src={respuesta.imagen_url}
+                                                            src={`http://localhost:8000/storage/${respuesta.path_imagen}`}
                                                                 alt={`Imagen de la respuesta ${respuesta.texto}`}
                                                                 className="answer-image"
                                                             />

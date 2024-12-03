@@ -19,6 +19,8 @@ Route::post('/examenes/comenzar', [ExamenController::class, 'comenzar']);
 Route::post('/examenes/getTiempoRestante', [ExamenController::class, 'getTiempoRestante']);
 Route::post('/examenes/autoguardar', [ExamenController::class, 'autoguardado']);
 Route::post('/user/courses', [CourseController::class, 'getUserCourses']);
+
+Route::post('/instructor/cursos', [CourseController::class, 'getCursosInstructor']);
 //Route::get('/courses', [CourseController::class, 'getAllCourses']);
 Route::get('/course-user', [CourseUserController::class, 'getCourseUsers']);
 Route::post('/inscriptions', [InscriptionController::class, 'store']);
