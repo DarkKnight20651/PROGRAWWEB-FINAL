@@ -4,7 +4,7 @@ import logo from "/src/assets/logo.png";
 import "./Cursos.css";
 import axios from "axios";
 import useAuth from 'src/useAuth';  // Importar el hook useAuth
-
+import '/src/pages/servicios/ListaDistribucion.css';
 const ListaDistribucion = () => {
   const [distribucion, setDistribucion] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,22 +21,22 @@ const ListaDistribucion = () => {
           throw new Error("No se pudo obtener las inscripciones");
         }
         const inscriptionsData = await inscriptionsResponse.json();
-        
+
         // Obtiene los usuarios ya registrados en course_user
         const courseUsersResponse = await fetch("http://localhost:8000/api/course-user");
         if (!courseUsersResponse.ok) {
           throw new Error("No se pudo obtener los usuarios registrados en cursos");
         }
         const courseUsersData = await courseUsersResponse.json();
-  
+
         // Extrae los IDs de usuarios registrados en cursos
         const registeredUserIds = courseUsersData.map((entry) => entry.user_id);
-  
+
         // Filtra las inscripciones para excluir las de usuarios ya registrados
         const filteredInscriptions = inscriptionsData.filter(
           (inscription) => !registeredUserIds.includes(inscription.user_id)
         );
-  
+
         // Agrega los documentos a las inscripciones filtradas
         const distribucionConDocumentos = await Promise.all(
           filteredInscriptions.map(async (persona) => {
@@ -44,16 +44,16 @@ const ListaDistribucion = () => {
             return { ...persona, documents: documentos };
           })
         );
-  
+
         setDistribucion(distribucionConDocumentos);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
 
   const fetchUserDocuments = async (userId) => {
     try {
@@ -64,11 +64,11 @@ const ListaDistribucion = () => {
         },
         body: JSON.stringify({ user_id: userId }), // Enviar el userId en el body de la solicitud
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al obtener los documentos");
       }
-  
+
       const data = await response.json();
       return data.documentos;
     } catch (error) {
@@ -76,7 +76,7 @@ const ListaDistribucion = () => {
       return null;
     }
   };
-  
+
   const generateCourses = async () => {
     try {
       // Agrupamos los usuarios por categoría
@@ -99,9 +99,9 @@ const ListaDistribucion = () => {
               name: user.nombre, // Enviar el nombre del usuario
             })),
           };
-  
+
           console.log("Cursos:", payload);
-  
+
           // Usando Axios para enviar la solicitud
           const response = await axios.post("http://localhost:8000/api/courses", payload, {
             headers: {
@@ -140,7 +140,15 @@ const ListaDistribucion = () => {
       setCurrentPage(page);
     }
   };
+  function showAlert() {
+    const alertBox = document.getElementById("alert-message");
+    alertBox.classList.remove("hidden");
+  }
 
+  function closeAlert() {
+    const alertBox = document.getElementById("alert-message");
+    alertBox.classList.add("hidden");
+  }
   // Lógica para abrir y cerrar el modal
   const openModal = (categoria) => {
     let description = "";
@@ -156,13 +164,13 @@ const ListaDistribucion = () => {
       case "C":
         description = "Torton y Rabon";
         break;
-        case "D":
-          description = "Chofer Guia";
-          break;
-        case "E":
-          description = "TSR-TSS Doblemente articulado o Materiales y residuos peligrosos";
-          break;
-          case "F":
+      case "D":
+        description = "Chofer Guia";
+        break;
+      case "E":
+        description = "TSR-TSS Doblemente articulado o Materiales y residuos peligrosos";
+        break;
+      case "F":
         description = "Aeropuertos y puertos maritimos";
         break;
       default:
@@ -178,8 +186,27 @@ const ListaDistribucion = () => {
     setModalVisible(false);
   };
 
+  const [formData, setFormData] = useState(
+    Array(3).fill({ examen: "", fecha: "", horaInicio: "", horaFin: "" })
+  );
 
-  
+  const handleChange = (index, field, value) => {
+    const updatedData = [...formData];
+    updatedData[index][field] = value;
+    setFormData(updatedData);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+  const examenes = [
+    { id: 1, nombre: "Matemáticas" },
+    { id: 2, nombre: "Español" },
+    { id: 3, nombre: "Historia" },
+    { id: 4, nombre: "Ciencias" },
+  ];
+
   return (
     <div className="App gradient__bg">
       <div className="custom-container">
@@ -224,7 +251,7 @@ const ListaDistribucion = () => {
               </thead>
               <tbody className="table-group-divider">
                 {paginatedData.map((persona, index) => (
-                    
+
                   <tr key={persona.id}>
                     <th scope="row">{(currentPage - 1) * rowsPerPage + index + 1}</th>
                     <td>{persona.nombre || "No disponible"}</td>
@@ -285,13 +312,21 @@ const ListaDistribucion = () => {
             </button>
           </div>
           <div className="text-center mt-4">
-      <button
-        className="btn btn-success"
-        onClick={generateCourses}
-      >
-        Generar Cursos
-      </button>
-    </div>
+            <button
+              className="btn btn-success"
+              onClick={generateCourses}
+            >
+              Generar Cursos
+            </button>
+          </div>
+          <div className="text-center mt-4">
+            <button
+              className="btn btn-success"
+              onClick={showAlert}
+            >
+              Mostrar Alert
+            </button>
+          </div>
         </div>
       </div>
 
@@ -305,6 +340,64 @@ const ListaDistribucion = () => {
           </div>
         </div>
       )}
+      <div id="alert-message" className=" modal-content hidden">
+        <form onSubmit={handleSubmit}>
+          <h2>Selecciona tus exámenes</h2>
+          {formData.map((item, index) => (
+            <div key={index} style={{ marginBottom: "20px" }}>
+              <h3>Examen {index + 1}</h3>
+              <label>
+                Examen:
+                <select
+                  value={item.examen}
+                  onChange={(e) => handleChange(index, "examen", e.target.value)}
+                  required
+                >
+                  <option value="">Seleccionar</option>
+                  {examenes.map((examen) => (
+                    <option key={examen.id} value={examen.id}>
+                      {examen.nombre}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <br />
+              <label>
+                Fecha:
+                <input
+                  type="date"
+                  value={item.fecha}
+                  onChange={(e) => handleChange(index, "fecha", e.target.value)}
+                  required
+                />
+              </label>
+              <br />
+              <label>
+                Hora de Inicio:
+                <input
+                  type="time"
+                  value={item.horaInicio}
+                  onChange={(e) =>
+                    handleChange(index, "horaInicio", e.target.value)
+                  }
+                  required
+                />
+              </label>
+              <br />
+              <label>
+                Hora de Fin:
+                <input
+                  type="time"
+                  value={item.horaFin}
+                  onChange={(e) => handleChange(index, "horaFin", e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+          ))}
+          <button type="submit">Guardar</button>
+        </form>
+      </div>
     </div>
   );
 };

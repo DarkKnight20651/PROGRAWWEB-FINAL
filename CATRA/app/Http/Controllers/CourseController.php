@@ -7,7 +7,7 @@ use App\Models\CourseUser;
 use App\Models\User;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class CourseController extends Controller
 {
     public function store(Request $request)
@@ -62,14 +62,17 @@ class CourseController extends Controller
 
     } catch (\Exception $e) {
         // En caso de error, se registra y se retorna el error
-        \Log::error('Error al crear el curso: ' . $e->getMessage());
+        Log::error('Error al crear el curso: ' . $e->getMessage());
         return response()->json([
             'error' => 'Failed to create course',
             'message' => $e->getMessage(),
         ], 500); // Código 500: Internal Server Error
     }
 }
-
+public function getCursosInstructor(Request $request){
+    $cursos=Course::where('instructor_curp', $request->curp)->get();
+    return response()->json($cursos);
+}
 public function getUserCourses(Request $request)
 {
     try {

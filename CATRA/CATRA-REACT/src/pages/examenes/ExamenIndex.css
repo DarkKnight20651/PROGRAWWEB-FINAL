@@ -1,0 +1,52 @@
+/* Estilo general para los botones */
+.table .btn {
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: 100px; /* Ancho uniforme */
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block; /* Asegura uniformidad en alineación */
+  }
+  
+  /* Botón de "Editar" - color amarillo dorado */
+  .table .btn-warning {
+    background-color: rgb(255, 193, 7); /* Amarillo dorado */
+    color: #000; /* Texto negro */
+    border: 1px solid rgb(255, 193, 7);
+  }
+  .table .btn-warning:hover {
+    background-color: rgb(253, 185, 3);
+    color: #fff; /* Texto blanco en hover */
+    transform: scale(1.05); /* Ligero zoom */
+  }
+  
+  /* Botón de "Eliminar" - color rojo oscuro */
+  .table .btn-danger {
+    background-color: rgb(184, 28, 28); /* Rojo oscuro */
+    color: #fff; /* Texto blanco */
+    border: 1px solid rgb(184, 28, 28);
+  }
+  .table .btn-danger:hover {
+    background-color: rgb(150, 20, 20); /* Más oscuro en hover */
+    transform: scale(1.05);
+  }
+  
+  /* Botón de "Ver Preguntas" - color azul */
+  .table .btn-info {
+    background-color: rgb(33, 150, 243); /* Azul claro */
+    color: #fff; /* Texto blanco */
+    border: 1px solid rgb(33, 150, 243);
+  }
+  .table .btn-info:hover {
+    background-color: rgb(25, 120, 200); /* Azul más oscuro en hover */
+    transform: scale(1.05);
+  }
+  
+  /* Opciones comunes a todos los botones */
+  .table .btn:active {
+    transform: scale(0.98); /* Efecto clic */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  

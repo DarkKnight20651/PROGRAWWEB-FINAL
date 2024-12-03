@@ -18,7 +18,7 @@ class Pregunta extends Model
 
     public function getImagenUrlAttribute()
     {
-        if ($this->path_imagen && Storage::exists($this->path_imagen)) {
+        if ($this->path_imagen ) {
             return Storage::url($this->path_imagen);
         }
         return null;
