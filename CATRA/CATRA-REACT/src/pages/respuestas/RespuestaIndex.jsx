@@ -95,7 +95,7 @@ const RespuestaIndex = () => {
     return <Loader />
   } else
     return (
-      <div className="container my-4">
+      <div className="containe my-4">
         <h1>Respuestas de la Pregunta</h1>
         <div className="d-flex justify-content-between align-items-center mb-3">
           <button onClick={() => openModal()} className="btn btn-primary">

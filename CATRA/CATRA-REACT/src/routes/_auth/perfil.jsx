@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 
 import useAuth from 'src/useAuth'
-
+import './perfil.css'
 export const Route = createFileRoute('/_auth/perfil')({
   component: ProfilePage,
 })
@@ -23,7 +23,18 @@ function ProfilePage() {
 
   return (
     <section className="grid gap-2 p-2">
-      <h1>Ruta Autenticada</h1>
+      <h1> {auth.user?.email}</h1>
+      {auth.user?.path_imagen ? (
+            <img
+              src={`http://localhost:8000/storage/${auth.user?.path_imagen}`}
+              alt="Imagen de la pregunta"
+              className="img-fluid"
+              style={{ width: '100px', height: 'auto' }}
+            />
+          ) : (
+            <p>No hay imagen disponible</p>
+          )}
+         
       <p>Tu rol es {auth.user?.role}</p>
       {auth.cliente && <p>{auth.cliente.name}</p>}
       <p>Estás actualmente en la ruta del perfil.</p>

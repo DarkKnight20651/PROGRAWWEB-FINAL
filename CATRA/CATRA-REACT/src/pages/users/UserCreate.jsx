@@ -11,6 +11,7 @@ const UserCreate = () => {
   const passwordRef = createRef();
   const password_confirmationRef = createRef();
   const roleRef = createRef();
+  const pathRef = createRef();
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
   const onSubmit = async (ev) => {
@@ -22,16 +23,18 @@ const UserCreate = () => {
     }
 
     setPasswordMismatch(false);
+    const formData = new FormData();
+    formData.append('email', emailRef.current.value);
+    formData.append('role', roleRef.current.value);
+    formData.append('password', passwordRef.current.value);
+    formData.append('password_confirmation', password_confirmationRef.current.value);
+    if (pathRef.current.files[0]) {
+      formData.append('path_imagen', pathRef.current.files[0]);
+  }
 
-    const payload = {
-      email: emailRef.current.value,
-      role: roleRef.current.value,
-      password: passwordRef.current.value,
-      password_confirmation: password_confirmationRef.current.value,
-    };
 
     try {
-      await axiosClient.post('/users', payload);
+      await axiosClient.post('/users', formData);
       alert("Usuario creado correctamente");
       await navigate({ to: "/usuarios" });
     } catch (error) {
@@ -54,7 +57,7 @@ const UserCreate = () => {
             className="form-control"
             id="role"
             required
-          >
+          >a
             <option value="">Selecciona un rol</option>
             <option value="admin">Admin</option>
             <option value="secre">Secretaria</option>
@@ -70,6 +73,16 @@ const UserCreate = () => {
             id="email"
             placeholder="Correo Electrónico"
             required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="imagen" className="form-label">Cargar Imagen de Perfil</label>
+          <input
+            ref={pathRef}
+            type="file"
+            className="form-control"
+            id="imagen"
+            accept=".jpg, .jpeg, .png"
           />
         </div>
         <div className="mb-3">

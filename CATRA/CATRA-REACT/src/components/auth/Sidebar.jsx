@@ -43,7 +43,7 @@ function getRoutesByRole(role) {
     case 'secre':
       return rutasSecre;
     case 'instructor':
-    return rutasIns;
+      return rutasIns;
     default:
       return [];
   }
@@ -57,7 +57,18 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
     <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive" : ""}>
       <div className='sidebar-title'>
         <div className='sidebar-brand'>
-          CATRA
+         
+          {auth.user?.path_imagen ? (
+            <img
+              src={`http://localhost:8000/storage/${auth.user?.path_imagen}`}
+              alt="Imagen de la pregunta"
+              className="img-fluid"
+              style={{ width: '100px', height: 'auto' }}
+            />
+          ) : (
+            <p>No hay imagen disponible</p>
+          )}
+          <p> {auth.user?.email}</p>
         </div>
         <span className='icon close_icon' onClick={OpenSidebar}>X</span>
       </div>

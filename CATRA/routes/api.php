@@ -36,13 +36,41 @@ Route::get('cliente/{curp}/examenes', [ClienteController::class, 'getExamens']);
 Route::get('examen/{id_examen}/preguntas', [PreguntaController::class, 'getPreguntasByExamen']);
 Route::get('pregunta/{id_pregunta}/respuestas', [RespuestaController::class, 'getRespuestasByPregunta']);
 
-Route::apiResource('preguntas', PreguntaController::class);
-Route::apiResource('examenes', ExamenController::class);
-Route::apiResource('respuestas', RespuestaController::class);
+Route::prefix('preguntas')->group(function () {
+    Route::get('/', [PreguntaController::class, 'index'])->name('preguntas.index');
+    Route::post('/', [PreguntaController::class, 'store'])->name('preguntas.store');
+    Route::get('/{pregunta}', [PreguntaController::class, 'show'])->name('preguntas.show');
+    Route::put('/{pregunta}', [PreguntaController::class, 'update'])->name('preguntas.update');
+    Route::delete('/{pregunta}', [PreguntaController::class, 'destroy'])->name('preguntas.destroy');
+});
+
+Route::prefix('examenes')->group(function () {
+    Route::get('/', [ExamenController::class, 'index'])->name('examenes.index');
+    Route::post('/', [ExamenController::class, 'store'])->name('examenes.store');
+    Route::get('/{examen}', [ExamenController::class, 'show'])->name('examenes.show');
+    Route::put('/{examen}', [ExamenController::class, 'update'])->name('examenes.update');
+    Route::delete('/{examen}', [ExamenController::class, 'destroy'])->name('examenes.destroy');
+});
+
+Route::prefix('respuestas')->group(function () {
+    Route::get('/', [RespuestaController::class, 'index'])->name('respuestas.index');
+    Route::post('/', [RespuestaController::class, 'store'])->name('respuestas.store');
+    Route::get('/{respuesta}', [RespuestaController::class, 'show'])->name('respuestas.show');
+    Route::put('/{respuesta}', [RespuestaController::class, 'update'])->name('respuestas.update');
+    Route::delete('/{respuesta}', [RespuestaController::class, 'destroy'])->name('respuestas.destroy');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::apiResource('/users', UserController::class);
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::post('/', [UserController::class, 'store'])->name('users.store');
+        Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+
 
     Route::post("/users/documents-status/{id}", [UserController::class, 'updateDocumentsStatus']);
 

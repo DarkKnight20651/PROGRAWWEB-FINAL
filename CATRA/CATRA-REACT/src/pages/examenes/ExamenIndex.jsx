@@ -109,7 +109,7 @@ const ExamenIndex = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="container my-4">
+    <div className="containe my-4">
       <h1>Consulta de Exámenes </h1>
       <div className="d-flex justify-content-between align-items-center mb-3">
         <button onClick={() => openModal()} className="btn btn-primary">

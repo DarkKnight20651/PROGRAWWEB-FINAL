@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { useEffect, useState, useRef} from 'react';
+import { useNavigate, useParams} from '@tanstack/react-router';
 import axiosClient from 'src/axios-client';
 
 import 'src/assets/bootstrap.min.css'
@@ -14,7 +14,7 @@ const UserEdit = () => {
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
+  const pathRef = useRef();
   useEffect(() => {
     const controller = new AbortController();
     let signalError = false;
@@ -43,9 +43,17 @@ const UserEdit = () => {
       password_confirmation: passwordConf,
       role,
     };
-
+    const formData = new FormData();
+    formData.append('email',email);
+    formData.append('password',password);
+    formData.append('password_confirmation', passwordConf);
+    formData.append('role',role);
+    if (pathRef.current.files[0]) {
+      formData.append('path_imagen', pathRef.current.files[0]);
+    }
+    formData.append('_method', 'PUT')
     try {
-      const { data } = await axiosClient.put(`/users/${userId}`, payload);
+      const { data } = await axiosClient.post(`/users/${userId}`, formData);
       setRole(data.role);
       setEmail(data.email);
       alert("Usuario editado correctamente");
@@ -92,6 +100,16 @@ const UserEdit = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="imagen" className="form-label">Cargar Imagen</label>
+            <input
+              ref={pathRef}
+              type="file"
+              className="form-control"
+              id="imagen"
+              accept=".jpg, .jpeg, .png"
             />
           </div>
           <div className="mb-3">

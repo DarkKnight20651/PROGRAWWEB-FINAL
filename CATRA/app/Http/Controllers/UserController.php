@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function index()
@@ -27,10 +27,15 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|min:8',
         ]);
+        $path_imagen = null;
 
+        if ($request->hasFile('path_imagen') && $request->file('path_imagen')->isValid()) {
+            $path_imagen = $request->file('path_imagen')->store('usuarios', 'public');
+        }
         $user = User::create([
             'role' => $validated["role"],
             'email' => $validated["email"],
+            'path_imagen' => $path_imagen,
             'password' => Hash::make($validated["password"]),
         ]);
 
@@ -55,7 +60,16 @@ class UserController extends Controller
                 Password::min(8)
             ],
         ]);
+        if ($request->hasFile('path_imagen') && $request->file('path_imagen')->isValid()) {
+            // Eliminar la imagen anterior si existe
+            if ($user->path_imagen) {
+                Storage::delete($user->path_imagen);
+            }
 
+            // Guardar la nueva imagen
+            $path_imagen = $request->file('path_imagen')->store('usuarios', 'public');
+            $user->path_imagen = $path_imagen;
+        }
         $userUpdateData = [
             'email' => $validated['email'],
             'role' => $validated['role'],
