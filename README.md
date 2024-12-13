@@ -1,5 +1,11 @@
+## subsistema adaptado para la materia de Programacion web 
+- Pacheco Infanzon Daniel
+- Santos Vengas Victor Adrian
+
 # CRATRA-SYSTEM
-Este repositorio esta enfocado al desarrollo de un sistema web para la empresa de tramites de licencias federales en estado de oaxaca de juarez, oaaxca 
+Este repositorio esta enfocado al desarrollo de un sistema web para la empresa de tramites de licencias federales en estado de oaxaca de juarez, oaaxca
+
+
 
 
 # Tecnologias utilizadas
@@ -20,3 +26,4 @@ Este repositorio esta enfocado al desarrollo de un sistema web para la empresa d
   - Administtrador
   - Secretaria 
   - Cliente 
+
