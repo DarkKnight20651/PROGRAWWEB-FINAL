@@ -55,6 +55,49 @@ Algunos de los métodos más importantes son los siguientes
 ![image](https://github.com/user-attachments/assets/039fcd4c-9887-4daa-a20c-256b3ba324c4)
 ![image](https://github.com/user-attachments/assets/46333ae7-5bf6-4367-8c40-6d85d7ee37f0)
 
+![image](https://github.com/user-attachments/assets/d79cfdb7-ad2b-4bfa-87c4-da7bd7c7fbbb)
+![image](https://github.com/user-attachments/assets/b918dc8d-38cb-40fe-bb4d-e5aede640e1c)
+
+![image](https://github.com/user-attachments/assets/c68b1bbd-f8cd-4e13-a846-69cc968ff2d2)
+
+![image](https://github.com/user-attachments/assets/2df6b22c-8a03-4295-83a5-bbc21d7f9da7)
+
+![image](https://github.com/user-attachments/assets/7ae15d71-5aa3-490c-b63d-b6431e53f35e)
+
+![image](https://github.com/user-attachments/assets/409f6882-9d12-43cf-9444-f88de24ca936)
+
+Cada uno de los modelos tiene funciones que nos permiten administrarlas, es decir, cada modelo tiene un Create, Update, Show y Delete, para manejar estos métodos desde el frontend creamos un api por medio del cual comunicamos nuestro frontend con nuestro backend
+
+
+
+![image](https://github.com/user-attachments/assets/95fc8687-b871-4a0a-8e52-8c08220e5a41)
+
+![image](https://github.com/user-attachments/assets/c1bf3038-71d3-4fb5-a7b9-df231ff5ae06)
+
+#Vista
+
+En el frontend utilizamos react, en este caso para el login implementamos un formulario en el que se recibirá la información de acceso del usuario y se enviará al backend por medio del api
+
+![image](https://github.com/user-attachments/assets/2a2dbf6f-f78d-4cc9-beb6-3ffc580fcea5)
+
+Al recibir la respuesta apropiada el sistema nos permitirá acceder
+
+de lo contrario se mostrará un mensaje de error
+
+
+![image](https://github.com/user-attachments/assets/bc540145-6b7a-4c33-a1d7-b75cf927f307)
+
+
+![image](https://github.com/user-attachments/assets/a8ca0b1f-5e2c-4d93-b956-cc6b891f6931)
+
+![image](https://github.com/user-attachments/assets/4f07234b-a667-4e3c-918c-6431947c04a5)
+
+
+![image](https://github.com/user-attachments/assets/040be61d-f92a-438e-92d7-6b4a90b0ae88)
+
+
+
+
 
 
 
