@@ -48,7 +48,23 @@ Nuestros controladores principales serán los siguientes:
 
 Algunos de los métodos más importantes son los siguientes
 
+-Login:
+El usuario ingresa sus credenciales y el sistema lo busca en la bd, en caso de existir permite el acceso, en caso contrario manda un error
 
+-Logout:
+Se elimina el token del usuario y se cierra la sesion
+
+-Store:
+Se usa para crear nuevos elementos de algún modelo
+
+-Update: actualiza elementos de algún modelo
+
+-destroy: elimina elementos de algún modelo
+
+-Show: devuelve la información de algún modelo
+
+-notas:
+El proceso de almacenar imagenes hace que los métodos y empaquetado de información deba ser modificado ya que Php por defecto no hace un parseo de las imagenes enviadas en los formularios, además es necesario habilitar el link del storage de laravel para poder acceder a las imagenes.
 ![image](https://github.com/user-attachments/assets/a65f8525-dbf9-445d-91c0-87638b20031b)
 ![image](https://github.com/user-attachments/assets/b5126acc-1ace-4cd4-b43f-4f2a27927b21)
 ![image](https://github.com/user-attachments/assets/9308c745-4667-4705-b6eb-691855dea591)
@@ -94,6 +110,43 @@ de lo contrario se mostrará un mensaje de error
 
 
 ![image](https://github.com/user-attachments/assets/040be61d-f92a-438e-92d7-6b4a90b0ae88)
+
+Para administrar los examenes de la plataforma se implemento un modulo en el cual se pueden visualizar, editar, agregar o eliminar los examenes
+
+![image](https://github.com/user-attachments/assets/e89c7138-e358-4808-86e1-29ac92fac862)
+
+![image](https://github.com/user-attachments/assets/ddede237-226f-4293-a238-1d01883d1047)
+![image](https://github.com/user-attachments/assets/85e65f12-2741-4953-8ced-ea90f112d7de)
+
+Para cada examen corresponde un grupo de preguntas, estas pueden administrarse de la misma manera
+![image](https://github.com/user-attachments/assets/7614428c-5561-45da-82a2-54d33811da34)
+![image](https://github.com/user-attachments/assets/225bc9b5-e9db-47b7-b23e-77cd91264872)
+![image](https://github.com/user-attachments/assets/5fcd857e-9ff3-4fcd-a4e3-d5837e29d739)
+
+De la misma manera a cada pregunta le corresponden un grupo de respuestas que se administran de la misma manera
+
+![image](https://github.com/user-attachments/assets/32f2f00d-1c87-4b90-8893-4f9cef77202e)
+![image](https://github.com/user-attachments/assets/d2083f9f-103f-4880-8576-4f5449ba0be2)
+![image](https://github.com/user-attachments/assets/47755283-d3a1-4da1-8010-0ad33e3dc079)
+
+
+Para utilizar nuestra API de manera más sencilla implementamos Axios lo cual nos permite comunicarnos sencillamente optimizando bastante el código
+
+![image](https://github.com/user-attachments/assets/0e1f9fc0-60f1-4602-bc14-cded842bfa13)
+
+Para implementar rutas protegidas usamos Tanstack Router la cual es una libreria que nos ayuda y simplifica mucho el proceso
+Ya que las rutas se manejan como archivos y se crean automaticamente de la siguiente manera
+![image](https://github.com/user-attachments/assets/99aa6bdb-fce3-476b-8fd6-46cf8a54ec57)
+![image](https://github.com/user-attachments/assets/9a603806-d6c6-4f72-abcb-638c0a393994)
+
+De manera general, el proceso es el siguiente
+
+El usuario realiza una consulta en react desde su navegador, react envia una peticion al backend usando Axios que se comunica con el API, el backend en este caso laravel procesa la peticion y devuelve una respuesta que es recibida por Axios y procesada por React.
+
+
+
+
+
 
 
 
